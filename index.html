@@ -2,20 +2,304 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>学習帖 — 英語</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>学習帖 — トップ</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FAF7F0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="学習帖">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="icon" href="icons/favicon.png">
-<meta http-equiv="refresh" content="0; url=./英語.html">
-<script>location.replace('./英語.html');</script>
+<link rel="icon" type="image/png" href="icons/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
-  body{font-family:system-ui;background:#FAF7F0;color:#2C2C2C;
-       display:flex;align-items:center;justify-content:center;
-       min-height:100vh;margin:0;text-align:center;padding:20px}
-  a{color:#E8743C}
+:root{
+  --paper:#FAF7F0;
+  --paper-edge:#EFE9D9;
+  --ink:#2C2C2C;
+  --ink-soft:#5C5854;
+  --rule:#D9D3C2;
+  --rule-soft:#EDE6D2;
+  --en-accent:#E8743C;
+  --en-deep:#C45A26;
+  --geo-accent:#C77A4E;
+  --geo-deep:#A65530;
+  --indigo:#1F4068;
+  --shadow:0 4px 20px rgba(60,40,20,.08);
+  --shadow-deep:0 12px 40px rgba(60,40,20,.15);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, #F5EFDD 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, #F0E8D2 0%, transparent 50%),
+    var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  min-height:100vh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing:antialiased;
+}
+
+.hub{
+  max-width:760px;
+  margin:0 auto;
+  padding:40px 20px 60px;
+}
+
+header.brand{
+  text-align:center;
+  margin-bottom:32px;
+  padding-bottom:18px;
+  border-bottom:2px solid var(--ink);
+}
+header.brand h1{
+  font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
+  font-size:38px;
+  font-weight:700;
+  letter-spacing:.1em;
+}
+header.brand .sub{
+  font-family:'Crimson Pro',serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--ink-soft);
+  margin-top:4px;
+  letter-spacing:.05em;
+}
+
+.greeting{
+  text-align:center;
+  font-size:14px;
+  color:var(--ink-soft);
+  margin-bottom:24px;
+}
+.greeting .today{
+  font-family:'Crimson Pro',serif;
+  font-size:13px;
+  color:var(--ink-soft);
+  display:block;
+  margin-top:2px;
+}
+
+h2.section-h{
+  font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
+  font-size:14px;
+  color:var(--ink-soft);
+  letter-spacing:.15em;
+  margin:12px 0 14px;
+  font-weight:500;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-bottom:30px;
+}
+.card{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  background:#FFFDF7;
+  border:1px solid var(--paper-edge);
+  border-radius:16px;
+  padding:20px 18px;
+  box-shadow:var(--shadow);
+  transition:transform .15s, box-shadow .15s;
+  position:relative;
+  overflow:hidden;
+  min-height:200px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-deep)}
+.card:active{transform:translateY(0)}
+.card .acc-tab{
+  position:absolute;left:-2px;top:18px;
+  padding:4px 14px 4px 12px;
+  border-radius:0 6px 6px 0;
+  color:#FFFDF7;
+  font-family:'Crimson Pro',serif;
+  font-weight:700;font-size:12px;
+  letter-spacing:.1em;
+}
+.card.en .acc-tab{background:var(--en-accent)}
+.card.geo .acc-tab{background:var(--geo-accent)}
+.card .subject{
+  font-family:'Crimson Pro',serif;
+  font-size:42px;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  margin-top:30px;
+  line-height:1;
+}
+.card.en .subject{color:var(--ink)}
+.card.geo .subject{color:var(--ink)}
+.card .subject-sub{
+  font-family:'Crimson Pro',serif;
+  font-style:italic;
+  font-weight:500;
+  font-size:14px;
+  margin-top:4px;
+}
+.card.en .subject-sub{color:var(--en-deep)}
+.card.geo .subject-sub{color:var(--geo-deep)}
+.card .jp{
+  font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
+  font-weight:700;
+  font-size:20px;
+  margin-top:18px;
+}
+.card .desc{
+  font-size:11px;
+  color:var(--ink-soft);
+  margin-top:4px;
+  letter-spacing:.02em;
+}
+.card .footer-row{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-top:14px;
+  font-size:11px;color:var(--ink-soft);
+}
+.card .footer-row .arrow{
+  font-size:18px;color:var(--ink);
+}
+
+/* Decoration: faint pattern */
+.card.en::after{
+  content:"";
+  position:absolute;right:-30px;bottom:-30px;
+  width:120px;height:120px;
+  border:2px solid var(--en-accent);
+  border-radius:14px;
+  opacity:.06;
+  transform:rotate(10deg);
+}
+.card.geo::after{
+  content:"";
+  position:absolute;right:-20px;bottom:-20px;
+  width:100px;height:100px;
+  border:2px dashed var(--geo-accent);
+  border-radius:50%;
+  opacity:.15;
+}
+
+.helper{
+  background:#FFFDF7;
+  border:1px solid var(--rule);
+  border-radius:12px;
+  padding:14px 16px;
+  font-size:12px;
+  color:var(--ink-soft);
+  line-height:1.65;
+}
+.helper b{color:var(--ink)}
+.helper kbd{
+  background:#EFE9D9;
+  border:1px solid var(--rule);
+  padding:1px 6px;
+  border-radius:4px;
+  font-family:'Crimson Pro',serif;
+  font-size:11px;
+  color:var(--ink);
+}
+
+footer.colophon{
+  text-align:center;font-size:11px;color:var(--ink-soft);
+  margin-top:24px;font-family:'Crimson Pro',serif;letter-spacing:.05em;
+}
+
+@media (max-width:520px){
+  .cards{grid-template-columns:1fr}
+  .card{min-height:170px}
+  .card .subject{font-size:36px;margin-top:24px}
+}
 </style>
 </head>
 <body>
-  <p>学習帖・英語に移動しています… 自動で切り替わらない場合は <a href="./英語.html">こちら</a> をタップしてください。</p>
+
+<div class="hub">
+
+  <header class="brand">
+    <h1>学習帖</h1>
+    <div class="sub">Lesson Trainer · 試験対策ノート</div>
+  </header>
+
+  <div class="greeting">
+    <span>今日は何を勉強しますか？</span>
+    <span class="today" id="today"></span>
+  </div>
+
+  <h2 class="section-h">SUBJECTS · 科目</h2>
+
+  <div class="cards">
+    <a class="card en" href="./英語.html">
+      <span class="acc-tab">EN</span>
+      <div>
+        <div class="subject">English</div>
+        <div class="subject-sub">Power On EC Ⅰ</div>
+      </div>
+      <div>
+        <div class="jp">英語</div>
+        <div class="desc">Lesson 1〜10 / 中間試験対策</div>
+      </div>
+      <div class="footer-row">
+        <span>語彙・文法・並べ替え ほか</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <a class="card geo" href="./地理.html">
+      <span class="acc-tab">GEO</span>
+      <div>
+        <div class="subject">Geography</div>
+        <div class="subject-sub">新地理総合</div>
+      </div>
+      <div>
+        <div class="jp">地理</div>
+        <div class="desc">L1〜L6 / 中間試験対策</div>
+      </div>
+      <div class="footer-row">
+        <span>用語・一問一答・○× ほか</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="helper">
+    <b>使い方のヒント:</b> このページを iPhone の <kbd>共有</kbd> → <kbd>ホーム画面に追加</kbd> で、ホーム画面に「学習帖」アイコンが追加されます。
+    各科目を直接ホーム画面に置きたい場合は、そのページを開いてから同じ操作をしてください。
+  </div>
+
+  <footer class="colophon">
+    学習帖 — 試験対策ノート &nbsp;·&nbsp; 教科書の本文・設問は引用しません。出題はオリジナル類題です。
+  </footer>
+</div>
+
+<script>
+// Today's date in Japanese
+const d = new Date();
+const dow = ['日','月','火','水','木','金','土'][d.getDay()];
+document.getElementById('today').textContent =
+  `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${dow}）`;
+
+// Service worker registration (cached files include 地理.html now)
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+  });
+}
+</script>
 </body>
 </html>

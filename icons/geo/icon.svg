@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FAF7F0"/>
+      <stop offset="100%" stop-color="#EFE6CC"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3A6A9A"/>
+      <stop offset="100%" stop-color="#1F4068"/>
+    </linearGradient>
+    <linearGradient id="terra" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#C77A4E"/>
+      <stop offset="100%" stop-color="#A65530"/>
+    </linearGradient>
+    <filter id="soft" x="-2%" y="-2%" width="104%" height="104%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
+      <feOffset dx="0" dy="6" result="off"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#paper)"/>
+  <g stroke="#D9D3C2" stroke-width="3" opacity=".5">
+    <line x1="120" y1="320" x2="904" y2="320"/>
+    <line x1="120" y1="430" x2="904" y2="430"/>
+    <line x1="120" y1="540" x2="904" y2="540"/>
+    <line x1="120" y1="650" x2="904" y2="650"/>
+    <line x1="120" y1="760" x2="904" y2="760"/>
+    <line x1="120" y1="870" x2="904" y2="870"/>
+  </g>
+  <line x1="190" y1="60" x2="190" y2="964" stroke="#1F4068" stroke-width="4" opacity=".5"/>
+
+  <path d="M 60 100 L 360 100 L 410 220 L 360 340 L 60 340 Z" fill="url(#ribbon)" filter="url(#soft)"/>
+  <text x="115" y="245"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-weight="700" font-size="110" fill="#FFFDF7" letter-spacing="6">GEO</text>
+
+  <path d="M 1024 60 L 1024 180 L 904 180 Z" fill="#E8E0C8"/>
+  <path d="M 1024 60 L 904 180 L 904 60 Z" fill="#D9D0B4"/>
+
+  <!-- Globe motif behind title -->
+  <g opacity="0.18" transform="translate(740,560)">
+    <circle r="170" fill="#1F4068"/>
+    <ellipse rx="170" ry="60" fill="none" stroke="#FAF7F0" stroke-width="3"/>
+    <ellipse rx="80" ry="170" fill="none" stroke="#FAF7F0" stroke-width="3"/>
+    <ellipse rx="140" ry="170" fill="none" stroke="#FAF7F0" stroke-width="2"/>
+    <line x1="-170" y1="0" x2="170" y2="0" stroke="#FAF7F0" stroke-width="3"/>
+    <line x1="0" y1="-170" x2="0" y2="170" stroke="#FAF7F0" stroke-width="3"/>
+  </g>
+
+  <g filter="url(#soft)">
+    <text x="512" y="620" text-anchor="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-weight="700" font-size="170" fill="#2C2C2C">Geography</text>
+  </g>
+  <line x1="240" y1="660" x2="784" y2="660" stroke="#C77A4E" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- subtitle pill (terra) -->
+  <rect x="232" y="745" width="560" height="100" rx="50" fill="url(#terra)" filter="url(#soft)"/>
+  <text x="512" y="812" text-anchor="middle"
+        font-family="Georgia, serif" font-style="italic" font-weight="500"
+        font-size="54" fill="#FFFDF7" letter-spacing="2">Atlas  &amp;  World</text>
+
+  <circle cx="900" cy="900" r="50" fill="none" stroke="#1F4068" stroke-width="6" stroke-dasharray="3,4"/>
+  <text x="900" y="918" text-anchor="middle"
+        font-family="Georgia, serif" font-weight="700" font-size="40" fill="#1F4068">JP</text>
+</svg>

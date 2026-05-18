@@ -1,10 +1,10 @@
 {
-  "name": "学習帖 — 英語",
-  "short_name": "学習帖・英語",
-  "description": "Power On English Communication I の試験対策アプリ",
+  "name": "学習帖",
+  "short_name": "学習帖",
+  "description": "高校試験対策アプリ（英語・地理）",
   "lang": "ja",
   "dir": "ltr",
-  "start_url": "./英語.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
@@ -40,6 +40,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "英語",
+      "short_name": "英語",
+      "description": "学習帖・英語を開く",
+      "url": "./英語.html",
+      "icons": [{"src":"icons/apple-touch-icon.png","sizes":"180x180"}]
+    },
+    {
+      "name": "地理",
+      "short_name": "地理",
+      "description": "学習帖・地理を開く",
+      "url": "./地理.html",
+      "icons": [{"src":"icons/geo/apple-touch-icon.png","sizes":"180x180"}]
     }
   ]
 }

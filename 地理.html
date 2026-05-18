@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>学習帖 — 地理 / 新地理総合</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FAF7F0">
+<meta name="color-scheme" content="light">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="学習帖・地理">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="icons/geo/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/geo/favicon.png">
+<link rel="icon" type="image/svg+xml" href="icons/geo/icon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   学習帖 — 地理  |  Design system (terra-cotta + indigo accent)
+   ============================================================ */
+:root{
+  --paper:#FAF7F0;
+  --paper-edge:#EFE9D9;
+  --ink:#2C2C2C;
+  --ink-soft:#5C5854;
+  --rule:#D9D3C2;
+  --rule-soft:#EDE6D2;
+  --accent:#C77A4E;        /* terra-cotta */
+  --accent-deep:#A65530;
+  --indigo:#1F4068;
+  --indigo-soft:#3A6A9A;
+  --good:#3C8A5A;
+  --bad:#C4523A;
+  --shadow:0 4px 20px rgba(60,40,20,.08);
+  --shadow-deep:0 12px 40px rgba(60,40,20,.15);
+  --tab-1:#1F4068; --tab-2:#3A8A8A; --tab-3:#A65530;
+  --tab-4:#C77A4E; --tab-5:#5A9A3C; --tab-6:#7A4E9A;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Noto Sans JP','Inter',sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, #F5EFDD 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, #F0E8D2 0%, transparent 50%),
+    var(--paper);
+  color:var(--ink);
+  line-height:1.7;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:env(safe-area-inset-bottom);
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
+  overscroll-behavior-y:contain;
+}
+input,textarea,select{font-size:16px}
+button{-webkit-appearance:none;cursor:pointer;font-family:inherit}
+
+.app{max-width:980px;margin:0 auto;padding:24px 16px 80px}
+
+header.brand{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:8px}
+header.brand h1{font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;font-size:28px;font-weight:700;letter-spacing:.04em}
+header.brand h1 .sep{color:var(--accent);margin:0 .35em}
+header.brand .sub{font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink-soft);font-style:italic;text-align:right}
+header.brand .back{font-size:12px;color:var(--ink-soft);text-decoration:none;border:1px solid var(--rule);padding:4px 10px;border-radius:99px;margin-right:8px}
+header.brand .back:hover{border-color:var(--ink);color:var(--ink)}
+
+.tab-strip{display:flex;gap:4px;flex-wrap:wrap;margin:18px 0 0;padding-bottom:0}
+.tab-strip button.lesson-tab{
+  appearance:none;border:none;background:#EAE2CE;color:var(--ink-soft);
+  font-family:'Inter','Noto Sans JP',sans-serif;font-size:13px;font-weight:600;
+  padding:10px 14px 12px;border-radius:10px 10px 0 0;cursor:pointer;
+  border-bottom:3px solid transparent;transition:transform .15s ease, background .15s;
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:108px;
+}
+.tab-strip button.lesson-tab .ttl{font-size:11px;color:var(--ink-soft);font-weight:500;font-family:'Noto Sans JP',sans-serif}
+.tab-strip button.lesson-tab .num{font-size:13px;color:var(--ink)}
+.tab-strip button.lesson-tab:hover{background:#F0E8D2;transform:translateY(-2px)}
+.tab-strip button.lesson-tab.active{background:var(--paper);color:var(--ink);border-bottom:3px solid var(--paper);box-shadow:0 -4px 12px rgba(60,40,20,.08);transform:translateY(0)}
+.tab-strip button.lesson-tab.active::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;border-radius:10px 10px 0 0;background:var(--tab-color, var(--accent))}
+
+.sheet{
+  background:var(--paper);border:1px solid var(--paper-edge);
+  border-radius:0 12px 12px 12px;padding:32px 32px 40px;box-shadow:var(--shadow);
+  position:relative;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule-soft) 31px,var(--rule-soft) 32px);
+}
+.sheet::before{content:"";position:absolute;left:54px;top:0;bottom:0;width:1px;background:rgba(31,64,104,.25)}
+
+.lesson-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px dashed var(--rule)}
+.lesson-head .titles h2{font-family:'Crimson Pro',serif;font-size:28px;font-weight:600;color:var(--ink);letter-spacing:.01em;line-height:1.25}
+.lesson-head .titles h2 .lesson-num{display:inline-block;background:var(--tab-color, var(--accent));color:#fff;padding:2px 12px;border-radius:6px;font-size:14px;font-family:'Inter',sans-serif;font-weight:600;letter-spacing:.08em;margin-right:10px;vertical-align:middle;transform:translateY(-3px)}
+.lesson-head .titles .lesson-jp{font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;font-size:18px;font-weight:700;color:var(--ink);margin-top:6px}
+.lesson-head .titles .theme{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.lesson-head .titles .theme b{color:var(--accent-deep);font-weight:600}
+.lesson-head .progress-card{background:#FFF;border:1px solid var(--rule);border-radius:10px;padding:10px 14px;min-width:170px;text-align:right}
+.lesson-head .progress-card .label{font-size:11px;color:var(--ink-soft);letter-spacing:.05em}
+.lesson-head .progress-card .pct{font-family:'Crimson Pro',serif;font-size:24px;font-weight:600;color:var(--indigo)}
+.lesson-head .progress-card .bar{height:6px;background:#EFE9D9;border-radius:99px;overflow:hidden;margin-top:6px}
+.lesson-head .progress-card .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--tab-color,var(--accent)),var(--accent-deep));border-radius:99px;transition:width .5s ease}
+
+.mode-row{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 18px;border-bottom:1px solid var(--rule);margin-bottom:22px}
+.mode-row button{appearance:none;border:1.5px solid var(--rule);background:#FFFDF7;color:var(--ink);font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:600;padding:8px 14px;border-radius:99px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.mode-row button .glyph{font-size:14px}
+.mode-row button:hover{border-color:var(--accent);color:var(--accent-deep);background:#FFF7EF}
+.mode-row button.active{background:var(--ink);color:#FFFDF7;border-color:var(--ink)}
+
+.qarea{padding:6px 4px}
+.qmeta{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink-soft);margin-bottom:10px}
+.qmeta .step{font-family:'Crimson Pro',serif;font-size:14px}
+.qmeta .score{font-weight:600}
+.qmeta .score b.good{color:var(--good)}
+.qmeta .score b.bad{color:var(--bad)}
+
+.q-card{background:#FFFDF7;border:1px solid var(--rule);border-radius:14px;padding:24px 26px;margin-bottom:18px;position:relative;box-shadow:0 2px 6px rgba(60,40,20,.04)}
+.q-card .qno{position:absolute;left:-10px;top:18px;background:var(--tab-color,var(--accent));color:#fff;font-family:'Crimson Pro',serif;font-weight:600;padding:2px 10px;border-radius:4px;font-size:13px}
+.q-card .qprompt{font-size:13px;color:var(--ink-soft);margin-bottom:6px;letter-spacing:.04em}
+.q-card .qbody{font-family:'Crimson Pro',serif;font-size:20px;line-height:1.7;margin:6px 0 18px;color:var(--ink)}
+.q-card .qbody.ja{font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;font-size:18px;font-weight:500}
+.q-card .qbody .blank{display:inline-block;min-width:80px;text-align:center;border-bottom:2px solid var(--accent);font-weight:600;color:transparent}
+
+.choices{display:flex;flex-direction:column;gap:8px}
+.choices button.choice{appearance:none;text-align:left;background:#FFF;border:1.5px solid var(--rule);padding:12px 16px;border-radius:10px;font-family:'Noto Sans JP',sans-serif;font-size:15px;cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:all .15s;color:var(--ink)}
+.choices button.choice .mark{display:inline-block;width:24px;height:24px;border-radius:50%;background:#EFE9D9;color:var(--ink-soft);font-family:'Inter',sans-serif;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.choices button.choice:hover:not(.locked){border-color:var(--accent);background:#FFF7EF}
+.choices button.choice.selected{border-color:var(--indigo)}
+.choices button.choice.correct{background:#EAF6EE;border-color:var(--good);color:#1F5C32}
+.choices button.choice.correct .mark{background:var(--good);color:#fff}
+.choices button.choice.wrong{background:#FBEBE6;border-color:var(--bad);color:#7A2A1A}
+.choices button.choice.wrong .mark{background:var(--bad);color:#fff}
+.choices button.choice.locked{cursor:default}
+
+/* ○× big buttons */
+.ox-row{display:flex;gap:14px;justify-content:center;margin:14px 0 4px}
+.ox-btn{
+  flex:1;max-width:200px;
+  font-family:'Crimson Pro',serif;
+  font-size:42px;font-weight:700;
+  padding:30px 0;border:2px solid var(--rule);
+  background:#FFF;color:var(--ink);
+  border-radius:14px;cursor:pointer;
+  transition:all .15s;
+}
+.ox-btn:hover:not(.locked){border-color:var(--accent);background:#FFF7EF}
+.ox-btn.selected{border-color:var(--indigo)}
+.ox-btn.correct{background:#EAF6EE;border-color:var(--good);color:var(--good)}
+.ox-btn.wrong{background:#FBEBE6;border-color:var(--bad);color:var(--bad)}
+.ox-btn .lbl{display:block;font-size:11px;color:var(--ink-soft);font-family:'Noto Sans JP',sans-serif;font-weight:600;letter-spacing:.1em;margin-top:6px}
+.ox-btn.locked{cursor:default}
+
+/* Free text */
+textarea.answer-input{width:100%;min-height:80px;background:#FFFDF7;border:1.5px solid var(--rule);border-radius:10px;padding:14px 16px;font-family:'Noto Sans JP',sans-serif;font-size:17px;color:var(--ink);resize:vertical;line-height:1.6}
+textarea.answer-input:focus{outline:none;border-color:var(--accent);background-color:#FFF}
+
+.text-fill-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.text-fill-row label{font-size:13px;color:var(--ink-soft)}
+input.text-fill{
+  flex:1;min-width:160px;border:none;border-bottom:2px solid var(--accent);
+  background:#FFFDF7;font-family:'Noto Sans JP',sans-serif;font-size:18px;font-weight:600;
+  color:var(--ink);padding:8px 4px;
+}
+input.text-fill:focus{outline:none;background:#FFF7EF}
+
+.arrange-area{margin-top:6px}
+.arrange-answer{min-height:64px;border:1.5px dashed var(--rule);border-radius:10px;padding:14px 12px;background:#FFFDF7;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;align-items:flex-start}
+.arrange-answer .placeholder{color:var(--ink-soft);font-size:13px;font-style:italic;display:flex;align-items:center;height:32px}
+.arrange-pool{display:flex;flex-wrap:wrap;gap:6px;padding:8px 0;border-top:1px dashed var(--rule)}
+.arrange-pool::before{content:"カードの引き出し";display:block;width:100%;font-size:11px;color:var(--ink-soft);margin-bottom:6px;letter-spacing:.05em}
+.word-chip{background:#FFF;border:1.5px solid var(--rule);padding:6px 14px;border-radius:99px;font-family:'Noto Sans JP',sans-serif;font-size:15px;cursor:pointer;transition:all .12s;color:var(--ink)}
+.word-chip:hover:not(:disabled){border-color:var(--accent);background:#FFF7EF}
+.arrange-answer .word-chip{background:var(--ink);color:#FFFDF7;border-color:var(--ink)}
+.arrange-answer .word-chip:hover{background:#000;border-color:#000}
+.word-chip:disabled{opacity:.4;cursor:not-allowed}
+
+.q-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;align-items:center}
+.btn{appearance:none;border:none;cursor:pointer;padding:10px 22px;border-radius:99px;font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:14px;transition:transform .12s, background .12s}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--ink);color:#FFFDF7}
+.btn.primary:hover{background:#000}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.accent{background:var(--accent);color:#fff}
+.btn.accent:hover{background:var(--accent-deep)}
+
+.feedback{margin-top:14px;padding:14px 18px;border-radius:10px;font-size:14px;line-height:1.7;display:none;animation:popIn .25s ease}
+.feedback.show{display:block}
+.feedback.good{background:#EAF6EE;border-left:3px solid var(--good);color:#1F5C32}
+.feedback.bad{background:#FBEBE6;border-left:3px solid var(--bad);color:#7A2A1A}
+.feedback .stamp{display:inline-block;font-weight:700;letter-spacing:.1em;margin-right:8px;font-family:'Crimson Pro',serif;font-size:16px}
+.feedback .ja-hint{display:block;margin-top:6px;color:var(--ink-soft);font-size:13px}
+.feedback .ans-line{display:block;margin-top:6px;color:var(--ink);font-size:14px}
+.feedback .ans-line b{color:var(--good)}
+@keyframes popIn{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+
+.summary{background:#FFFDF7;border:1px solid var(--rule);border-radius:14px;padding:30px;text-align:center}
+.summary h3{font-family:'Crimson Pro',serif;font-size:24px;margin-bottom:8px;color:var(--ink)}
+.summary .score-big{font-family:'Crimson Pro',serif;font-size:64px;font-weight:600;color:var(--accent);line-height:1;margin:10px 0}
+.summary .score-big small{font-size:24px;color:var(--ink-soft)}
+.summary .stamp-circle{display:inline-block;border:3px double var(--accent);border-radius:50%;padding:14px 22px;color:var(--accent-deep);font-family:'Zen Maru Gothic',sans-serif;font-weight:700;transform:rotate(-8deg);margin:14px 0;font-size:18px;letter-spacing:.1em}
+.summary .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+
+.placeholder-pane{text-align:center;padding:60px 20px;color:var(--ink-soft)}
+.placeholder-pane .glyph{font-size:48px;display:block;margin-bottom:12px;opacity:.5}
+.placeholder-pane h3{font-family:'Crimson Pro',serif;font-size:22px;margin-bottom:6px;color:var(--ink)}
+.placeholder-pane p{font-size:14px}
+
+.review-fab{position:fixed;right:20px;bottom:20px;background:var(--indigo);color:#fff;border:none;border-radius:99px;padding:12px 18px;font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:13px;cursor:pointer;box-shadow:var(--shadow-deep);display:inline-flex;align-items:center;gap:6px;z-index:50}
+.review-fab .count{background:var(--accent);padding:2px 8px;border-radius:99px;font-size:11px}
+.review-fab:hover{background:var(--indigo-soft)}
+
+.modal-bg{position:fixed;inset:0;background:rgba(20,15,5,.45);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:40px 16px;overflow-y:auto}
+.modal-bg.show{display:flex}
+.modal{background:var(--paper);border-radius:14px;width:100%;max-width:680px;padding:24px 26px;box-shadow:var(--shadow-deep)}
+.modal h3{font-family:'Crimson Pro',serif;font-size:22px;margin-bottom:6px}
+.modal .close{float:right;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-soft)}
+.modal .item{border-top:1px dashed var(--rule);padding:14px 0}
+.modal .item:first-of-type{border-top:none}
+.modal .item .q{font-family:'Noto Sans JP',sans-serif;font-size:15px;color:var(--ink)}
+.modal .item .a{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.modal .item .a b{color:var(--good)}
+.modal .item .tags{font-size:11px;color:var(--ink-soft);margin-top:4px}
+
+footer.colophon{text-align:center;color:var(--ink-soft);font-size:12px;margin-top:30px;font-family:'Crimson Pro',serif;letter-spacing:.05em}
+
+@media (max-width:680px){
+  .app{padding:16px 8px 80px}
+  .sheet{padding:22px 18px 30px}
+  .sheet::before{display:none}
+  .lesson-head{flex-direction:column}
+  .lesson-head .progress-card{align-self:stretch;text-align:left}
+  .tab-strip button.lesson-tab{min-width:90px;padding:8px 10px}
+  .tab-strip button.lesson-tab .ttl{display:none}
+  .q-card .qbody{font-size:17px}
+}
+@media print{
+  body{background:#fff}
+  .tab-strip,.review-fab,.mode-row,.q-actions,.lesson-head .progress-card{display:none}
+  .sheet{box-shadow:none;border:none;background-image:none}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="brand">
+    <h1>学習帖<span class="sep">—</span>地理</h1>
+    <div class="sub"><a class="back" href="./">← 学習帖トップ</a>新地理総合&nbsp;|&nbsp;Lesson Trainer</div>
+  </header>
+
+  <nav class="tab-strip" id="lessonTabs"></nav>
+
+  <main class="sheet" id="sheet"></main>
+
+  <footer class="colophon">
+    学習帖 — 地理 / 試験対策ノート &nbsp;·&nbsp; 教科書の本文・設問は引用しません。出題はオリジナル類題です。
+  </footer>
+</div>
+
+<button class="review-fab" id="reviewFab" title="間違えた問題">
+  <span>☆ 復習帳</span>
+  <span class="count" id="reviewCount">0</span>
+</button>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<script>
+/* ============================================================
+   Lesson metadata
+   ============================================================ */
+const LESSONS = [
+  {n:1, title:"Globe & Position",          jp:"地球と位置",          theme:"緯度・経度・時差・標準時",                              color:"--tab-1"},
+  {n:2, title:"Maps & GIS",                jp:"地図と地理情報",      theme:"地球儀・投影法・地形図・統計地図・GIS",                color:"--tab-2"},
+  {n:3, title:"Nations & Japan",           jp:"現代世界と日本",      theme:"国家の三要素・領域・日本の領土",                       color:"--tab-3"},
+  {n:4, title:"Globalization",             jp:"グローバル化",        theme:"交通・情報・観光・サプライチェーン",                   color:"--tab-4"},
+  {n:5, title:"World Landforms",           jp:"世界の地形",          theme:"プレート・大地形・河川・海岸・氷河・カルスト",         color:"--tab-5"},
+  {n:6, title:"World Climates",            jp:"世界の気候",          theme:"気候要素・ケッペン区分・気候帯ごとの生活",             color:"--tab-6"},
+];
+
+const MODES = [
+  {id:"vocab",     label:"用語",      glyph:"📖"},
+  {id:"qa",        label:"一問一答",  glyph:"❓"},
+  {id:"fillblank", label:"穴埋め",    glyph:"✎"},
+  {id:"truefalse", label:"○×",       glyph:"◯"},
+  {id:"arrange",   label:"並べ替え",  glyph:"⇄"},
+  {id:"test",      label:"総合テスト",glyph:"🎯"},
+];
+
+/* ============================================================
+   Question banks
+   オリジナル類題。教科書本文・設問は引用していない。
+   ============================================================ */
+const QUESTIONS = {
+
+  /* ==================== LESSON 1: 地球と位置 ==================== */
+  1: {
+    vocab:[
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"緯度", choices:["東西方向の位置を表す角度","南北方向の位置を 0〜90°で表す角度","地点の標高","二点間の距離"], answer:1, note:"赤道を 0°として南北に最大 90°。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"経度", choices:["本初子午線から東西に 0〜180°で表す角度","赤道からの南北の角度","地球の半径","海面からの標高"], answer:0, note:"イギリスのグリニッジを 0°として東西に 180°ずつ。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"赤道", choices:["地軸が地表と交わる点","緯度 0°の線","経度 0°の線","北極と南極を結ぶ線"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"本初子午線", choices:["緯度 0°の線","経度 0°の線(グリニッジを通る)","日付変更線","赤道に平行な線"], answer:1, note:"イギリスのグリニッジ天文台跡を通る。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"対蹠点", choices:["地球の中心","北極と南極の中間","地球上のある地点の正反対の点","二点を結ぶ最短経路"], answer:2, note:"緯度は南北逆、経度は180°ずれた点。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"標準時", choices:["国や地域が代表的な経線で定める時刻","太陽が真南に来た時刻","夏に時計を進める制度","世界共通の時刻"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"日本標準時 (JST)", choices:["東経 120°を基準","東経 135°を基準","東経 140°を基準","東経 145°を基準"], answer:1, note:"兵庫県明石市を通る東経 135°が標準時子午線。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"日付変更線", choices:["経度 0°付近に引かれた線","経度 90°付近に引かれた線","経度 180°付近に引かれた線","赤道に沿った線"], answer:2, note:"政治的事情で多少曲げて引かれている。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"協定世界時 (UTC)", choices:["世界共通の時刻の基準","アメリカ標準時","日本標準時の英語名","太平洋標準時"], answer:0, note:"以前の GMT(グリニッジ標準時) と実質ほぼ同じ。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"サマータイム(夏時間)", choices:["夏に時計を 1 時間進める制度","夏だけ太陽が出る期間","冬と夏の気温差","昼が一番長い日"], answer:0, note:"欧米諸国などで実施されている。"},
+      {prompt:"次の日本語に対応する英語(略称)を選びなさい。", body:"協定世界時", choices:["GPS","UTC","UTM","UTV"], answer:1},
+      {prompt:"次の日本語に対応する英語(略称)を選びなさい。", body:"日本標準時", choices:["JIS","JST","JPN","JGT"], answer:1},
+    ],
+    qa:[
+      {prompt:"質問に答えなさい。", body:"経度 0°の本初子午線が通るイギリスの天文台は？", answer:"グリニッジ天文台", alts:["グリニッジ","グリニッジ天文台跡"], note:"ロンドン郊外。"},
+      {prompt:"質問に答えなさい。", body:"日本の標準時子午線は東経何度？", answer:"135", alts:["135度","東経135","東経135度"], note:"兵庫県明石市を通る。"},
+      {prompt:"質問に答えなさい。", body:"経度差 15°で時差は何時間？", answer:"1", alts:["1時間"], note:"360° ÷ 24 時間 = 15°/時。"},
+      {prompt:"質問に答えなさい。", body:"日本の標準時は UTC より何時間進んでいる？", answer:"9", alts:["9時間","+9","UTC+9"]},
+      {prompt:"質問に答えなさい。", body:"赤道の緯度は何度？", answer:"0", alts:["0度"]},
+      {prompt:"質問に答えなさい。", body:"北極点の緯度は北緯何度？", answer:"90", alts:["90度"]},
+      {prompt:"質問に答えなさい。", body:"日付変更線をまたいで東から西へ越えると、日付はどうなる？", answer:"1日進める", alts:["進める","1日進む","一日進める"], note:"逆に西→東なら 1 日戻す。"},
+      {prompt:"質問に答えなさい。", body:"北緯 35°、東経 135°の対蹠点の座標は？(緯度経度の組み合わせ)", answer:"南緯35度 西経45度", alts:["南緯35 西経45","南緯35°西経45°","南緯35度,西経45度"], note:"緯度は逆、経度は 180°ずらす。"},
+      {prompt:"質問に答えなさい。", body:"日本が 1月1日午前 0 時のとき、UTC は何月何日何時？", answer:"12月31日15時", alts:["12月31日 15時","31日15時","15時","15:00"], note:"JST は UTC+9 なので 9 時間戻す。"},
+      {prompt:"質問に答えなさい。", body:"日本とロンドンの時差は何時間？", answer:"9", alts:["9時間","9時間遅い","-9"], note:"日本のほうが 9 時間進んでいる。"},
+    ],
+    fillblank:[
+      {prompt:"空所に適語(または数字)を入れなさい。", body:"日本の標準時子午線は東経( )度である。", answer:"135", alts:["135度"]},
+      {prompt:"空所に適語を入れなさい。", body:"経度 0°の本初子午線は( )天文台を通る。", answer:"グリニッジ", alts:["グリニッジ天文台"]},
+      {prompt:"空所に適語(数字)を入れなさい。", body:"経度差( )度で 1 時間の時差が生じる。", answer:"15", alts:["15度"]},
+      {prompt:"空所に適語(数字)を入れなさい。", body:"日付変更線は経度( )°付近に引かれている。", answer:"180", alts:["180度"]},
+      {prompt:"空所に適語を入れなさい。", body:"赤道の緯度は( )°である。", answer:"0", alts:["0度"]},
+      {prompt:"空所に適語を入れなさい。", body:"世界共通の時刻の基準を( )(略称 UTC)という。", answer:"協定世界時", alts:["UTC"]},
+      {prompt:"空所に適語を入れなさい。", body:"夏に時計を 1 時間進める制度を( )という。", answer:"サマータイム", alts:["夏時間","summer time"]},
+      {prompt:"空所に適語を入れなさい。", body:"地球上のある地点の正反対の点を( )という。", answer:"対蹠点", alts:["たいせきてん"]},
+      {prompt:"空所に適語を入れなさい。", body:"日本標準時(JST)は UTC( )時間である。", answer:"+9", alts:["プラス9","+9時間","9","9時間"]},
+      {prompt:"空所に適語を入れなさい。", body:"緯度は赤道を 0°として、北極と南極までそれぞれ( )°まである。", answer:"90", alts:["90度"]},
+    ],
+    truefalse:[
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"緯度は南北方向の位置を表す。", answer:true, note:"赤道から北極/南極までの角度。"},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"本初子午線はパリの天文台を通る。", answer:false, note:"パリではなくロンドン郊外のグリニッジ天文台跡を通る。"},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"日本の標準時は UTC+10 である。", answer:false, note:"日本標準時 (JST) は UTC+9。"},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"経度差 15°で 1 時間の時差が生じる。", answer:true, note:"360°÷24時間=15°/時。"},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"日付変更線は経度 180°付近に位置する。", answer:true},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"北極点の緯度は北緯 180°である。", answer:false, note:"北極の緯度は北緯 90°。経度の最大が 180°。"},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"対蹠点では緯度は同じで、経度だけが 180°ずれる。", answer:false, note:"緯度も南北逆になる。"},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"日本標準時子午線は兵庫県明石市付近を通る。", answer:true},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"サマータイムは日本でも 1 年中実施されている。", answer:false, note:"日本では現在実施されていない。"},
+      {prompt:"次の文が正しければ ○、誤っていれば × を選びなさい。", body:"赤道は緯度 0° の線で、地球を北半球と南半球に分ける。", answer:true},
+    ],
+    arrange:[
+      {prompt:"次の地点を東に位置する順(経度の小さい→大きい)に並べなさい。", body:"ロンドン・東京・ニューヨーク・シドニーを東に行く順に",
+       scramble:["ニューヨーク","ロンドン","東京","シドニー"],
+       answer:"ロンドン 東京 シドニー ニューヨーク", note:"本初子午線(ロンドン)から東回り。ロンドン(0°)→東京(135°)→シドニー(150°)→ニューヨーク(75°W=285°)。",
+       alts:[]},
+      {prompt:"次の都市を北にある順(緯度の高い順)に並べなさい。", body:"札幌・東京・那覇・赤道付近",
+       scramble:["東京","赤道付近","那覇","札幌"],
+       answer:"札幌 東京 那覇 赤道付近", note:"札幌(43°)→東京(35°)→那覇(26°)→赤道(0°)。"},
+      {prompt:"次の都市を時刻が早い順(東にある順)に並べなさい。", body:"パリ・東京・カイロ・北京",
+       scramble:["カイロ","パリ","北京","東京"],
+       answer:"東京 北京 カイロ パリ", note:"東経大きい方が時刻も先に進む。東京(135°)>北京(120°)>カイロ(30°)>パリ(2°)。"},
+    ],
+    test:[
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"対蹠点", choices:["地球の中心","北極と南極の中間","地球上のある地点の正反対の点","二点を結ぶ最短経路"], answer:2},
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"日本標準時 (JST)", choices:["東経 120°基準","東経 135°基準","東経 140°基準","東経 145°基準"], answer:1},
+      {type:"qa",     prompt:"質問に答えなさい。", body:"日本の標準時子午線は東経何度？", answer:"135", alts:["135度"]},
+      {type:"qa",     prompt:"質問に答えなさい。", body:"経度 0°の本初子午線が通る天文台は？", answer:"グリニッジ天文台", alts:["グリニッジ"]},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"経度差( )度で 1 時間の時差が生じる。", answer:"15", alts:["15度"]},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"日付変更線は経度( )°付近に引かれている。", answer:"180", alts:["180度"]},
+      {type:"truefalse", prompt:"○か×か。", body:"日本の標準時は UTC+9 である。", answer:true},
+      {type:"truefalse", prompt:"○か×か。", body:"本初子午線はパリの天文台を通る。", answer:false},
+      {type:"truefalse", prompt:"○か×か。", body:"北極点の緯度は北緯 180°である。", answer:false},
+      {type:"arrange",   prompt:"都市を北にある順に並べなさい。", body:"札幌・東京・那覇・赤道付近",
+       scramble:["東京","赤道付近","那覇","札幌"], answer:"札幌 東京 那覇 赤道付近"},
+    ],
+  },
+
+  /* ==================== LESSON 2: 地図と地理情報 ==================== */
+  2: {
+    vocab:[
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"地球儀", choices:["地球を球体のまま縮めた模型(距離・面積・角度・方位すべて正確)","平面に表した世界全図","海洋のみ示した模型","古代の天体観測装置"], answer:0, note:"3 次元の地球を 3 次元のまま表すので歪みがない。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"地図投影法", choices:["地球の表面を平面に表す方法","地形を立体的に作る方法","地表からの距離を測る方法","気候を分類する方法"], answer:0, note:"目的によって使い分ける(正角・正積・正距方位 など)。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"メルカトル図法", choices:["正積図法で分布図に使う","正角図法で航海図に使う","正距方位図法で航空図に使う","等高線で標高を表す"], answer:1, note:"緯線・経線が直線で交わる。高緯度ほど面積が拡大。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"モルワイデ図法", choices:["正角図法・楕円形","正積図法・楕円形","正距方位図法・円形","断面図法・帯状"], answer:1, note:"楕円形で分布図によく使う。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"正距方位図法", choices:["全方位の距離と角度が正しい","中心からの距離と方位が正しい","面積が正しい","角度が正しい"], answer:1, note:"航空図によく使う。中心点を変えると見え方が変わる。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"等高線", choices:["気温が同じ地点を結ぶ線","降水量が同じ地点を結ぶ線","標高が同じ地点を結ぶ線","年較差が同じ地点を結ぶ線"], answer:2},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"主曲線", choices:["地形図で 5 本ごとに太く描かれる","地形図の基本となる細い等高線","計曲線の補助","海岸線を表す線"], answer:1, note:"5万分の1で20m間隔・2.5万分の1で10m間隔。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"計曲線", choices:["主曲線 5 本ごとに引かれる太い線","等高線の名称","海面の線","断層線"], answer:0, note:"5万分の1で100m毎・2.5万分の1で50m毎。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"縮尺", choices:["地図上の距離 ÷ 実際の距離","実際の面積 ÷ 地図上の面積","真北と方位の角度","地球の半径"], answer:0, note:"1/25,000 や 1/50,000 などで表す。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"ドットマップ", choices:["地域を塗り分ける","点で分布の密度を表す","矢印で流れを表す","等値線で値を表す"], answer:1, note:"絶対分布図の一種。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"階級区分図(コロプレスマップ)", choices:["点で密度を表す","地域別に色や濃淡で塗り分ける","円の大きさで量を表す","矢印で動きを表す"], answer:1, note:"相対分布図。割合や比率を表すのに適する。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"流線図", choices:["矢印の太さや向きで流れの量と方向を表す","等高線を結んだ図","気候帯を色分けした図","断面図"], answer:0, note:"貿易や人の移動などに使う。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"等値線図", choices:["同じ値の地点を線で結ぶ","点で分布を表す","面積を色分けする","地形を 3D で表す"], answer:0, note:"等温線・等降水量線・等圧線など。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"GIS (地理情報システム)", choices:["地理情報をコンピュータで処理・分析する仕組み","地球の磁場を測る装置","気象観測網","世界地図出版規格"], answer:0, note:"複数のレイヤを重ねて分析できる。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"GPS", choices:["位置を測位する人工衛星の仕組み","気象観測網","国際標準時刻","ハザードマップ作成ソフト"], answer:0, note:"米国の Global Positioning System。日本の準天頂衛星「みちびき」と併用。"},
+    ],
+    qa:[
+      {prompt:"質問に答えなさい。", body:"正角図法で航海図によく使われる図法は？", answer:"メルカトル図法", alts:["メルカトル"]},
+      {prompt:"質問に答えなさい。", body:"正積図法で分布図によく使われる楕円形の図法は？", answer:"モルワイデ図法", alts:["モルワイデ"]},
+      {prompt:"質問に答えなさい。", body:"中心からの距離と方位が正しく、航空図に使われる図法は？", answer:"正距方位図法", alts:["正距方位"]},
+      {prompt:"質問に答えなさい。", body:"地形図で標高が同じ地点を結ぶ線を何という？", answer:"等高線", alts:["とうこうせん"]},
+      {prompt:"質問に答えなさい。", body:"2 万 5 千分の 1 地形図の主曲線の間隔は何 m ？", answer:"10", alts:["10m","10メートル","10 m"]},
+      {prompt:"質問に答えなさい。", body:"5 万分の 1 地形図の主曲線の間隔は何 m ？", answer:"20", alts:["20m","20メートル","20 m"]},
+      {prompt:"質問に答えなさい。", body:"5万分の 1 地形図上で 4cm は実際の何 km ？", answer:"2", alts:["2km","2 km","2キロ","2キロメートル"], note:"4cm × 50,000 = 2km。"},
+      {prompt:"質問に答えなさい。", body:"地域別に塗り分ける統計地図を何という？", answer:"階級区分図", alts:["コロプレスマップ","コロプレス図","コロプレス"]},
+      {prompt:"質問に答えなさい。", body:"点で分布を表す統計地図を何という？", answer:"ドットマップ", alts:["点描図","ドット マップ"]},
+      {prompt:"質問に答えなさい。", body:"矢印で流れの量と方向を表す統計地図を何という？", answer:"流線図", alts:["フローライン","流線","流れ線図"]},
+      {prompt:"質問に答えなさい。", body:"地理情報をコンピュータで処理する仕組みの略称は？", answer:"GIS", alts:["G I S","地理情報システム"]},
+      {prompt:"質問に答えなさい。", body:"位置を衛星で測る米国の仕組みの略称は？", answer:"GPS", alts:["G P S","全地球測位システム"]},
+    ],
+    fillblank:[
+      {prompt:"空所に適語を入れなさい。", body:"球体の地球をそのまま縮めた模型を( )という。", answer:"地球儀"},
+      {prompt:"空所に適語を入れなさい。", body:"航海図によく使われる正角図法は( )図法である。", answer:"メルカトル", alts:["メルカトル図法"]},
+      {prompt:"空所に適語を入れなさい。", body:"楕円形で分布図に向く正積図法は( )図法である。", answer:"モルワイデ", alts:["モルワイデ図法"]},
+      {prompt:"空所に適語を入れなさい。", body:"中心からの距離と方位が正しい図法は( )図法である。", answer:"正距方位", alts:["正距方位図法"]},
+      {prompt:"空所に適語(数字)を入れなさい。", body:"5 万分の 1 地形図の主曲線は( )m おき。", answer:"20", alts:["20m"]},
+      {prompt:"空所に適語(数字)を入れなさい。", body:"2 万 5 千分の 1 地形図の主曲線は( )m おき。", answer:"10", alts:["10m"]},
+      {prompt:"空所に適語を入れなさい。", body:"地域別に色や濃淡で塗り分けた統計地図を( )という。", answer:"階級区分図", alts:["コロプレスマップ"]},
+      {prompt:"空所に適語を入れなさい。", body:"地理情報を処理する仕組みの略称を( )という。", answer:"GIS"},
+      {prompt:"空所に適語を入れなさい。", body:"地形図で標高が同じ地点を結ぶ線を( )という。", answer:"等高線"},
+      {prompt:"空所に適語を入れなさい。", body:"位置を衛星で測る米国の仕組みの略称は( )である。", answer:"GPS"},
+    ],
+    truefalse:[
+      {prompt:"○か× か。", body:"メルカトル図法では高緯度ほど面積が拡大される。", answer:true, note:"赤道付近は正しい大きさだが、高緯度ほど引き伸ばされる。"},
+      {prompt:"○か× か。", body:"メルカトル図法は面積が正しい(正積図法)。", answer:false, note:"角度が正しい(正角図法)で、面積はゆがむ。"},
+      {prompt:"○か× か。", body:"地球儀では距離・面積・角度・方位すべてが正確に表される。", answer:true},
+      {prompt:"○か× か。", body:"等高線の間隔が狭いほど傾斜は急である。", answer:true},
+      {prompt:"○か× か。", body:"等高線の間隔が広いところは険しい山地である。", answer:false, note:"間隔が広い=傾斜がゆるやか。"},
+      {prompt:"○か× か。", body:"2 万 5 千分の 1 地形図のほうが 5 万分の 1 より詳細である。", answer:true, note:"分母が小さいほど詳細(縮尺が大きい)。"},
+      {prompt:"○か× か。", body:"正距方位図法は中心からの距離と方位が正しい。", answer:true, note:"航空図によく使われる。"},
+      {prompt:"○か× か。", body:"階級区分図(コロプレスマップ)は絶対値を示すのに適する。", answer:false, note:"割合や比率(相対値)に適する。絶対値はドットマップなど。"},
+      {prompt:"○か× か。", body:"GIS は複数のレイヤを重ねて分析できる。", answer:true},
+      {prompt:"○か× か。", body:"5 万分の 1 地形図上の 1 cm は実際の 500m である。", answer:true, note:"1cm × 50,000 = 500m = 0.5km。"},
+    ],
+    arrange:[
+      {prompt:"次の図法を、緯線が直線で交わる順(直線性が高い順)に並べなさい。", body:"メルカトル・モルワイデ・正距方位",
+       scramble:["正距方位","モルワイデ","メルカトル"],
+       answer:"メルカトル モルワイデ 正距方位", note:"メルカトル(緯線経線が直線)→モルワイデ(緯線が直線、経線は曲線)→正距方位(緯線も曲線)。"},
+      {prompt:"次の縮尺を詳細な順(分母の小さい順)に並べなさい。", body:"1/2,500・1/25,000・1/50,000・1/200,000",
+       scramble:["1/25,000","1/200,000","1/50,000","1/2,500"],
+       answer:"1/2,500 1/25,000 1/50,000 1/200,000", note:"分母が小さいほど縮尺が大きい(詳細)。"},
+      {prompt:"次の作業を地形図を読む順序として正しく並べなさい。", body:"縮尺確認・等高線読取・地図記号確認・方位確認",
+       scramble:["等高線読取","地図記号確認","縮尺確認","方位確認"],
+       answer:"縮尺確認 方位確認 等高線読取 地図記号確認", note:"まず縮尺と方位を確認→等高線で地形→地図記号で土地利用。"},
+    ],
+    test:[
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"メルカトル図法", choices:["正積","正角(航海図)","正距方位(航空図)","等温線図"], answer:1},
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"GIS", choices:["地球磁場の測定","地理情報をコンピュータで処理する仕組み","気象観測網","世界地図規格"], answer:1},
+      {type:"qa",     prompt:"質問に答えなさい。", body:"航空図によく使われる、中心からの距離と方位が正しい図法は？", answer:"正距方位図法", alts:["正距方位"]},
+      {type:"qa",     prompt:"質問に答えなさい。", body:"2万 5 千分の 1 地形図の主曲線は何 m おき？", answer:"10", alts:["10m"]},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"分布図に向く楕円形の正積図法は( )図法である。", answer:"モルワイデ", alts:["モルワイデ図法"]},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"位置を衛星で測る米国の仕組みの略称は( )である。", answer:"GPS"},
+      {type:"truefalse", prompt:"○か×か。", body:"メルカトル図法では高緯度ほど面積が拡大する。", answer:true},
+      {type:"truefalse", prompt:"○か×か。", body:"等高線の間隔が広いところは傾斜が急である。", answer:false},
+      {type:"truefalse", prompt:"○か×か。", body:"2 万 5 千分の 1 のほうが 5 万分の 1 より詳細な地形図である。", answer:true},
+      {type:"arrange",   prompt:"縮尺を詳細順に並べなさい。", body:"1/2,500・1/25,000・1/50,000・1/200,000",
+       scramble:["1/25,000","1/200,000","1/50,000","1/2,500"], answer:"1/2,500 1/25,000 1/50,000 1/200,000"},
+    ],
+  },
+
+  /* ==================== LESSON 3: 現代世界と日本 ==================== */
+  3: {
+    vocab:[
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"国家の三要素", choices:["領域・国民・主権","面積・人口・首都","政治・経済・文化","国旗・国歌・国章"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"領海", choices:["沿岸から 3 海里","沿岸から 12 海里","沿岸から 24 海里","沿岸から 200 海里"], answer:1, note:"国際的に 12 海里(約 22 km)が標準。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"接続水域", choices:["沿岸から 6 海里","沿岸から 12 海里","沿岸から 24 海里","沿岸から 200 海里"], answer:2, note:"領海の外側、密輸・密入国対策などの権限が及ぶ。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"排他的経済水域 (EEZ)", choices:["沿岸から 12 海里","沿岸から 24 海里","沿岸から 200 海里","沿岸から 350 海里"], answer:2, note:"水産・海底資源をその国が独占できる。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"領空", choices:["領土と領海の上空(宇宙空間は含まない)","領土の上空のみ","領海の上空のみ","領土・領海・大陸棚すべての上空"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"自然的国境", choices:["山脈・河川・海峡などを利用した国境","緯線や経線で引いた国境","民族の分布で引いた国境","条約だけで決められた国境"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"人為的国境", choices:["民族や文化に基づく","緯線・経線などの直線で引かれる","山脈で引かれる","海岸線で引かれる"], answer:1, note:"アフリカに直線国境が多いのは植民地時代の名残。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"北方領土", choices:["国後島・択捉島・色丹島・歯舞群島","沖縄諸島","小笠原諸島","南西諸島"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"竹島", choices:["島根県の島で韓国が不法占拠","沖縄県の島","北海道沖の島","東京都の島"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"尖閣諸島", choices:["北海道沖","島根県沖","沖縄県の無人島(日本固有の領土)","小笠原諸島"], answer:2},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"主権", choices:["国民が政治を決める権利のみ","他国の干渉を受けず国を統治する最終的な権力","国王が持つ権限","国境を引く権利"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"内陸国", choices:["海に面していない国","島国","沿岸が長い国","河川がない国"], answer:0, note:"モンゴル・スイス・ボリビアなど。"},
+    ],
+    qa:[
+      {prompt:"質問に答えなさい。", body:"日本の最北端の島は？", answer:"択捉島", alts:["えとろふ","エトロフ島","えとろふ島"], note:"北海道根室半島の北東。"},
+      {prompt:"質問に答えなさい。", body:"日本の最東端の島は？", answer:"南鳥島", alts:["みなみとり","みなみとりしま"], note:"東京都小笠原村に属する。"},
+      {prompt:"質問に答えなさい。", body:"日本の最南端の島は？", answer:"沖ノ鳥島", alts:["おきのとり","おきのとりしま"], note:"東京都小笠原村。波で削られないよう護岸。"},
+      {prompt:"質問に答えなさい。", body:"日本の最西端の島は？", answer:"与那国島", alts:["よなぐにじま","よなぐに"], note:"沖縄県。台湾から約 110 km。"},
+      {prompt:"質問に答えなさい。", body:"領海の幅は沿岸から何海里？", answer:"12", alts:["12海里"]},
+      {prompt:"質問に答えなさい。", body:"排他的経済水域 (EEZ) の幅は沿岸から何海里？", answer:"200", alts:["200海里"]},
+      {prompt:"質問に答えなさい。", body:"接続水域の幅は沿岸から何海里？", answer:"24", alts:["24海里"]},
+      {prompt:"質問に答えなさい。", body:"国家の三要素を答えよ(3 つ)。", answer:"領域 国民 主権", alts:["領域、国民、主権","領域・国民・主権","国民 領域 主権"]},
+      {prompt:"質問に答えなさい。", body:"1 海里は約何 m ？", answer:"1852", alts:["1852m","1,852","1852メートル"], note:"国際海里。"},
+      {prompt:"質問に答えなさい。", body:"北方領土に属する 4 島のうち、最も大きい島は？", answer:"択捉島", alts:["えとろふ"]},
+      {prompt:"質問に答えなさい。", body:"竹島は日本のどの県に属する？", answer:"島根県", alts:["島根"]},
+      {prompt:"質問に答えなさい。", body:"尖閣諸島は日本のどの県に属する？", answer:"沖縄県", alts:["沖縄"]},
+    ],
+    fillblank:[
+      {prompt:"空所を埋めなさい。", body:"国家の三要素は領域・国民・( )である。", answer:"主権"},
+      {prompt:"空所を埋めなさい。", body:"領海の幅は沿岸から( )海里。", answer:"12", alts:["12海里"]},
+      {prompt:"空所を埋めなさい。", body:"排他的経済水域は沿岸から( )海里。", answer:"200", alts:["200海里"]},
+      {prompt:"空所を埋めなさい。", body:"日本の最東端は東京都の( )島。", answer:"南鳥", alts:["南鳥島","みなみとり"]},
+      {prompt:"空所を埋めなさい。", body:"日本の最南端は東京都の( )島。", answer:"沖ノ鳥", alts:["沖ノ鳥島","おきのとり"]},
+      {prompt:"空所を埋めなさい。", body:"日本の最西端は沖縄県の( )島。", answer:"与那国", alts:["与那国島","よなぐに"]},
+      {prompt:"空所を埋めなさい。", body:"日本の最北端は北方領土の( )島。", answer:"択捉", alts:["択捉島","えとろふ"]},
+      {prompt:"空所を埋めなさい。", body:"北方領土は択捉島・( )島・色丹島・歯舞群島の 4 島。", answer:"国後", alts:["国後島","くなしり"]},
+      {prompt:"空所を埋めなさい。", body:"竹島は( )県に属する日本固有の領土。", answer:"島根", alts:["島根県"]},
+      {prompt:"空所を埋めなさい。", body:"尖閣諸島は( )県に属する日本固有の領土。", answer:"沖縄", alts:["沖縄県"]},
+    ],
+    truefalse:[
+      {prompt:"○か×か。", body:"日本の最東端は南鳥島(東京都)である。", answer:true},
+      {prompt:"○か×か。", body:"領海の幅は沿岸から 200 海里である。", answer:false, note:"領海は 12 海里。200 海里は EEZ。"},
+      {prompt:"○か×か。", body:"国家の三要素は領域・国民・主権である。", answer:true},
+      {prompt:"○か×か。", body:"北方領土は択捉島・国後島・色丹島・歯舞群島の 4 島である。", answer:true},
+      {prompt:"○か×か。", body:"竹島は北海道に属する。", answer:false, note:"島根県。"},
+      {prompt:"○か×か。", body:"尖閣諸島は沖縄県に属する日本固有の領土である。", answer:true},
+      {prompt:"○か×か。", body:"領空には宇宙空間も含まれる。", answer:false, note:"宇宙空間は含まない。"},
+      {prompt:"○か×か。", body:"アフリカに直線国境が多いのは植民地分割の名残である。", answer:true},
+      {prompt:"○か×か。", body:"内陸国は海に面していない国を指す(例:モンゴル・スイス)。", answer:true},
+      {prompt:"○か×か。", body:"接続水域は沿岸から 100 海里までである。", answer:false, note:"接続水域は 24 海里。"},
+    ],
+    arrange:[
+      {prompt:"次の日本の端を北→東→南→西の順に並べなさい。", body:"端の島",
+       scramble:["与那国島","南鳥島","択捉島","沖ノ鳥島"],
+       answer:"択捉島 南鳥島 沖ノ鳥島 与那国島"},
+      {prompt:"次の海域を沿岸からの幅が広い順に並べなさい。", body:"領海・接続水域・EEZ",
+       scramble:["EEZ","領海","接続水域"],
+       answer:"EEZ 接続水域 領海", note:"EEZ(200)>接続水域(24)>領海(12)。"},
+      {prompt:"次の島を緯度が高い順(北にある順)に並べなさい。", body:"北方領土の島",
+       scramble:["国後島","歯舞群島","色丹島","択捉島"],
+       answer:"択捉島 国後島 色丹島 歯舞群島"},
+    ],
+    test:[
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"国家の三要素", choices:["領域・国民・主権","面積・人口・首都","政治・経済・文化","国旗・国歌・国章"], answer:0},
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"排他的経済水域 (EEZ)", choices:["12 海里","24 海里","200 海里","350 海里"], answer:2},
+      {type:"qa", prompt:"質問に答えなさい。", body:"日本の最北端の島は？", answer:"択捉島", alts:["えとろふ"]},
+      {type:"qa", prompt:"質問に答えなさい。", body:"領海の幅は何海里？", answer:"12", alts:["12海里"]},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"日本の最南端は東京都の( )島。", answer:"沖ノ鳥", alts:["沖ノ鳥島"]},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"竹島は( )県に属する。", answer:"島根", alts:["島根県"]},
+      {type:"truefalse", prompt:"○か×か。", body:"領海は沿岸から 12 海里である。", answer:true},
+      {type:"truefalse", prompt:"○か×か。", body:"領空には宇宙空間も含まれる。", answer:false},
+      {type:"arrange",   prompt:"海域を幅が広い順に並べなさい。", body:"領海・接続水域・EEZ",
+       scramble:["EEZ","領海","接続水域"], answer:"EEZ 接続水域 領海"},
+    ],
+  },
+
+  /* ==================== LESSON 4: グローバル化 ==================== */
+  4: {
+    vocab:[
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"グローバル化", choices:["国境を越えて人・モノ・情報・お金が活発に移動する状態","ある国だけが発展すること","国際機関の数が増えること","観光客が増えること"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"コンテナ船", choices:["人を運ぶ大型船","規格化された箱で大量の貨物を運ぶ船","軍用艦","液体専用タンカー"], answer:1, note:"国際海上輸送の中心。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"ハブ空港", choices:["小さなローカル空港","世界各地の路線が乗り換える中継拠点となる主要空港","軍用空港","ヘリポート"], answer:1, note:"乗継 客と貨物を集中させる戦略拠点。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"LCC", choices:["大型機専用航空","格安航空会社","郵便配送","海運会社"], answer:1, note:"Low Cost Carrier。サービスを絞り運賃を下げる。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"インバウンド", choices:["海外へ行く旅行","訪日外国人観光","国内出張","コンテナ輸送"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"アウトバウンド", choices:["訪日観光","日本人による海外旅行","国内旅行","観光ガイド"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"サプライチェーン", choices:["国際的な生産・流通の連鎖","料理のレシピ","チェーン店舗網","金融取引"], answer:0, note:"原材料調達→生産→輸送→販売の連鎖。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"FTA", choices:["国際機関名","自由貿易協定","食品の安全基準","軍事同盟"], answer:1, note:"Free Trade Agreement。関税を撤廃する。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"EPA", choices:["環境保護条約","経済連携協定(より広範な)","軍事同盟","海運業者連盟"], answer:1, note:"Economic Partnership Agreement。FTA+投資・知財・人の移動など。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"WTO", choices:["世界保健機関","世界貿易機関","世界気象機関","世界銀行"], answer:1, note:"World Trade Organization。GATT を継承。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"TPP", choices:["環太平洋パートナーシップ協定","環大西洋協定","南米共同体","EU の通商協定"], answer:0, note:"Trans-Pacific Partnership。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"海底ケーブル", choices:["通信用の光ファイバを海底に敷設したもの","海中の電線","漁業用ロープ","船舶の係留索"], answer:0, note:"国際インターネット通信の大部分を担う。"},
+    ],
+    qa:[
+      {prompt:"質問に答えなさい。", body:"国境を越えて人・モノ・情報が活発に移動することを何という？", answer:"グローバル化", alts:["グローバリゼーション"]},
+      {prompt:"質問に答えなさい。", body:"自由貿易協定の英語略称は？", answer:"FTA", alts:["F T A"]},
+      {prompt:"質問に答えなさい。", body:"経済連携協定の英語略称は？", answer:"EPA", alts:["E P A"]},
+      {prompt:"質問に答えなさい。", body:"格安航空会社の英語略称は？", answer:"LCC", alts:["L C C"]},
+      {prompt:"質問に答えなさい。", body:"世界貿易機関の略称は？", answer:"WTO", alts:["W T O"]},
+      {prompt:"質問に答えなさい。", body:"環太平洋パートナーシップ協定の略称は？", answer:"TPP", alts:["T P P"]},
+      {prompt:"質問に答えなさい。", body:"国際的な生産・流通の連鎖を何という？", answer:"サプライチェーン", alts:["サプライ チェーン"]},
+      {prompt:"質問に答えなさい。", body:"訪日外国人観光をカタカナで何という？", answer:"インバウンド"},
+      {prompt:"質問に答えなさい。", body:"日本人による海外旅行をカタカナで何という？", answer:"アウトバウンド"},
+      {prompt:"質問に答えなさい。", body:"国際海上輸送で規格化された箱で運ぶ船を何という？", answer:"コンテナ船", alts:["コンテナ"]},
+    ],
+    fillblank:[
+      {prompt:"空所を埋めなさい。", body:"格安航空会社の略称は( )である。", answer:"LCC"},
+      {prompt:"空所を埋めなさい。", body:"自由貿易協定の略称は( )である。", answer:"FTA"},
+      {prompt:"空所を埋めなさい。", body:"経済連携協定の略称は( )である。", answer:"EPA"},
+      {prompt:"空所を埋めなさい。", body:"国際的な生産・流通の連鎖を( )という。", answer:"サプライチェーン"},
+      {prompt:"空所を埋めなさい。", body:"訪日外国人観光を( )という。", answer:"インバウンド"},
+      {prompt:"空所を埋めなさい。", body:"国際路線の中継拠点となる主要空港を( )空港という。", answer:"ハブ", alts:["ハブ空港"]},
+      {prompt:"空所を埋めなさい。", body:"世界貿易機関の略称は( )である。", answer:"WTO"},
+      {prompt:"空所を埋めなさい。", body:"環太平洋パートナーシップ協定の略称は( )である。", answer:"TPP"},
+      {prompt:"空所を埋めなさい。", body:"国際通信の大部分を担う海底に敷設されたケーブルを( )という。", answer:"海底ケーブル"},
+      {prompt:"空所を埋めなさい。", body:"国境を越えた移動・取引が活発化することを( )という。", answer:"グローバル化", alts:["グローバリゼーション"]},
+    ],
+    truefalse:[
+      {prompt:"○か×か。", body:"コンテナ船は規格化された箱で大量の貨物を運ぶ。", answer:true},
+      {prompt:"○か×か。", body:"LCC は大型機と高級サービスを売りにする。", answer:false, note:"逆。サービスを絞って運賃を下げる。"},
+      {prompt:"○か×か。", body:"FTA は関税を撤廃する自由貿易協定の略称。", answer:true},
+      {prompt:"○か×か。", body:"EPA は FTA より広い範囲(投資・知財など)を扱う。", answer:true},
+      {prompt:"○か×か。", body:"WTO は国連の保健に関する機関である。", answer:false, note:"WTO は世界貿易機関。保健は WHO。"},
+      {prompt:"○か×か。", body:"海底ケーブルは国際通信の大部分を担う。", answer:true},
+      {prompt:"○か×か。", body:"インバウンドは日本人の海外旅行を指す。", answer:false, note:"逆。インバウンド=訪日外国人観光。"},
+      {prompt:"○か×か。", body:"ハブ空港は乗り換え・乗継を集中させる戦略拠点である。", answer:true},
+      {prompt:"○か×か。", body:"サプライチェーンは国際的な生産・流通の連鎖を指す。", answer:true},
+      {prompt:"○か×か。", body:"TPP は大西洋に面する国の協定である。", answer:false, note:"TPP は環太平洋パートナーシップ協定。"},
+    ],
+    arrange:[
+      {prompt:"次の貿易枠組みを、対象範囲が広い順に並べなさい。", body:"FTA・EPA・WTO",
+       scramble:["EPA","WTO","FTA"],
+       answer:"WTO EPA FTA", note:"WTO は世界全体、EPA は FTA より広い範囲(投資・知財など)を扱う。"},
+      {prompt:"次の輸送手段を一般的に速い順に並べなさい。", body:"航空機・コンテナ船・トラック",
+       scramble:["コンテナ船","航空機","トラック"],
+       answer:"航空機 トラック コンテナ船"},
+      {prompt:"次の段階をサプライチェーンの順に並べなさい。", body:"原材料調達・生産・販売・流通",
+       scramble:["生産","流通","販売","原材料調達"],
+       answer:"原材料調達 生産 流通 販売"},
+    ],
+    test:[
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"サプライチェーン", choices:["料理のレシピ","金融取引","国際的な生産・流通の連鎖","チェーン店舗網"], answer:2},
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"WTO", choices:["世界保健機関","世界貿易機関","世界銀行","世界気象機関"], answer:1},
+      {type:"qa", prompt:"質問に答えなさい。", body:"格安航空会社の略称は？", answer:"LCC"},
+      {type:"qa", prompt:"質問に答えなさい。", body:"環太平洋パートナーシップ協定の略称は？", answer:"TPP"},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"自由貿易協定の略称は( )。", answer:"FTA"},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"訪日外国人観光を( )という。", answer:"インバウンド"},
+      {type:"truefalse", prompt:"○か×か。", body:"LCC は格安航空会社の略称である。", answer:true},
+      {type:"truefalse", prompt:"○か×か。", body:"インバウンドは日本人の海外旅行を指す。", answer:false},
+      {type:"arrange", prompt:"対象範囲が広い順に並べなさい。", body:"FTA・EPA・WTO",
+       scramble:["EPA","WTO","FTA"], answer:"WTO EPA FTA"},
+    ],
+  },
+
+  /* ==================== LESSON 5: 世界の地形 ==================== */
+  5: {
+    vocab:[
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"プレートテクトニクス", choices:["気候変動の理論","地球表面のプレートが動いて地形が作られる理論","海流の流れの理論","火山噴火の周期"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"海溝", choices:["プレートが広がる境界の海底山脈","プレートが沈み込む境界の深い海底の溝","三角州の前面","氷河の谷"], answer:1, note:"日本海溝、マリアナ海溝など。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"海嶺", choices:["プレートが沈み込む境界","プレートが広がる境界にできる海底山脈","海岸線の名称","海面の最高高度"], answer:1, note:"大西洋中央海嶺など。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"新期造山帯", choices:["古生代に造られた山地","中生代以降に活発に形成、現在も活動中の高く険しい山地(アルプス・ヒマラヤ・環太平洋)","平坦な安定地塊","海底地形"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"古期造山帯", choices:["新生代の若い山地","古生代の造山運動で形成、侵食が進んでなだらか(ウラル・アパラチアなど)","安定陸塊","プレートの境界そのもの"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"安定陸塊", choices:["先カンブリア時代の地殻で平坦な楯状地・卓状地","若い山脈","海溝","氷河地形"], answer:0, note:"カナダ楯状地、シベリア卓状地など。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"扇状地", choices:["河口に堆積物が積もる三角形の地形","河川が山地から平地に出る所にできる扇形の堆積地形","氷河に削られた半円形の谷","海岸の三日月形の入り江"], answer:1, note:"果樹園や桑畑として利用される。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"三角州 (デルタ)", choices:["扇状地の別名","河口に堆積物が積もる三角形の地形","河川の上流のV字谷","氷河の堆積地形"], answer:1, note:"ナイル川河口、ガンジス川河口、ミシシッピ河口など。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"氾濫原", choices:["河川が洪水時に水で覆われる低平な地形","三角州の高い所","海岸の砂浜","乾燥地の涸れ川"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"自然堤防", choices:["氾濫原の河川沿いに堆積したやや高い地形","人工的な堤防","氷河堆積物","岩石海岸の岩"], answer:0, note:"集落や畑が立地。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"後背湿地", choices:["自然堤防の後ろにある低湿地","三角州の前面","氷河の前面","乾燥地の塩湖"], answer:0, note:"水はけが悪く水田に利用。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"リアス海岸", choices:["氷河に削られた海岸","沈水によって複雑になった海岸(三陸・志摩・若狭など)","砂浜が長く続く海岸","サンゴ礁の海岸"], answer:1, note:"養殖漁業に適する。津波に弱い。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"フィヨルド", choices:["乾燥地の盆地","氷河に削られたU字谷が沈水してできた深い湾(ノルウェーなど)","熱帯の岩礁","河川の三角州"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"U字谷", choices:["河川がV字に削った谷","氷河が削ってできたU字型の谷","プレート境界の溝","乾燥地の窪地"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"モレーン", choices:["氷河が運んできた堆積物","海底の堆積物","乾燥地の砂丘","河川の浅瀬"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"ワジ", choices:["乾燥地の塩湖","乾燥地の涸れ川(普段は水がない)","氷河地形","サンゴ礁地形"], answer:1, note:"雨季にのみ水が流れる。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"カルスト地形", choices:["石灰岩が水で溶けてできる地形(ドリーネ・鍾乳洞など)","氷河地形","火山地形","乾燥地形"], answer:0, note:"スロベニアのカルスト地方が語源。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"ドリーネ", choices:["カルスト地形のすり鉢状のくぼ地","氷河の谷","乾燥地の涸れ川","三角州の中の島"], answer:0},
+    ],
+    qa:[
+      {prompt:"質問に答えなさい。", body:"プレートが沈み込む境界にできる深い海底の溝を何という？", answer:"海溝"},
+      {prompt:"質問に答えなさい。", body:"プレートが広がる境界にできる海底山脈を何という？", answer:"海嶺", alts:["かいれい"]},
+      {prompt:"質問に答えなさい。", body:"河口に堆積物が積もってできる三角形の地形を何という？", answer:"三角州", alts:["デルタ"]},
+      {prompt:"質問に答えなさい。", body:"河川が山地から平地に出る所にできる扇形の地形を何という？", answer:"扇状地", alts:["せんじょうち"]},
+      {prompt:"質問に答えなさい。", body:"氷河が削ってできたU字型の谷を何という？", answer:"U字谷", alts:["Ｕ字谷"]},
+      {prompt:"質問に答えなさい。", body:"氷河が運んできた堆積物を何という？", answer:"モレーン"},
+      {prompt:"質問に答えなさい。", body:"ノルウェー沿岸に見られる、U字谷が沈水してできた深い湾を何という？", answer:"フィヨルド"},
+      {prompt:"質問に答えなさい。", body:"三陸海岸のような沈水海岸を何という？", answer:"リアス海岸", alts:["リアス式海岸"]},
+      {prompt:"質問に答えなさい。", body:"乾燥地の普段は水のない涸れ川を何という？", answer:"ワジ"},
+      {prompt:"質問に答えなさい。", body:"石灰岩が水で溶けてできる地形を何という？", answer:"カルスト地形", alts:["カルスト"]},
+      {prompt:"質問に答えなさい。", body:"カルスト地形のすり鉢状のくぼ地を何という？", answer:"ドリーネ"},
+      {prompt:"質問に答えなさい。", body:"新期造山帯の代表的な山脈の例を 1 つ答えよ。", answer:"アルプス山脈", alts:["ヒマラヤ山脈","アンデス山脈","ロッキー山脈","アルプス","ヒマラヤ","アンデス","ロッキー"]},
+      {prompt:"質問に答えなさい。", body:"古期造山帯の代表的な山脈の例を 1 つ答えよ。", answer:"アパラチア山脈", alts:["ウラル山脈","スカンディナビア山脈","アパラチア","ウラル","スカンディナビア"]},
+    ],
+    fillblank:[
+      {prompt:"空所を埋めなさい。", body:"プレートが沈み込む境界にできる深い溝を( )という。", answer:"海溝"},
+      {prompt:"空所を埋めなさい。", body:"プレートが広がる境界にできる海底山脈を( )という。", answer:"海嶺"},
+      {prompt:"空所を埋めなさい。", body:"河川が山地から平地に出る所にできる扇形の地形を( )という。", answer:"扇状地"},
+      {prompt:"空所を埋めなさい。", body:"河口に堆積物が積もる地形を( )(またはデルタ)という。", answer:"三角州", alts:["デルタ"]},
+      {prompt:"空所を埋めなさい。", body:"氷河が削った U字型の谷を( )という。", answer:"U字谷", alts:["Ｕ字谷"]},
+      {prompt:"空所を埋めなさい。", body:"U字谷が沈水してできた深い湾を( )という。", answer:"フィヨルド"},
+      {prompt:"空所を埋めなさい。", body:"三陸海岸のような沈水海岸を( )海岸という。", answer:"リアス", alts:["リアス海岸"]},
+      {prompt:"空所を埋めなさい。", body:"乾燥地で普段は水が流れない涸れ川を( )という。", answer:"ワジ"},
+      {prompt:"空所を埋めなさい。", body:"石灰岩が水で溶けてできる地形を( )地形という。", answer:"カルスト", alts:["カルスト地形"]},
+      {prompt:"空所を埋めなさい。", body:"アルプス・ヒマラヤ・環太平洋を含む新しい山地を( )造山帯という。", answer:"新期", alts:["新期造山帯"]},
+    ],
+    truefalse:[
+      {prompt:"○か×か。", body:"海溝はプレートが沈み込む境界にできる。", answer:true},
+      {prompt:"○か×か。", body:"アルプス山脈は古期造山帯に属する。", answer:false, note:"アルプスは新期造山帯。"},
+      {prompt:"○か×か。", body:"ウラル山脈は古期造山帯に属する。", answer:true},
+      {prompt:"○か×か。", body:"扇状地は河口にできる三角形の地形である。", answer:false, note:"扇状地は山地から平地に出る所。河口は三角州。"},
+      {prompt:"○か×か。", body:"U字谷は氷河が削った谷である。", answer:true},
+      {prompt:"○か×か。", body:"フィヨルドはサンゴ礁が発達した海岸である。", answer:false, note:"フィヨルドは氷河が削った U字谷が沈水したもの。"},
+      {prompt:"○か×か。", body:"リアス海岸は三陸海岸が代表例である。", answer:true},
+      {prompt:"○か×か。", body:"ワジは熱帯雨林の川である。", answer:false, note:"ワジは乾燥地の涸れ川。"},
+      {prompt:"○か×か。", body:"ドリーネはカルスト地形のすり鉢状のくぼ地である。", answer:true},
+      {prompt:"○か×か。", body:"自然堤防の後ろにできる低湿地を後背湿地という。", answer:true},
+    ],
+    arrange:[
+      {prompt:"次の地形を河川の上流から下流の順に並べなさい。", body:"扇状地・三角州・V字谷・氾濫原",
+       scramble:["三角州","氾濫原","扇状地","V字谷"],
+       answer:"V字谷 扇状地 氾濫原 三角州", note:"上流:V字谷→山地から平地へ:扇状地→中流:氾濫原→河口:三角州。"},
+      {prompt:"次の山地を造られた時代が新しい順に並べなさい。", body:"アパラチア・ヒマラヤ・カナダ楯状地",
+       scramble:["カナダ楯状地","アパラチア","ヒマラヤ"],
+       answer:"ヒマラヤ アパラチア カナダ楯状地", note:"新期造山帯(中生代以降)→古期造山帯(古生代)→安定陸塊(先カンブリア)。"},
+      {prompt:"プレート境界の動きで対応するものを並べなさい。", body:"沈み込み境界・広がる境界・ずれる境界の対応地形",
+       scramble:["海嶺","トランスフォーム断層","海溝"],
+       answer:"海溝 海嶺 トランスフォーム断層"},
+    ],
+    test:[
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"フィヨルド", choices:["乾燥地の盆地","氷河に削られたU字谷が沈水してできた深い湾","熱帯の岩礁","河川の三角州"], answer:1},
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"カルスト地形", choices:["石灰岩が溶けてできる","氷河地形","火山地形","乾燥地形"], answer:0},
+      {type:"qa", prompt:"質問に答えなさい。", body:"プレートが沈み込む境界にできる地形は？", answer:"海溝"},
+      {type:"qa", prompt:"質問に答えなさい。", body:"三陸海岸のような沈水海岸を何という？", answer:"リアス海岸", alts:["リアス式海岸"]},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"河口に堆積物が積もる地形を( )(またはデルタ)という。", answer:"三角州", alts:["デルタ"]},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"乾燥地の涸れ川を( )という。", answer:"ワジ"},
+      {type:"truefalse", prompt:"○か×か。", body:"ヒマラヤ山脈は新期造山帯に属する。", answer:true},
+      {type:"truefalse", prompt:"○か×か。", body:"扇状地は河口にできる地形である。", answer:false},
+      {type:"arrange", prompt:"地形を河川の上流から下流の順に並べなさい。", body:"扇状地・三角州・V字谷・氾濫原",
+       scramble:["三角州","氾濫原","扇状地","V字谷"], answer:"V字谷 扇状地 氾濫原 三角州"},
+    ],
+  },
+
+  /* ==================== LESSON 6: 世界の気候 ==================== */
+  6: {
+    vocab:[
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"気候要素", choices:["気温・降水量・風など気候を構成する要素","緯度・海流など気候を変える条件","地形","植生"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"気候因子", choices:["気温そのもの","気候を変化させる原因(緯度・標高・海からの距離・地形・海流)","降水量","植生"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"ケッペンの気候区分", choices:["気温だけで分類","植生に注目して気候を分類(A〜E)","降水量だけで分類","海流の温度で分類"], answer:1, note:"A熱帯・B乾燥・C温帯・D亜寒帯・E寒帯。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"熱帯 (A)", choices:["最暖月10℃未満","最寒月18℃以上","年中乾燥","年中積雪"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"乾燥帯 (B)", choices:["寒帯の隣","蒸発量＞降水量となる気候帯(BW砂漠・BSステップ)","年中多雨","熱帯のみ"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"温帯 (C)", choices:["最寒月 -3℃以上 18℃未満","年中熱帯","乾燥のみ","最寒月 -3℃未満"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"亜寒帯 (D)", choices:["最寒月 -3℃未満、最暖月 10℃以上","最暖月 10℃未満","熱帯雨林","乾燥のみ"], answer:0, note:"タイガ(針葉樹林)が広がる。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"寒帯 (E)", choices:["最寒月 -3℃未満","最暖月 10℃未満","最寒月 18℃以上","気温よりも降水で分類"], answer:1, note:"ツンドラ(ET)と氷雪(EF)に分けられる。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"熱帯雨林気候 (Af)", choices:["年中高温多雨","明確な雨季と乾季","年中降水で寒い","乾燥砂漠"], answer:0, note:"アマゾン・コンゴ・東南アジア。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"サバナ気候 (Aw)", choices:["年中乾燥","雨季と乾季のある熱帯(疎林と長草の草原)","氷雪","針葉樹林"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"砂漠気候 (BW)", choices:["年中極端に降水が少ない","雨季と乾季","年中湿潤","氷で覆われる"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"ステップ気候 (BS)", choices:["短い雨季がある乾燥気候(短草の草原)","完全な砂漠","熱帯雨林","ツンドラ"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"地中海性気候 (Cs)", choices:["夏に乾燥、冬に降雨","年中乾燥","年中多雨","夏に降雨、冬に乾燥"], answer:0, note:"地中海沿岸・カリフォルニア・チリ中部・南アフリカ西南端・オーストラリア西南端。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"西岸海洋性気候 (Cfb)", choices:["夏は涼しく冬は温暖、年中湿潤(偏西風と暖流)","年中乾燥","熱帯多雨","氷雪"], answer:0, note:"西ヨーロッパなど。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"温暖湿潤気候 (Cfa)", choices:["年中乾燥","夏は高温多湿・冬は寒冷、年中降水(日本の本州など)","氷雪","ステップ"], answer:1},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"亜寒帯湿潤気候 (Df)", choices:["年中降水あり・冬寒い、タイガが広がる","乾燥","ツンドラ","熱帯多雨"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"ツンドラ気候 (ET)", choices:["最暖月 10℃未満で短い夏に植物育つ・地衣類","氷雪","熱帯","乾燥"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"氷雪気候 (EF)", choices:["1 年中凍結し植物が育たない","ツンドラの夏","乾燥","熱帯雨林"], answer:0, note:"南極大陸・グリーンランド内陸など。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"焼畑農業", choices:["熱帯雨林などで木を焼いて灰を肥料にする原始的農業","乾燥地の機械化農業","温帯の混合農業","寒帯の遊牧"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"プランテーション農業", choices:["熱帯・亜熱帯で単一作物を大規模栽培する商業的農業","小規模な家族農業","氷雪地の農業","ステップの遊牧"], answer:0, note:"コーヒー・カカオ・ゴム・茶など。"},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"オアシス農業", choices:["乾燥地で水源を利用する集約農業(ナツメヤシなど)","氷雪地の温室","熱帯のプランテーション","ツンドラの遊牧"], answer:0},
+      {prompt:"用語の意味として最も適切なものを選びなさい。", body:"遊牧", choices:["乾燥地や寒帯で家畜を季節移動させる","定住して野菜を作る","プランテーション","商業漁業"], answer:0},
+    ],
+    qa:[
+      {prompt:"質問に答えなさい。", body:"ケッペンの気候区分で熱帯の記号は？", answer:"A"},
+      {prompt:"質問に答えなさい。", body:"ケッペンの気候区分で乾燥帯の記号は？", answer:"B"},
+      {prompt:"質問に答えなさい。", body:"ケッペンの気候区分で温帯の記号は？", answer:"C"},
+      {prompt:"質問に答えなさい。", body:"ケッペンの気候区分で亜寒帯の記号は？", answer:"D"},
+      {prompt:"質問に答えなさい。", body:"ケッペンの気候区分で寒帯の記号は？", answer:"E"},
+      {prompt:"質問に答えなさい。", body:"砂漠気候のケッペン記号は？", answer:"BW"},
+      {prompt:"質問に答えなさい。", body:"ステップ気候のケッペン記号は？", answer:"BS"},
+      {prompt:"質問に答えなさい。", body:"地中海性気候のケッペン記号は？", answer:"Cs"},
+      {prompt:"質問に答えなさい。", body:"西岸海洋性気候のケッペン記号は？", answer:"Cfb"},
+      {prompt:"質問に答えなさい。", body:"温暖湿潤気候のケッペン記号は？", answer:"Cfa"},
+      {prompt:"質問に答えなさい。", body:"亜寒帯の北部に広がる針葉樹林を何という？", answer:"タイガ"},
+      {prompt:"質問に答えなさい。", body:"寒帯のうち夏に短い間植物が生える気候を何気候という？", answer:"ツンドラ気候", alts:["ツンドラ"]},
+      {prompt:"質問に答えなさい。", body:"地中海性気候の夏の特徴は？", answer:"高温で乾燥", alts:["夏は乾燥","乾燥","暑く乾燥","高温・乾燥","乾燥する"]},
+      {prompt:"質問に答えなさい。", body:"熱帯雨林気候(Af)の代表地域を 1 つ答えよ。", answer:"アマゾン川流域", alts:["コンゴ盆地","東南アジア","アマゾン","コンゴ"]},
+    ],
+    fillblank:[
+      {prompt:"空所を埋めなさい。", body:"ケッペンの気候区分で熱帯の記号は( )。", answer:"A"},
+      {prompt:"空所を埋めなさい。", body:"ケッペンの気候区分で寒帯の記号は( )。", answer:"E"},
+      {prompt:"空所を埋めなさい。", body:"砂漠気候の記号は( )。", answer:"BW"},
+      {prompt:"空所を埋めなさい。", body:"地中海性気候の記号は( )。", answer:"Cs"},
+      {prompt:"空所を埋めなさい。", body:"温暖湿潤気候の記号は( )。", answer:"Cfa"},
+      {prompt:"空所を埋めなさい。", body:"亜寒帯北部に広がる針葉樹林を( )という。", answer:"タイガ"},
+      {prompt:"空所を埋めなさい。", body:"夏に乾燥、冬に降雨があるのは( )性気候である。", answer:"地中海", alts:["地中海性気候"]},
+      {prompt:"空所を埋めなさい。", body:"気候要素は気温・降水量・( )である。", answer:"風"},
+      {prompt:"空所を埋めなさい。", body:"乾燥地で水源を利用する集約農業を( )農業という。", answer:"オアシス", alts:["オアシス農業"]},
+      {prompt:"空所を埋めなさい。", body:"熱帯・亜熱帯で単一作物を大規模栽培するのは( )農業である。", answer:"プランテーション", alts:["プランテーション農業"]},
+    ],
+    truefalse:[
+      {prompt:"○か×か。", body:"ケッペンの気候区分は植生に注目したものである。", answer:true},
+      {prompt:"○か×か。", body:"砂漠気候の記号は BS である。", answer:false, note:"砂漠は BW、ステップが BS。"},
+      {prompt:"○か×か。", body:"地中海性気候は夏に乾燥し冬に降雨がある。", answer:true},
+      {prompt:"○か×か。", body:"西岸海洋性気候は年較差が大きい。", answer:false, note:"暖流と偏西風で年較差が小さい。"},
+      {prompt:"○か×か。", body:"ツンドラ気候では針葉樹林が広く分布する。", answer:false, note:"ツンドラは樹木が育たず地衣類が主。針葉樹林(タイガ)は亜寒帯。"},
+      {prompt:"○か×か。", body:"温暖湿潤気候(Cfa)は日本の本州の典型例。", answer:true},
+      {prompt:"○か×か。", body:"プランテーション農業では単一作物を大規模栽培する。", answer:true},
+      {prompt:"○か×か。", body:"オアシス農業は寒帯で行われる。", answer:false, note:"乾燥帯の水源近くで行う。"},
+      {prompt:"○か×か。", body:"焼畑農業は主に熱帯雨林などで行われる。", answer:true},
+      {prompt:"○か×か。", body:"亜寒帯の B はステップ気候である。", answer:false, note:"亜寒帯は D。B は乾燥帯。"},
+    ],
+    arrange:[
+      {prompt:"次の気候帯を赤道から極へ並べなさい。", body:"熱帯・温帯・乾燥帯・寒帯・亜寒帯",
+       scramble:["乾燥帯","寒帯","熱帯","温帯","亜寒帯"],
+       answer:"熱帯 乾燥帯 温帯 亜寒帯 寒帯", note:"低緯度→高緯度。"},
+      {prompt:"次のケッペン記号を熱帯→寒帯の順に並べなさい。", body:"A・B・C・D・E",
+       scramble:["B","D","A","E","C"],
+       answer:"A B C D E", note:"A熱帯→B乾燥→C温帯→D亜寒帯→E寒帯。"},
+      {prompt:"次の植生を高温多雨→寒冷の順に並べなさい。", body:"タイガ・熱帯雨林・地中海性樹林・ツンドラ",
+       scramble:["タイガ","熱帯雨林","ツンドラ","地中海性樹林"],
+       answer:"熱帯雨林 地中海性樹林 タイガ ツンドラ"},
+    ],
+    test:[
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"地中海性気候 (Cs)", choices:["夏に降雨・冬に乾燥","夏に乾燥・冬に降雨","年中湿潤","年中乾燥"], answer:1},
+      {type:"choice", prompt:"用語の意味を選びなさい。", body:"ステップ気候", choices:["年中砂漠","短い雨季のある乾燥(短草の草原)","熱帯多雨","氷雪"], answer:1},
+      {type:"qa", prompt:"質問に答えなさい。", body:"砂漠気候の記号は？", answer:"BW"},
+      {type:"qa", prompt:"質問に答えなさい。", body:"亜寒帯北部の針葉樹林を何という？", answer:"タイガ"},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"温暖湿潤気候の記号は( )。", answer:"Cfa"},
+      {type:"fillblank", prompt:"空所を埋めなさい。", body:"気候要素は気温・降水量・( )。", answer:"風"},
+      {type:"truefalse", prompt:"○か×か。", body:"ケッペンは植生に注目した気候区分を作った。", answer:true},
+      {type:"truefalse", prompt:"○か×か。", body:"ツンドラ気候には針葉樹林が広く分布する。", answer:false},
+      {type:"arrange", prompt:"気候帯を赤道から極へ並べなさい。", body:"熱帯・温帯・乾燥帯・寒帯・亜寒帯",
+       scramble:["乾燥帯","寒帯","熱帯","温帯","亜寒帯"], answer:"熱帯 乾燥帯 温帯 亜寒帯 寒帯"},
+    ],
+  },
+
+};
+
+/* ============================================================
+   State & persistence (separate key from English app)
+   ============================================================ */
+const STORE_KEY = "gakushucho_chiri_v1";
+const State = {
+  lesson:1, mode:"vocab", q:0, score:{good:0,bad:0},
+  showFeedback:false, selected:null, freeText:"", done:false,
+  progress:{}, review:[], pool:null,
+};
+
+function saveStore(){
+  const data={progress:State.progress, review:State.review};
+  try{localStorage.setItem(STORE_KEY, JSON.stringify(data));}catch(e){}
+}
+function loadStore(){
+  try{
+    const raw=localStorage.getItem(STORE_KEY);
+    if(!raw) return;
+    const d=JSON.parse(raw);
+    State.progress=d.progress||{};
+    State.review=d.review||[];
+  }catch(e){}
+}
+
+function getPool(lesson, mode){
+  const data=QUESTIONS[lesson];
+  if(!data) return [];
+  return data[mode]||[];
+}
+
+/* ============================================================
+   Rendering
+   ============================================================ */
+const sheet = document.getElementById("sheet");
+const tabStrip = document.getElementById("lessonTabs");
+
+function renderTabs(){
+  tabStrip.innerHTML="";
+  LESSONS.forEach(L=>{
+    const b=document.createElement("button");
+    b.className="lesson-tab"+(State.lesson===L.n?" active":"");
+    b.style.setProperty("--tab-color", `var(${L.color})`);
+    b.dataset.n=L.n;
+    b.innerHTML=`<span class="num">L${L.n}</span><span class="ttl">${L.jp}</span>`;
+    b.onclick=()=>{ State.lesson=L.n; State.mode="vocab"; resetQuiz(); render(); };
+    tabStrip.appendChild(b);
+  });
+}
+
+function getLessonProgress(lessonN){
+  const p=State.progress[lessonN];
+  if(!p) return 0;
+  const vals=Object.values(p);
+  if(!vals.length) return 0;
+  return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+}
+
+function render(){
+  renderTabs();
+  const L=LESSONS.find(l=>l.n===State.lesson);
+  const pool=getPool(State.lesson, State.mode);
+  const has = pool && pool.length;
+
+  let html=`
+  <div class="lesson-head">
+    <div class="titles">
+      <h2><span class="lesson-num" style="background:var(${L.color})">LESSON ${L.n}</span>${L.title}</h2>
+      <div class="lesson-jp">${L.jp}</div>
+      <div class="theme">扱う内容: <b>${L.theme}</b></div>
+    </div>
+    <div class="progress-card">
+      <div class="label">LESSON PROGRESS</div>
+      <div class="pct">${getLessonProgress(L.n)}%</div>
+      <div class="bar"><i style="--tab-color:var(${L.color});width:${getLessonProgress(L.n)}%"></i></div>
+    </div>
+  </div>
+  <div class="mode-row">
+    ${MODES.map(m=>`<button data-mode="${m.id}" class="${m.id===State.mode?'active':''}"><span class="glyph">${m.glyph}</span>${m.label}</button>`).join("")}
+  </div>
+  <div class="qarea" id="qarea"></div>`;
+  sheet.innerHTML=html;
+  sheet.style.setProperty("--tab-color", `var(${L.color})`);
+
+  sheet.querySelectorAll(".mode-row button").forEach(b=>{
+    b.onclick=()=>{ State.mode=b.dataset.mode; resetQuiz(); render(); };
+  });
+
+  if(!has) renderPlaceholder();
+  else renderQuiz();
+  updateReviewFab();
+}
+
+function renderPlaceholder(){
+  document.getElementById("qarea").innerHTML=`
+  <div class="placeholder-pane">
+    <span class="glyph">📓</span>
+    <h3>このセクションは準備中です</h3>
+    <p>Lesson ${State.lesson} の「${MODES.find(m=>m.id===State.mode).label}」は近日リリース予定です。</p>
+  </div>`;
+}
+
+function resetQuiz(){
+  State.q=0; State.score={good:0,bad:0};
+  State.showFeedback=false; State.selected=null; State.freeText="";
+  State.done=false; State.pool=null;
+}
+
+function renderQuiz(){
+  if(!State.pool){
+    const p=getPool(State.lesson, State.mode);
+    State.pool=[...p].sort(()=>Math.random()-0.5);
+  }
+  const total=State.pool.length;
+  if(State.done){ renderSummary(); return; }
+  const q=State.pool[State.q];
+  if(!q){ State.done=true; renderSummary(); return; }
+
+  const area=document.getElementById("qarea");
+  const effType = q.type || State.mode;
+  const isQA        = effType==="qa";
+  const isFillBlank = effType==="fillblank";
+  const isVocab     = effType==="vocab";
+  const isTrueFalse = effType==="truefalse";
+  const isArrange   = effType==="arrange";
+  const isShortText = isQA || isFillBlank;
+
+  let qbodyClass="qbody";
+  if(/^[ぁ-んァ-ヶ一-龯、。「」]/.test((q.body||"")[0]||"")) qbodyClass+=" ja";
+  if(isArrange) qbodyClass="qbody ja";
+
+  let bodyHtml = formatBody(q.body);
+
+  let inputHtml = "";
+  if(isArrange)        inputHtml = renderArrange(q);
+  else if(isTrueFalse) inputHtml = renderTrueFalse(q);
+  else if(isShortText) inputHtml = renderTextFill(q);
+  else                 inputHtml = renderChoices(q); // vocab + test:choice
+
+  let html=`
+  <div class="qmeta">
+    <div class="step">問 ${State.q+1} <span style="opacity:.5"> / ${total}</span></div>
+    <div class="score">○ <b class="good">${State.score.good}</b> &nbsp; × <b class="bad">${State.score.bad}</b></div>
+  </div>
+  <div class="q-card">
+    <span class="qno">Q${State.q+1}</span>
+    <div class="qprompt">${escapeHtml(q.prompt||"")}</div>
+    <div class="${qbodyClass}">${bodyHtml}</div>
+    ${inputHtml}
+    <div class="feedback" id="fb"></div>
+    <div class="q-actions">
+      <button class="btn primary" id="checkBtn" ${isShortText||isArrange?"":"disabled"}>採点する</button>
+      <button class="btn ghost" id="nextBtn" style="display:none">次の問題 →</button>
+      <button class="btn ghost" id="skipBtn">スキップ</button>
+    </div>
+  </div>`;
+  area.innerHTML=html;
+
+  if(isArrange){
+    setupArrange();
+    document.getElementById("checkBtn").onclick=()=>checkArrange(q);
+  }else if(isTrueFalse){
+    area.querySelectorAll(".ox-btn").forEach(btn=>{
+      btn.onclick=()=>{
+        if(State.showFeedback) return;
+        State.selected=(btn.dataset.v==="true");
+        area.querySelectorAll(".ox-btn").forEach(b=>b.classList.remove("selected"));
+        btn.classList.add("selected");
+        document.getElementById("checkBtn").disabled=false;
+      };
+    });
+    document.getElementById("checkBtn").onclick=()=>checkTrueFalse(q);
+  }else if(isShortText){
+    const inp=area.querySelector("input.text-fill");
+    inp.addEventListener("input", e=>{ State.freeText=e.target.value; });
+    inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); checkShortText(q); }});
+    document.getElementById("checkBtn").onclick=()=>checkShortText(q);
+  }else{
+    area.querySelectorAll(".choice").forEach(btn=>{
+      btn.onclick=()=>{
+        if(State.showFeedback) return;
+        State.selected=Number(btn.dataset.i);
+        area.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"));
+        btn.classList.add("selected");
+        document.getElementById("checkBtn").disabled=false;
+      };
+    });
+    document.getElementById("checkBtn").onclick=()=>checkChoice(q);
+  }
+  document.getElementById("nextBtn").onclick=nextQuestion;
+  document.getElementById("skipBtn").onclick=()=>{ nextQuestion(true); };
+}
+
+function renderChoices(q){
+  return `<div class="choices">${q.choices.map((c,i)=>
+    `<button class="choice" data-i="${i}">
+       <span class="mark">${"ABCD"[i]}</span>
+       <span>${escapeHtml(c)}</span>
+     </button>`).join("")}</div>`;
+}
+
+function renderTextFill(q){
+  return `<div class="text-fill-row">
+    <label>解答 →</label>
+    <input type="text" class="text-fill" placeholder="例: 135" value="${escapeHtml(State.freeText||"")}" autofocus>
+  </div>`;
+}
+
+function renderTrueFalse(q){
+  return `<div class="ox-row">
+    <button class="ox-btn" data-v="true">○<span class="lbl">正しい</span></button>
+    <button class="ox-btn" data-v="false">×<span class="lbl">誤り</span></button>
+  </div>`;
+}
+
+function renderArrange(q){
+  if(!q._shuffle){
+    const arr = [...q.scramble];
+    for(let i=arr.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    q._shuffle = arr;
+  }
+  const pool = q._shuffle;
+  return `<div class="arrange-area">
+    <div class="arrange-answer" id="arrAns">
+      <span class="placeholder">↓ 下から順にタップして並べよう</span>
+    </div>
+    <div class="arrange-pool" id="arrPool">
+      ${pool.map((w)=>`<button class="word-chip" data-w="${escapeHtml(w)}">${escapeHtml(w)}</button>`).join("")}
+    </div>
+  </div>`;
+}
+
+function setupArrange(){
+  const pool = document.getElementById("arrPool");
+  const ans  = document.getElementById("arrAns");
+  function refreshPlaceholder(){
+    if(!ans.querySelector(".word-chip")){
+      if(!ans.querySelector(".placeholder")){
+        const ph=document.createElement("span");
+        ph.className="placeholder";
+        ph.textContent="↓ 下から順にタップして並べよう";
+        ans.appendChild(ph);
+      }
+    } else {
+      ans.querySelector(".placeholder")?.remove();
+    }
+  }
+  document.querySelectorAll(".arrange-area .word-chip").forEach(btn=>{
+    btn.onclick = () => {
+      if(State.showFeedback) return;
+      if(btn.parentElement === pool){
+        ans.querySelector(".placeholder")?.remove();
+        ans.appendChild(btn);
+      } else {
+        pool.appendChild(btn);
+        refreshPlaceholder();
+      }
+    };
+  });
+}
+
+function checkChoice(q){
+  if(State.selected==null) return;
+  State.showFeedback=true;
+  const area=document.getElementById("qarea");
+  area.querySelectorAll(".choice").forEach((b,i)=>{
+    b.classList.add("locked");
+    if(i===q.answer) b.classList.add("correct");
+    if(i===State.selected && i!==q.answer) b.classList.add("wrong");
+  });
+  const ok=(State.selected===q.answer);
+  showFeedback(ok, q);
+  if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
+  finalizeUI();
+}
+
+function checkTrueFalse(q){
+  if(State.selected==null) return;
+  State.showFeedback=true;
+  const area=document.getElementById("qarea");
+  area.querySelectorAll(".ox-btn").forEach(btn=>{
+    btn.classList.add("locked");
+    const v = (btn.dataset.v==="true");
+    if(v === q.answer) btn.classList.add("correct");
+    if(v === State.selected && v !== q.answer) btn.classList.add("wrong");
+  });
+  const ok = (State.selected === q.answer);
+  showFeedback(ok, q, true, State.selected?"○":"×");
+  if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
+  finalizeUI();
+}
+
+function checkShortText(q){
+  const ans=(State.freeText||"").trim();
+  if(!ans){ alert("解答を入力してください。"); return; }
+  State.showFeedback=true;
+  const ok = isShortAnswerCorrect(ans, q);
+  showFeedback(ok, q, true, ans);
+  if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
+  finalizeUI();
+  const inp=document.querySelector("input.text-fill"); if(inp) inp.disabled=true;
+}
+
+function normalizeShort(s){
+  return String(s||"")
+    .replace(/[、。．，！？「」『』 　\s]/g,"")
+    .replace(/[ァ-ヶ]/g, ch => String.fromCharCode(ch.charCodeAt(0)-0x60))
+    .replace(/[０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0)-0xFEE0))
+    .replace(/[Ａ-Ｚａ-ｚ]/g, ch => String.fromCharCode(ch.charCodeAt(0)-0xFEE0))
+    .toLowerCase();
+}
+function isShortAnswerCorrect(input, q){
+  const cand=[q.answer, ...(q.alts||[])].map(normalizeShort);
+  const n=normalizeShort(input);
+  if(cand.includes(n)) return true;
+  // partial: 答えがちょうど含まれる場合も許す（例: 「135度」を「135」で正解にする）
+  for(const c of cand){
+    if(c.length>=1 && (n.includes(c) || c.includes(n))){
+      // 長さの差が大きすぎないこと
+      if(Math.abs(n.length - c.length) <= 3) return true;
+    }
+  }
+  return false;
+}
+
+function normalizeArrangeWord(w){
+  return String(w||"").toLowerCase().replace(/[.,!?;:"'、。]/g,"").trim();
+}
+function checkArrange(q){
+  const ans=document.getElementById("arrAns");
+  const userWords = [...ans.querySelectorAll(".word-chip")].map(c=>c.dataset.w);
+  if(userWords.length === 0){ alert("並べてから採点してください。"); return; }
+  const expected = q.answer.split(/\s+/);
+  const a = userWords.map(normalizeArrangeWord).join("|");
+  const b = expected.map(normalizeArrangeWord).join("|");
+  let ok = (a===b);
+  if(!ok && q.alts){
+    for(const alt of q.alts){
+      const c = alt.split(/\s+/).map(normalizeArrangeWord).join("|");
+      if(a===c){ ok=true; break; }
+    }
+  }
+  State.showFeedback=true;
+  document.querySelectorAll(".arrange-area .word-chip").forEach(c=>c.disabled=true);
+  showFeedback(ok, q, true, userWords.join(" / "));
+  if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
+  finalizeUI();
+}
+
+function finalizeUI(){
+  document.getElementById("checkBtn").style.display="none";
+  document.getElementById("nextBtn").style.display="inline-flex";
+}
+
+function showFeedback(ok, q, freeMode=false, userInput=""){
+  const fb=document.getElementById("fb");
+  fb.classList.add("show");
+  fb.classList.remove("good","bad");
+  fb.classList.add(ok?"good":"bad");
+  let html="";
+  if(ok){
+    html += `<span class="stamp">◎ 正解！</span>${escapeHtml(q.note||"よく出来ました。")}`;
+  }else{
+    html += `<span class="stamp">× 不正解</span>もう一度確認しましょう。`;
+    if(!freeMode && q.choices){
+      html += `<span class="ans-line">正解: <b>${"ABCD"[q.answer]}. ${escapeHtml(q.choices[q.answer])}</b></span>`;
+    }else if(q.choices===undefined && typeof q.answer==="boolean"){
+      html += `<span class="ans-line">正解: <b>${q.answer?"○ (正しい)":"× (誤り)"}</b></span>`;
+    }else{
+      html += `<span class="ans-line">模範解答: <b>${escapeHtml(q.answer)}</b></span>`;
+      if(q.alts && q.alts.length){
+        html += `<span class="ja-hint">他の許容例: ${q.alts.map(a=>`「${escapeHtml(a)}」`).join(" / ")}</span>`;
+      }
+      if(userInput){
+        html += `<span class="ja-hint">あなたの解答: ${escapeHtml(userInput)}</span>`;
+      }
+    }
+    if(q.note) html += `<span class="ja-hint">ヒント: ${escapeHtml(q.note)}</span>`;
+  }
+  fb.innerHTML=html;
+}
+
+function nextQuestion(skip=false){
+  if(skip && !State.showFeedback){
+    State.score.bad++; addToReview(State.pool[State.q]);
+  }
+  State.q++;
+  State.showFeedback=false;
+  State.selected=null;
+  State.freeText="";
+  if(State.q>=State.pool.length){ State.done=true; commitProgress(); renderSummary(); return; }
+  renderQuiz();
+}
+
+function addToReview(q){
+  if(!State.review.find(r=>r.body===q.body && r.lesson===State.lesson && r.mode===State.mode)){
+    let ans;
+    if(typeof q.answer === "boolean") ans = q.answer ? "○ (正しい)" : "× (誤り)";
+    else if(q.choices) ans = q.choices[q.answer];
+    else ans = q.answer;
+    State.review.push({
+      lesson:State.lesson, mode:State.mode,
+      body:q.body, prompt:q.prompt, answer:ans, note:q.note||""
+    });
+    saveStore();
+  }
+}
+
+function commitProgress(){
+  const total=State.score.good+State.score.bad;
+  const pct = total? Math.round(100*State.score.good/total):0;
+  State.progress[State.lesson] = State.progress[State.lesson] || {};
+  State.progress[State.lesson][State.mode] = pct;
+  saveStore();
+}
+
+function renderSummary(){
+  const area=document.getElementById("qarea");
+  const total=State.score.good+State.score.bad;
+  const pct = total? Math.round(100*State.score.good/total):0;
+  let stamp="もう一度復習しましょう。";
+  if(pct>=90) stamp="満点近し！素晴らしい";
+  else if(pct>=70) stamp="よくできました";
+  else if(pct>=50) stamp="あと一歩";
+  area.innerHTML=`
+  <div class="summary">
+    <h3>${MODES.find(m=>m.id===State.mode).label} ・ 結果</h3>
+    <div class="score-big">${pct}<small>%</small></div>
+    <div>${State.score.good} / ${total} 問正解</div>
+    <div class="stamp-circle">${stamp}</div>
+    <div class="row">
+      <button class="btn primary" id="againBtn">もう一度</button>
+      <button class="btn accent" id="nextModeBtn">次のモードへ</button>
+      <button class="btn ghost" id="goReviewBtn">復習帳を見る</button>
+    </div>
+  </div>`;
+  document.getElementById("againBtn").onclick=()=>{ resetQuiz(); render(); };
+  document.getElementById("nextModeBtn").onclick=()=>{
+    const idx=MODES.findIndex(m=>m.id===State.mode);
+    State.mode=MODES[(idx+1)%MODES.length].id;
+    resetQuiz(); render();
+  };
+  document.getElementById("goReviewBtn").onclick=openReview;
+  updateReviewFab();
+}
+
+const modalBg=document.getElementById("modalBg");
+const modalBody=document.getElementById("modalBody");
+
+function openReview(){
+  let html=`
+    <button class="close" id="closeModal">×</button>
+    <h3>☆ 復習帳（地理）</h3>
+    <p style="font-size:13px;color:var(--ink-soft);margin-bottom:8px">間違えた問題が自動で集まります。</p>`;
+  if(!State.review.length){
+    html += `<p style="margin-top:18px;color:var(--ink-soft)">まだ登録された問題はありません。</p>`;
+  }else{
+    html += State.review.map((r,i)=>{
+      const L=LESSONS.find(l=>l.n===r.lesson);
+      return `<div class="item">
+        <div class="q">${escapeHtml(r.body)}</div>
+        <div class="a">正解: <b>${escapeHtml(r.answer)}</b></div>
+        ${r.note?`<div class="a" style="color:var(--ink-soft)">ヒント: ${escapeHtml(r.note)}</div>`:""}
+        <div class="tags">L${L.n} ${L.jp} / ${MODES.find(m=>m.id===r.mode)?.label||r.mode}</div>
+      </div>`;
+    }).join("");
+    html += `<div style="margin-top:18px;text-align:right">
+      <button class="btn ghost" id="clearReviewBtn">復習帳を空にする</button>
+    </div>`;
+  }
+  modalBody.innerHTML=html;
+  modalBg.classList.add("show");
+  document.getElementById("closeModal").onclick=closeReview;
+  const cl=document.getElementById("clearReviewBtn");
+  if(cl) cl.onclick=()=>{ if(confirm("復習帳をすべて削除しますか？")){ State.review=[]; saveStore(); openReview(); updateReviewFab(); }};
+}
+function closeReview(){ modalBg.classList.remove("show"); }
+modalBg.addEventListener("click", e=>{ if(e.target===modalBg) closeReview(); });
+
+function updateReviewFab(){
+  document.getElementById("reviewCount").textContent=State.review.length;
+}
+document.getElementById("reviewFab").onclick=openReview;
+
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g, c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));}
+function formatBody(s){
+  return escapeHtml(s||"").replace(/\(\s*\)/g, '<span class="blank">　　　</span>');
+}
+
+loadStore();
+render();
+
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
