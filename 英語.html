@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>学習帖 — 英語 / Power On English Communication I</title>
+
+<!-- PWA: manifest & theme -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FAF7F0">
+<meta name="color-scheme" content="light">
+
+<!-- iOS specific -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="学習帖・英語">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   学習帖 — 英語  |  Design system
+   ============================================================ */
+:root{
+  --paper:#FAF7F0;
+  --paper-edge:#EFE9D9;
+  --ink:#2C2C2C;
+  --ink-soft:#5C5854;
+  --rule:#D9D3C2;          /* notebook rule line */
+  --rule-soft:#EDE6D2;
+  --accent:#E8743C;        /* Power On orange */
+  --accent-deep:#C45A26;
+  --indigo:#1F4068;        /* tab indigo */
+  --indigo-soft:#3A5A85;
+  --good:#3C8A5A;
+  --bad:#C4523A;
+  --shadow:0 4px 20px rgba(60,40,20,.08);
+  --shadow-deep:0 12px 40px rgba(60,40,20,.15);
+  --tab-1:#E8743C; --tab-2:#3A8A8A; --tab-3:#7A4E9A;
+  --tab-4:#C44A6A; --tab-5:#5A9A3C; --tab-6:#3C6AC4;
+  --tab-7:#2C8A7A; --tab-8:#C49A2C; --tab-9:#9A4C3C;
+  --tab-10:#5C5854;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Noto Sans JP','Inter',sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, #F5EFDD 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, #F0E8D2 0%, transparent 50%),
+    var(--paper);
+  color:var(--ink);
+  line-height:1.7;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  /* iOS standalone safe area */
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:env(safe-area-inset-bottom);
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
+  overscroll-behavior-y:contain;
+}
+/* Prevent iOS zoom on focus by ensuring input font-size >= 16px */
+input,textarea,select{font-size:16px}
+button{-webkit-appearance:none;cursor:pointer;font-family:inherit}
+
+/* ============================================================
+   Page frame: ノートのインデックスタブ感
+   ============================================================ */
+.app{
+  max-width:980px;
+  margin:0 auto;
+  padding:24px 16px 80px;
+}
+
+header.brand{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:14px;
+  margin-bottom:8px;
+}
+header.brand h1{
+  font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:.04em;
+}
+header.brand h1 .sep{
+  color:var(--accent);
+  margin:0 .35em;
+}
+header.brand .sub{
+  font-family:'Crimson Pro',serif;
+  font-size:14px;
+  color:var(--ink-soft);
+  font-style:italic;
+  text-align:right;
+}
+
+/* ============================================================
+   Lesson tab strip (left index tabs like a notebook)
+   ============================================================ */
+.tab-strip{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+  margin:18px 0 0;
+  padding-bottom:0;
+}
+.tab-strip button.lesson-tab{
+  appearance:none;
+  border:none;
+  background:#EAE2CE;
+  color:var(--ink-soft);
+  font-family:'Inter','Noto Sans JP',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  padding:10px 14px 12px;
+  border-radius:10px 10px 0 0;
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  transition:transform .15s ease, background .15s;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+  min-width:96px;
+}
+.tab-strip button.lesson-tab .ttl{
+  font-size:11px;
+  color:var(--ink-soft);
+  font-weight:500;
+  font-family:'Noto Sans JP',sans-serif;
+}
+.tab-strip button.lesson-tab .num{font-size:13px;color:var(--ink)}
+.tab-strip button.lesson-tab:hover{background:#F0E8D2;transform:translateY(-2px)}
+.tab-strip button.lesson-tab.active{
+  background:var(--paper);
+  color:var(--ink);
+  border-bottom:3px solid var(--paper);
+  box-shadow:0 -4px 12px rgba(60,40,20,.08);
+  transform:translateY(0);
+}
+.tab-strip button.lesson-tab.active::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;top:0;
+  height:4px;
+  border-radius:10px 10px 0 0;
+  background:var(--tab-color, var(--accent));
+}
+
+/* notebook sheet */
+.sheet{
+  background:var(--paper);
+  border:1px solid var(--paper-edge);
+  border-radius:0 12px 12px 12px;
+  padding:32px 32px 40px;
+  box-shadow:var(--shadow);
+  position:relative;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      var(--rule-soft) 31px,
+      var(--rule-soft) 32px
+    );
+}
+.sheet::before{
+  content:"";
+  position:absolute;
+  left:54px;top:0;bottom:0;
+  width:1px;
+  background:rgba(232,116,60,.25);
+}
+
+/* Lesson header */
+.lesson-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  padding-bottom:18px;
+  margin-bottom:18px;
+  border-bottom:1px dashed var(--rule);
+}
+.lesson-head .titles h2{
+  font-family:'Crimson Pro',serif;
+  font-size:30px;
+  font-weight:600;
+  color:var(--ink);
+  letter-spacing:.01em;
+  line-height:1.2;
+}
+.lesson-head .titles h2 .lesson-num{
+  display:inline-block;
+  background:var(--tab-color, var(--accent));
+  color:#fff;
+  padding:2px 12px;
+  border-radius:6px;
+  font-size:14px;
+  font-family:'Inter',sans-serif;
+  font-weight:600;
+  letter-spacing:.08em;
+  margin-right:10px;
+  vertical-align:middle;
+  transform:translateY(-3px);
+}
+.lesson-head .titles .theme{
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-top:4px;
+}
+.lesson-head .titles .theme b{color:var(--accent-deep);font-weight:600}
+.lesson-head .progress-card{
+  background:#FFF;
+  border:1px solid var(--rule);
+  border-radius:10px;
+  padding:10px 14px;
+  min-width:170px;
+  text-align:right;
+}
+.lesson-head .progress-card .label{font-size:11px;color:var(--ink-soft);letter-spacing:.05em}
+.lesson-head .progress-card .pct{
+  font-family:'Crimson Pro',serif;
+  font-size:24px;
+  font-weight:600;
+  color:var(--indigo);
+}
+.lesson-head .progress-card .bar{
+  height:6px;background:#EFE9D9;border-radius:99px;overflow:hidden;margin-top:6px;
+}
+.lesson-head .progress-card .bar > i{
+  display:block;height:100%;
+  background:linear-gradient(90deg,var(--tab-color,var(--accent)),var(--accent-deep));
+  border-radius:99px;
+  transition:width .5s ease;
+}
+
+/* Mode picker */
+.mode-row{
+  display:flex;flex-wrap:wrap;gap:8px;
+  padding:0 0 18px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:22px;
+}
+.mode-row button{
+  appearance:none;
+  border:1.5px solid var(--rule);
+  background:#FFFDF7;
+  color:var(--ink);
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  padding:8px 14px;
+  border-radius:99px;
+  cursor:pointer;
+  transition:all .15s;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.mode-row button .glyph{font-size:14px}
+.mode-row button:hover{border-color:var(--accent);color:var(--accent-deep);background:#FFF7EF}
+.mode-row button.active{
+  background:var(--ink);color:#FFFDF7;border-color:var(--ink);
+}
+
+/* ============================================================
+   Question card
+   ============================================================ */
+.qarea{padding:6px 4px}
+.qmeta{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;color:var(--ink-soft);
+  margin-bottom:10px;
+}
+.qmeta .step{font-family:'Crimson Pro',serif;font-size:14px}
+.qmeta .score{font-weight:600}
+.qmeta .score b.good{color:var(--good)}
+.qmeta .score b.bad{color:var(--bad)}
+
+.q-card{
+  background:#FFFDF7;
+  border:1px solid var(--rule);
+  border-radius:14px;
+  padding:24px 26px;
+  margin-bottom:18px;
+  position:relative;
+  box-shadow:0 2px 6px rgba(60,40,20,.04);
+}
+.q-card .qno{
+  position:absolute;left:-10px;top:18px;
+  background:var(--tab-color,var(--accent));
+  color:#fff;
+  font-family:'Crimson Pro',serif;font-weight:600;
+  padding:2px 10px;border-radius:4px;font-size:13px;
+}
+.q-card .qprompt{
+  font-size:13px;color:var(--ink-soft);margin-bottom:6px;letter-spacing:.04em;
+}
+.q-card .qbody{
+  font-family:'Crimson Pro',serif;
+  font-size:20px;
+  line-height:1.7;
+  margin:6px 0 18px;
+  color:var(--ink);
+}
+.q-card .qbody .blank{
+  display:inline-block;min-width:80px;text-align:center;
+  border-bottom:2px solid var(--accent);
+  font-weight:600;color:transparent;
+}
+.q-card .qbody.ja{font-family:'Noto Sans JP',sans-serif;font-size:18px}
+.q-card .reading-passage{
+  font-family:'Crimson Pro',serif;
+  font-size:17px;line-height:1.85;
+  color:var(--ink);
+  background:#FFF9EC;
+  border-left:3px solid var(--accent);
+  padding:18px 22px;
+  border-radius:0 8px 8px 0;
+  margin-bottom:18px;
+  max-height:none;
+}
+.q-card .reading-passage h4{
+  font-size:14px;font-family:'Inter',sans-serif;color:var(--accent-deep);
+  margin-bottom:8px;letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* choices */
+.choices{display:flex;flex-direction:column;gap:8px}
+.choices button.choice{
+  appearance:none;
+  text-align:left;
+  background:#FFF;
+  border:1.5px solid var(--rule);
+  padding:12px 16px;
+  border-radius:10px;
+  font-family:'Crimson Pro',serif;
+  font-size:17px;
+  cursor:pointer;
+  display:flex;gap:12px;align-items:flex-start;
+  transition:all .15s;
+  color:var(--ink);
+}
+.choices button.choice .mark{
+  display:inline-block;
+  width:24px;height:24px;
+  border-radius:50%;
+  background:#EFE9D9;
+  color:var(--ink-soft);
+  font-family:'Inter',sans-serif;font-size:12px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.choices button.choice:hover:not(.locked){
+  border-color:var(--accent);
+  background:#FFF7EF;
+}
+.choices button.choice.selected{border-color:var(--indigo)}
+.choices button.choice.correct{
+  background:#EAF6EE;border-color:var(--good);color:#1F5C32;
+}
+.choices button.choice.correct .mark{background:var(--good);color:#fff}
+.choices button.choice.wrong{
+  background:#FBEBE6;border-color:var(--bad);color:#7A2A1A;
+}
+.choices button.choice.wrong .mark{background:var(--bad);color:#fff}
+.choices button.choice.locked{cursor:default}
+
+/* Free text input (writing) */
+textarea.answer-input{
+  width:100%;
+  min-height:88px;
+  background:#FFFDF7;
+  border:1.5px solid var(--rule);
+  border-radius:10px;
+  padding:14px 16px;
+  font-family:'Crimson Pro',serif;
+  font-size:17px;
+  color:var(--ink);
+  resize:vertical;
+  line-height:1.6;
+  background-image:repeating-linear-gradient(
+    to bottom,
+    transparent 0, transparent 27px,
+    var(--rule-soft) 27px, var(--rule-soft) 28px);
+}
+textarea.answer-input:focus{outline:none;border-color:var(--accent);background-color:#FFF}
+
+/* Action buttons */
+.q-actions{
+  display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;align-items:center;
+}
+.btn{
+  appearance:none;border:none;cursor:pointer;
+  padding:10px 22px;border-radius:99px;
+  font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:14px;
+  transition:transform .12s, background .12s;
+}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--ink);color:#FFFDF7}
+.btn.primary:hover{background:#000}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--rule)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.accent{background:var(--accent);color:#fff}
+.btn.accent:hover{background:var(--accent-deep)}
+
+/* Feedback panel (shown after answer) */
+.feedback{
+  margin-top:14px;padding:14px 18px;
+  border-radius:10px;
+  font-size:14px;line-height:1.7;
+  display:none;
+  animation:popIn .25s ease;
+}
+.feedback.show{display:block}
+.feedback.good{background:#EAF6EE;border-left:3px solid var(--good);color:#1F5C32}
+.feedback.bad{background:#FBEBE6;border-left:3px solid var(--bad);color:#7A2A1A}
+.feedback .stamp{
+  display:inline-block;font-weight:700;letter-spacing:.1em;
+  margin-right:8px;font-family:'Crimson Pro',serif;font-size:16px;
+}
+.feedback .ja-hint{
+  display:block;margin-top:6px;color:var(--ink-soft);font-size:13px;
+}
+.feedback .ans-line{
+  display:block;margin-top:6px;color:var(--ink);font-size:14px;
+}
+.feedback .ans-line b{color:var(--good)}
+
+@keyframes popIn{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* Summary screen */
+.summary{
+  background:#FFFDF7;
+  border:1px solid var(--rule);
+  border-radius:14px;
+  padding:30px;
+  text-align:center;
+}
+.summary h3{
+  font-family:'Crimson Pro',serif;font-size:24px;margin-bottom:8px;color:var(--ink);
+}
+.summary .score-big{
+  font-family:'Crimson Pro',serif;font-size:64px;font-weight:600;
+  color:var(--accent);line-height:1;margin:10px 0;
+}
+.summary .score-big small{font-size:24px;color:var(--ink-soft)}
+.summary .stamp-circle{
+  display:inline-block;border:3px double var(--accent);border-radius:50%;
+  padding:14px 22px;color:var(--accent-deep);
+  font-family:'Zen Maru Gothic',sans-serif;font-weight:700;
+  transform:rotate(-8deg);margin:14px 0;
+  font-size:18px;letter-spacing:.1em;
+}
+.summary .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+
+/* Placeholder for未実装lessons */
+.placeholder{
+  text-align:center;padding:60px 20px;color:var(--ink-soft);
+}
+.placeholder .glyph{font-size:48px;display:block;margin-bottom:12px;opacity:.5}
+.placeholder h3{font-family:'Crimson Pro',serif;font-size:22px;margin-bottom:6px;color:var(--ink)}
+.placeholder p{font-size:14px}
+.placeholder .badge{
+  display:inline-block;margin-top:18px;
+  background:#EFE9D9;color:var(--ink-soft);
+  padding:6px 14px;border-radius:99px;font-size:12px;
+}
+
+/* Review bank (復習帳) drawer button */
+.review-fab{
+  position:fixed;
+  right:20px;bottom:20px;
+  background:var(--indigo);color:#fff;
+  border:none;border-radius:99px;
+  padding:12px 18px;
+  font-family:'Noto Sans JP',sans-serif;font-weight:600;font-size:13px;
+  cursor:pointer;
+  box-shadow:var(--shadow-deep);
+  display:inline-flex;align-items:center;gap:6px;
+  z-index:50;
+}
+.review-fab .count{
+  background:var(--accent);padding:2px 8px;border-radius:99px;font-size:11px;
+}
+.review-fab:hover{background:var(--indigo-soft)}
+
+.modal-bg{
+  position:fixed;inset:0;background:rgba(20,15,5,.45);
+  display:none;align-items:flex-start;justify-content:center;
+  z-index:100;padding:40px 16px;overflow-y:auto;
+}
+.modal-bg.show{display:flex}
+.modal{
+  background:var(--paper);border-radius:14px;
+  width:100%;max-width:680px;padding:24px 26px;
+  box-shadow:var(--shadow-deep);
+}
+.modal h3{
+  font-family:'Crimson Pro',serif;font-size:22px;margin-bottom:6px;
+}
+.modal .close{
+  float:right;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-soft);
+}
+.modal .item{
+  border-top:1px dashed var(--rule);padding:14px 0;
+}
+.modal .item:first-of-type{border-top:none}
+.modal .item .q{font-family:'Crimson Pro',serif;font-size:16px;color:var(--ink)}
+.modal .item .a{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.modal .item .a b{color:var(--good)}
+.modal .item .tags{font-size:11px;color:var(--ink-soft);margin-top:4px}
+
+/* Footer */
+footer.colophon{
+  text-align:center;color:var(--ink-soft);font-size:12px;margin-top:30px;
+  font-family:'Crimson Pro',serif;letter-spacing:.05em;
+}
+
+/* Mobile */
+@media (max-width:680px){
+  .app{padding:16px 8px 80px}
+  .sheet{padding:22px 18px 30px}
+  .sheet::before{display:none}
+  .lesson-head{flex-direction:column}
+  .lesson-head .progress-card{align-self:stretch;text-align:left}
+  .tab-strip button.lesson-tab{min-width:70px;padding:8px 10px}
+  .tab-strip button.lesson-tab .ttl{display:none}
+  .q-card .qbody{font-size:17px}
+}
+
+/* Print */
+@media print{
+  body{background:#fff}
+  .tab-strip,.review-fab,.mode-row,.q-actions,.lesson-head .progress-card{display:none}
+  .sheet{box-shadow:none;border:none;background-image:none}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <header class="brand">
+    <h1>学習帖<span class="sep">—</span>英語</h1>
+    <div class="sub">Power On English&nbsp;Communication&nbsp;Ⅰ&nbsp;|&nbsp;Lesson Trainer</div>
+  </header>
+
+  <!-- Lesson tabs -->
+  <nav class="tab-strip" id="lessonTabs"></nav>
+
+  <!-- Main sheet -->
+  <main class="sheet" id="sheet"></main>
+
+  <footer class="colophon">
+    学習帖 — 試験対策ノート &nbsp;·&nbsp; 教科書の本文・設問は引用しません。出題はオリジナル類題です。
+  </footer>
+</div>
+
+<!-- Review FAB -->
+<button class="review-fab" id="reviewFab" title="間違えた問題">
+  <span>☆ 復習帳</span>
+  <span class="count" id="reviewCount">0</span>
+</button>
+
+<!-- Modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<script>
+/* ============================================================
+   Lesson metadata
+   ============================================================ */
+const LESSONS = [
+  {n:1, title:"Japan's New Tourism", theme:"日本文化／ALT", grammar:"現在形・過去形・進行形・助動詞", color:"--tab-1"},
+  {n:2, title:"Light from Creatures", theme:"生物／発表", grammar:"受け身・現在完了形・現在完了進行形", color:"--tab-2"},
+  {n:3, title:"One Small Goal at a Time", theme:"スポーツ／新聞記事", grammar:"S+V+O / S+V+O+(that)節", color:"--tab-3"},
+  {n:4, title:"Miniature Life", theme:"日本文化／雑誌記事", grammar:"後置修飾の分詞・関係代名詞", color:"--tab-4"},
+  {n:5, title:"Banana Paper", theme:"環境／講演 (SDGs)", grammar:"関係代名詞・seem to", color:"--tab-5"},
+  {n:6, title:"Patterns in Human Behavior", theme:"心理／紀行", grammar:"It+be形容詞+that節・使役・SVOC", color:"--tab-6"},
+  {n:7, title:"No Plastic or No Future", theme:"環境／論説 (SDGs)", grammar:"関係副詞 where/when・関係代名詞 what", color:"--tab-7"},
+  {n:8, title:"Oh My Cod!", theme:"食料資源 (SDGs)", grammar:"分詞構文・過去完了", color:"--tab-8"},
+  {n:9, title:"Is Esports a Real Sport?", theme:"スポーツ／論説 (SDGs)", grammar:"知覚動詞・使役動詞 SVOC", color:"--tab-9"},
+  {n:10, title:"Never Too Late to Learn and Relearn", theme:"言語・キャリア・学習", grammar:"仮定法 (wish/過去/過去完了/without)", color:"--tab-10"},
+];
+
+const MODES = [
+  {id:"vocab",   label:"語彙ドリル",  glyph:"📖"},
+  {id:"grammar", label:"文法ドリル",  glyph:"✎"},
+  {id:"writing", label:"英作文",      glyph:"✑"},
+  {id:"reading", label:"長文読解",    glyph:"📰"},
+  {id:"test",    label:"総合テスト",  glyph:"🎯"},
+];
+
+/* ============================================================
+   Question banks
+   ※ すべて教科書の本文・設問とは無関係なオリジナル類題。
+   ============================================================ */
+const QUESTIONS = {
+
+  /* ====================  LESSON 1  ==================== */
+  1: {
+    vocab:[
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"region", choices:["伝統","地域・地方","物語","お土産"], answer:1, note:"地域の意。例: a mountain region."},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"attract", choices:["広告する","引きつける","返事する","計算する"], answer:1, note:"動詞で「魅了する／引きつける」。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"tradition", choices:["伝統","練習","渋滞","結果"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"recommend", choices:["記録する","推薦する","拒否する","到着する"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"souvenir", choices:["案内人","お土産","記念碑","予算"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"cuisine", choices:["流通","料理","曲線","議論"], answer:1, note:"その地域・国の料理。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"landmark", choices:["土地区分","目印・名所","上陸","現地ガイド"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"heritage", choices:["心臓","遺産","儀式","収穫"], answer:1, note:"world heritage = 世界遺産。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"scenery", choices:["脚本","景色・風景","場面分け","背景音楽"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"accommodation", choices:["案内係","宿泊施設","運送会社","食事の支度"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"itinerary", choices:["旅行日程","目的地","片道切符","旅行会社"], answer:0, note:"travel itinerary = 旅程表。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"authentic", choices:["古典的な","本物の・正真正銘の","儀礼的な","代表的な"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"crowded", choices:["静かな","混雑した","人気のない","狭い"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"spectacular", choices:["素朴な","壮観な","儀式的な","軽率な"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"explore", choices:["輸出する","探検する・探索する","表現する","爆発する"], answer:1},
+      {prompt:"日本語に対応する英単語を選びなさい。", body:"祭り", choices:["fasten","festival","fluster","fashion"], answer:1},
+      {prompt:"日本語に対応する英単語を選びなさい。", body:"地元の", choices:["lonely","local","logical","loyal"], answer:1},
+      {prompt:"日本語に対応する英単語を選びなさい。", body:"訪れる", choices:["vacate","visit","value","view"], answer:1},
+      {prompt:"次の文脈に最も合う語を選びなさい。", body:"Kyoto is famous for its ( ) temples and shrines.", choices:["ancient","absent","artificial","awkward"], answer:0, note:"ancient = 古代の・古い。"},
+      {prompt:"次の文脈に最も合う語を選びなさい。", body:"The tour guide ( ) us a quiet café near the river.", choices:["recovered","recommended","recorded","reduced"], answer:1},
+    ],
+    grammar:[
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'She always (___) green tea in the morning.', choices:["drink","drinks","drinking","drank"], answer:1, note:"主語が3人称単数 + 習慣 → 現在形 -s。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Last weekend, I (___) a famous temple in Kyoto.', choices:["visit","visited","visiting","visits"], answer:1, note:"last weekend → 過去形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Look! The children (___) in the park right now.', choices:["play","plays","are playing","played"], answer:2, note:"right now → 現在進行形 be + -ing。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When I called him, he (___) his homework.', choices:["does","did","was doing","is doing"], answer:2, note:"過去進行形 was/were + -ing。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'You (___) take an umbrella; it might rain.', choices:["should","shouldn’t","cannot","wouldn’t"], answer:0, note:"助言の should。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'(___) you pass me the salt, please?', choices:["Could","Must","Should","Did"], answer:0, note:"丁寧な依頼の Could you ~ ?"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'We (___) each other when we were children.', choices:["know","knew","are knowing","knows"], answer:1, note:"when we were children → 過去形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Tourists (___) this region for its hot springs.', choices:["love","loves","loving","loved"], answer:0, note:"主語 Tourists は複数 → 原形 love。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'My grandfather (___) a kimono on special occasions when he was young.', choices:["wear","wore","wearing","wears"], answer:1, note:"when he was young の文脈 → 過去形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'(___) I borrow your guidebook?', choices:["Can","Was","Did","Were"], answer:0, note:"許可を求める Can I ~ ?"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The shop (___) at 8 a.m. every day.', choices:["opening","opens","opened","is opening"], answer:1, note:"every day の習慣 → 現在形 -s。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'While we (___) near the lake, we saw a beautiful sunset.', choices:["walk","walks","were walking","walked"], answer:2, note:"While + 過去進行形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'He (___) swim across the river when he was a child.', choices:["could","can","must","should"], answer:0, note:"過去の能力 → could。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'(___) I help you with your luggage?', choices:["Shall","Did","Was","Have"], answer:0, note:"申し出の Shall I ~ ?"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Last year, my family (___) to Okinawa for vacation.', choices:["goes","went","going","is going"], answer:1},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Don’t disturb him. He (___) a book.', choices:["reads","read","is reading","was reading"], answer:2, note:"今この瞬間 → 現在進行形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'People in this town (___) a special festival every August.', choices:["holds","hold","holding","is holding"], answer:1, note:"主語 People は複数 → hold。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'He (___) his bicycle to school every day.', choices:["ride","rides","is riding","rode"], answer:1},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Tourists (___) that old castle because of its history.', choices:["admire","admires","is admiring","admired"], answer:0},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When the earthquake struck, we (___) dinner.', choices:["have","had","were having","are having"], answer:2, note:"過去の進行中の動作 → were having。"},
+    ],
+    writing:[
+      {prompt:"次の日本語を英訳しなさい。", body:"彼女は毎週末、祖父母を訪ねる。", answer:"She visits her grandparents every weekend.", alts:["She goes to see her grandparents every weekend."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私は昨日、その有名なお城に行った。", answer:"I went to the famous castle yesterday.", alts:["Yesterday I went to the famous castle."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その子どもたちは今、海で泳いでいる。", answer:"The children are swimming in the sea now.", alts:["The children are swimming in the ocean now."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私たちは早く起きなければならない。", answer:"We must get up early.", alts:["We have to get up early."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"あなたはこの店の寿司を試してみるべきです。", answer:"You should try the sushi at this restaurant.", alts:["You should try the sushi at this shop."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼は子どもの頃、ピアノを弾いていました。", answer:"He played the piano when he was a child.", alts:["He used to play the piano when he was a child."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"窓を開けてもいいですか？", answer:"May I open the window?", alts:["Can I open the window?"]},
+      {prompt:"次の日本語を英訳しなさい。", body:"雨が降っているので、私たちは家にいます。", answer:"It is raining, so we are staying home.", alts:["Because it is raining, we are staying home."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼らは去年その町で祭りを開催した。", answer:"They held a festival in the town last year.", alts:["They had a festival in that town last year."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"この公園は地元の人々に人気です。", answer:"This park is popular with the local people.", alts:["This park is popular among local people."]},
+    ],
+    reading:[{
+      title:"The Quiet Village of Yumesato",
+      passage:`Yumesato is a small village in the mountains of central Japan. About 800 people live there, and most of them work on small farms or run family inns. The village is famous for its hot springs and for an old wooden bridge that was built more than 300 years ago.
+
+Every autumn, the village holds a Lantern Festival. During the festival, visitors and local people walk through the streets carrying paper lanterns. They sing traditional songs, eat local food, and watch a small fireworks show at the end of the night.
+
+A few years ago, only a few hundred tourists visited Yumesato each year. But last summer, more than 5,000 people came. Many of them stayed at family inns and tried the village's special soba noodles. The villagers were surprised, but they were also happy. They are planning to open a small museum next year to teach visitors about the history of the bridge.
+
+If you ever travel to Japan, you should visit Yumesato. You can hike, take photos, and enjoy a quiet evening at a traditional inn.`,
+      questions:[
+        {prompt:"内容に合うものを選びなさい。", body:"Where is Yumesato located?", choices:["On a small island","In the mountains of central Japan","On the coast of Hokkaido","Near Tokyo Bay"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"What is the village famous for?", choices:["A modern art museum","Hot springs and an old wooden bridge","A summer beach festival","Its ski resorts"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"When is the Lantern Festival held?", choices:["In spring","In summer","In autumn","In winter"], answer:2},
+        {prompt:"内容に合うものを選びなさい。", body:"About how many tourists came last summer?", choices:["A few hundred","About 1,000","More than 5,000","Around 10,000"], answer:2},
+        {prompt:"内容に合うものを選びなさい。", body:"What are the villagers planning for next year?", choices:["To build a new bridge","To open a small museum","To stop the festival","To close the family inns"], answer:1},
+      ]
+    }],
+    test:[
+      // mix of vocab + grammar + writing
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"heritage", choices:["心臓","遺産","儀式","収穫"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"recommend", choices:["記録する","推薦する","拒否する","到着する"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"crowded", choices:["静かな","混雑した","人気のない","狭い"], answer:1},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) coffee every morning.", choices:["drink","drinks","is drinking","drank"], answer:1},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"They (___) the museum yesterday.", choices:["visit","visited","are visiting","visits"], answer:1},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"Listen! Someone (___) the piano.", choices:["play","plays","is playing","played"], answer:2},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"(___) you tell me the way to the station?", choices:["Could","Must","Did","Have"], answer:0},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"We (___) leave now, or we'll miss the bus.", choices:["must","might","could","would"], answer:0},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"He (___) tennis every Sunday when he was in high school.", choices:["plays","played","is playing","has played"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"scenery", choices:["脚本","景色","場面","背景音楽"], answer:1},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"私は明日、京都に行きます。", answer:"I am going to Kyoto tomorrow.", alts:["I will go to Kyoto tomorrow.","I'm visiting Kyoto tomorrow."]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"彼は今、宿題をしている。", answer:"He is doing his homework now.", alts:["He is doing homework now."]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"あなたはもっと水を飲むべきです。", answer:"You should drink more water.", alts:["You ought to drink more water."]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"私たちは去年、その祭りに参加した。", answer:"We took part in the festival last year.", alts:["We joined the festival last year.","We participated in that festival last year."]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"窓を閉めてもいいですか？", answer:"May I close the window?", alts:["Can I close the window?"]},
+    ],
+  },
+
+  /* ====================  LESSON 2  ==================== */
+  2: {
+    vocab:[
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"creature", choices:["創造","生き物","信用","批評"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"discover", choices:["覆い隠す","発見する","議論する","出発する"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"species", choices:["速度","種（生物の分類）","特別な","予報"], answer:1, note:"単複同形の名詞。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"glow", choices:["流れる","ぼんやり光る","成長する","糊付けする"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"researcher", choices:["研究者","出版社","観光客","代表者"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"fascinate", choices:["失敗する","魅了する","設備を整える","発酵させる"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"observe", choices:["観察する","祝う","従う","保護する"], answer:0, note:"「観察する／（規則を）守る」両方の意味あり。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"survive", choices:["供給する","生き残る","勝つ","驚く"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"predator", choices:["前任者","捕食者","予測者","序文"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"organism", choices:["有機体・生物","オルガン","会社","風刺画"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"environment", choices:["環境","出来事","出口","会場"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"depth", choices:["深さ","死亡","贈り物","量"], answer:0, note:"deep の名詞形。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"mysterious", choices:["神秘的な","損失の","凄惨な","ごたごたした"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"signal", choices:["署名","合図・信号","荷物","痕跡"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"release", choices:["放出する","関連付ける","賃借する","記述する"], answer:0},
+      {prompt:"日本語に対応する英単語を選びなさい。", body:"ホタル", choices:["fireball","fireplace","firefly","fireman"], answer:2},
+      {prompt:"日本語に対応する英単語を選びなさい。", body:"海洋（の）", choices:["mountain","marine","material","mineral"], answer:1, note:"marine = 海洋の。"},
+      {prompt:"日本語に対応する英単語を選びなさい。", body:"明らかにする・暴露する", choices:["reveal","reverse","revise","retire"], answer:0},
+      {prompt:"次の文脈に最も合う語を選びなさい。", body:"Scientists have ( ) a new species deep in the ocean.", choices:["discovered","discussed","disturbed","distributed"], answer:0},
+      {prompt:"次の文脈に最も合う語を選びなさい。", body:"The deep sea is a ( ) and unexplored place.", choices:["museum","mysterious","mineral","muscle"], answer:1},
+    ],
+    grammar:[
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The deep sea (___) by many scientists in recent years.', choices:["studies","studied","is studied","has been studying"], answer:2, note:"受け身（現在形）be + 過去分詞。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'I (___) this book three times.', choices:["read","have read","reading","am reading"], answer:1, note:"現在完了の経験：have + 過去分詞。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'She (___) for her keys for an hour.', choices:["is looking","has been looking","looked","looks"], answer:1, note:"for an hour → 現在完了進行形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'A new species (___) off the coast last year.', choices:["discovered","was discovered","discovers","has discovered"], answer:1, note:"last year + 受け身 → 過去形 was + 過去分詞。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'We (___) each other since high school.', choices:["know","are knowing","have known","knew"], answer:2, note:"since + 現在完了（継続）。状態動詞は進行形にしない。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The cave has already (___) by the team.', choices:["explored","being explored","been explored","explore"], answer:2, note:"完了受け身 have been + 過去分詞。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'He (___) in Tokyo for ten years.', choices:["lives","is living","has lived","lived"], answer:2, note:"for ten years + 継続 → 現在完了。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Many beautiful fish (___) near the reef every spring.', choices:["see","sees","seen","are seen"], answer:3, note:"主語が物 → 受け身。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'They (___) on the project since last month.', choices:["work","are working","have been working","worked"], answer:2, note:"since + 動作の継続 → 現在完了進行形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Have you ever (___) a wild dolphin?', choices:["see","saw","seen","seeing"], answer:2, note:"have + 過去分詞（経験）。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The whales (___) followed by the scientists at this moment.', choices:["is being","are being","have been","was"], answer:1, note:"進行形の受け身 are being + 過去分詞。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'I have never (___) such a strange creature before.', choices:["saw","seen","see","seeing"], answer:1},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'This lab (___) by Dr. Tanaka in 2010.', choices:["founded","is founded","was founded","has founded"], answer:2, note:"過去の出来事の受け身。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'She (___) a report about jellyfish since yesterday.', choices:["writes","wrote","has been writing","is writing"], answer:2},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The ocean (___) home to millions of species.', choices:["is called","calls","called","is calling"], answer:0, note:"call OC の受動態 → S is called C。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'We (___) this article many times already.', choices:["read","have read","are reading","reads"], answer:1, note:"already → 現在完了。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The samples (___) to the lab next week.', choices:["send","sent","will be sent","are sending"], answer:2, note:"未来の受け身 will be + 過去分詞。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'He (___) here for over an hour, but no one came.', choices:["waits","waited","has been waiting","is waiting"], answer:2},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'This documentary (___) by millions of viewers worldwide.', choices:["watches","is watched","is watching","watch"], answer:1},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'(___) you (___) your homework yet?', choices:["Are / doing","Have / done","Do / do","Did / done"], answer:1, note:"yet と相性が良いのは現在完了。"},
+    ],
+    writing:[
+      {prompt:"次の日本語を英訳しなさい。", body:"その魚は深海で発見された。", answer:"The fish was discovered in the deep sea.", alts:["That fish was discovered in the deep ocean."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私はこの本を3回読んだことがある。", answer:"I have read this book three times.", alts:["I've read this book three times."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼は2時間ずっと勉強し続けている。", answer:"He has been studying for two hours.", alts:["He has studied for two hours."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"たくさんのホタルが夏の夜に見られる。", answer:"Many fireflies are seen on summer nights.", alts:["A lot of fireflies can be seen on summer nights."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼らはまだ宿題を終えていない。", answer:"They haven't finished their homework yet.", alts:["They have not finished their homework yet."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その新種は科学者によって観察されている。", answer:"The new species is being observed by scientists.", alts:["That new species is being observed by scientists."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私たちはお互いに10年来の知り合いです。", answer:"We have known each other for ten years.", alts:["We've known each other for ten years."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その光は化学反応によって生み出される。", answer:"The light is produced by a chemical reaction.", alts:["That light is produced by chemical reactions."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼女はちょうど夕食を食べ終えたところだ。", answer:"She has just finished eating dinner.", alts:["She has just finished her dinner.","She has just had dinner."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"このビーチは美しいクラゲで有名です。", answer:"This beach is famous for its beautiful jellyfish.", alts:["This beach is known for its beautiful jellyfish."]},
+    ],
+    reading:[{
+      title:"The Mystery of Glowing Fish",
+      passage:`For many years, scientists have been studying the strange behavior of deep-sea creatures. One of the most fascinating discoveries is bioluminescence — the ability of some animals to produce their own light.
+
+In 2015, a small fish called the "moon lantern" was discovered in the western Pacific Ocean. It lives at a depth of about 700 meters, where almost no sunlight reaches. The moon lantern produces a soft blue light from special cells under its skin. Scientists believe that this light is used to attract small prey and to send signals to other moon lanterns in the dark.
+
+Since the discovery, more than fifty research papers have been written about this fish. A team in Okinawa has been observing it for almost five years. They have found that the light becomes brighter when the fish feels safe, and dimmer when a predator is nearby.
+
+Many questions still need to be answered. How does the moon lantern control its light? Why has this ability not been found in similar fish living in the same area? Scientists hope that, in the coming years, the secrets of this beautiful creature will be revealed.`,
+      questions:[
+        {prompt:"内容に合うものを選びなさい。", body:"What is bioluminescence?", choices:["The study of deep sea fish","The ability of some animals to produce their own light","A type of small jellyfish","A new chemical used in research"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"When and where was the moon lantern discovered?", choices:["In 2005, in the Atlantic Ocean","In 2015, in the western Pacific Ocean","In 2020, near the Japan Sea","In 2015, in a freshwater lake"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"Why does the moon lantern produce light?", choices:["To warm up its body","To attract prey and signal other moon lanterns","To frighten all kinds of fish","To find its way back home"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"What happens to its light when a predator is near?", choices:["It becomes brighter","It becomes dimmer","It changes color to red","It stays exactly the same"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"Which question do scientists still want to answer?", choices:["Whether the moon lantern can fly","How the moon lantern controls its light","Whether humans can eat it","Whether the fish can live on land"], answer:1},
+      ]
+    }],
+    test:[
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"species", choices:["速度","種","特別な","予報"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"observe", choices:["観察する","保護する","祝う","従う"], answer:0},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"environment", choices:["環境","出来事","出口","会場"], answer:0},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"glow", choices:["流れる","ぼんやり光る","成長する","糊付けする"], answer:1},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"That book (___) by a famous author.", choices:["writes","wrote","was written","writing"], answer:2},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"I (___) lived here for ten years.", choices:["have","am","was","do"], answer:0},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) studying English since this morning.", choices:["has been","is","was","will"], answer:0},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"The window (___) by the strong wind.", choices:["broke","was broken","has broken","is breaking"], answer:1},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"Have you ever (___) to Hokkaido?", choices:["go","gone","been","went"], answer:2, note:"経験は have been to。"},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"They (___) the project since last week.", choices:["work on","worked on","have been working on","are work on"], answer:2},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"私はちょうど宿題を終えたところだ。", answer:"I have just finished my homework.", alts:["I've just finished my homework."]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"その手紙は彼女によって書かれた。", answer:"The letter was written by her.", alts:["That letter was written by her."]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"彼は3時間ずっと泳ぎ続けている。", answer:"He has been swimming for three hours.", alts:["He has swum for three hours."]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"この映画は世界中で見られている。", answer:"This movie is watched all over the world.", alts:["This film is watched around the world."]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"私はまだ彼に会ったことがない。", answer:"I haven't met him yet.", alts:["I have not met him yet.","I haven't seen him yet."]},
+    ],
+  },
+
+};
+
+/* ============================================================
+   State & persistence
+   ============================================================ */
+const STORE_KEY = "gakushucho_eigo_v1";
+const State = {
+  lesson:1,
+  mode:"vocab",
+  q:0,
+  score:{good:0,bad:0},
+  showFeedback:false,
+  selected:null,
+  freeText:"",
+  done:false,
+  progress:{},        // {1:{vocab:.., grammar:.., ...}, ...}
+  review:[],          // wrong-answer bank
+  pool:null,          // current question pool (cached)
+};
+
+function saveStore(){
+  const data={progress:State.progress, review:State.review};
+  try{localStorage.setItem(STORE_KEY, JSON.stringify(data));}catch(e){}
+}
+function loadStore(){
+  try{
+    const raw=localStorage.getItem(STORE_KEY);
+    if(!raw) return;
+    const d=JSON.parse(raw);
+    State.progress=d.progress||{};
+    State.review=d.review||[];
+  }catch(e){}
+}
+
+function getPool(lesson, mode){
+  const data=QUESTIONS[lesson];
+  if(!data) return [];
+  if(mode==="reading"){
+    const r=data.reading?.[0];
+    if(!r) return [];
+    return r.questions.map(q=>({...q, _passage:r}));
+  }
+  return data[mode]||[];
+}
+
+/* ============================================================
+   Rendering
+   ============================================================ */
+const sheet = document.getElementById("sheet");
+const tabStrip = document.getElementById("lessonTabs");
+
+function renderTabs(){
+  tabStrip.innerHTML="";
+  LESSONS.forEach(L=>{
+    const b=document.createElement("button");
+    b.className="lesson-tab"+(State.lesson===L.n?" active":"");
+    b.style.setProperty("--tab-color", `var(${L.color})`);
+    b.dataset.n=L.n;
+    b.innerHTML=`<span class="num">Lesson ${L.n}</span><span class="ttl">${L.title}</span>`;
+    b.onclick=()=>{
+      State.lesson=L.n; State.mode="vocab"; resetQuiz(); render();
+    };
+    tabStrip.appendChild(b);
+  });
+}
+
+function getLessonProgress(lessonN){
+  const p=State.progress[lessonN];
+  if(!p) return 0;
+  const vals=Object.values(p);
+  if(!vals.length) return 0;
+  return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+}
+
+function render(){
+  renderTabs();
+  const L=LESSONS.find(l=>l.n===State.lesson);
+  const pool=getPool(State.lesson, State.mode);
+  const has = pool && pool.length;
+
+  let html=`
+  <div class="lesson-head">
+    <div class="titles">
+      <h2><span class="lesson-num" style="background:var(${L.color})">LESSON ${L.n}</span>${L.title}</h2>
+      <div class="theme">テーマ: <b>${L.theme}</b> ／ 文法: <b>${L.grammar}</b></div>
+    </div>
+    <div class="progress-card">
+      <div class="label">LESSON PROGRESS</div>
+      <div class="pct">${getLessonProgress(L.n)}%</div>
+      <div class="bar"><i style="--tab-color:var(${L.color});width:${getLessonProgress(L.n)}%"></i></div>
+    </div>
+  </div>
+  <div class="mode-row">
+    ${MODES.map(m=>`<button data-mode="${m.id}" class="${m.id===State.mode?'active':''}"><span class="glyph">${m.glyph}</span>${m.label}</button>`).join("")}
+  </div>
+  <div class="qarea" id="qarea"></div>`;
+  sheet.innerHTML=html;
+  // set tab color CSS var on sheet for accents
+  sheet.style.setProperty("--tab-color", `var(${L.color})`);
+
+  sheet.querySelectorAll(".mode-row button").forEach(b=>{
+    b.onclick=()=>{ State.mode=b.dataset.mode; resetQuiz(); render(); };
+  });
+
+  if(!has){
+    renderPlaceholder();
+  }else{
+    renderQuiz();
+  }
+  updateReviewFab();
+}
+
+function renderPlaceholder(){
+  document.getElementById("qarea").innerHTML=`
+  <div class="placeholder">
+    <span class="glyph">📓</span>
+    <h3>このセクションは準備中です</h3>
+    <p>Lesson ${State.lesson} の「${MODES.find(m=>m.id===State.mode).label}」は近日リリース予定です。</p>
+    <span class="badge">Lesson 1 と Lesson 2 でひととおりお試しできます</span>
+  </div>`;
+}
+
+function resetQuiz(){
+  State.q=0; State.score={good:0,bad:0};
+  State.showFeedback=false; State.selected=null; State.freeText="";
+  State.done=false; State.pool=null;
+}
+
+function renderQuiz(){
+  if(!State.pool){
+    const p=getPool(State.lesson, State.mode);
+    // shallow shuffle for variety on each session
+    State.pool=[...p].sort(()=>Math.random()-0.5);
+  }
+  const total=State.pool.length;
+  if(State.done){ renderSummary(); return; }
+  const q=State.pool[State.q];
+  if(!q){ State.done=true; renderSummary(); return; }
+
+  const area=document.getElementById("qarea");
+  const isReading = State.mode==="reading";
+  const isWriting = (State.mode==="writing") || q.type==="writing";
+
+  let qbodyClass="qbody";
+  if(/^[ぁ-んァ-ヶ一-龯、。「」]/.test((q.body||"")[0]||"")) qbodyClass+=" ja";
+
+  let html=`
+  <div class="qmeta">
+    <div class="step">問 ${State.q+1} <span style="opacity:.5"> / ${total}</span></div>
+    <div class="score">○ <b class="good">${State.score.good}</b> &nbsp; × <b class="bad">${State.score.bad}</b></div>
+  </div>
+  ${isReading?`
+    <div class="q-card">
+      <div class="reading-passage">
+        <h4>READING PASSAGE</h4>
+        ${escapeHtml(q._passage.passage).replace(/\n\n/g,'</p><p style="margin-top:10px">').replace(/^/,'<p>')}</p>
+        <p style="text-align:right;margin-top:8px;font-style:italic;color:var(--ink-soft);font-size:13px">— ${escapeHtml(q._passage.title)}</p>
+      </div>
+    </div>`:""}
+  <div class="q-card">
+    <span class="qno">Q${State.q+1}</span>
+    <div class="qprompt">${escapeHtml(q.prompt||"")}</div>
+    <div class="${qbodyClass}">${formatBody(q.body)}</div>
+    ${isWriting? renderWriting(q) : renderChoices(q)}
+    <div class="feedback" id="fb"></div>
+    <div class="q-actions">
+      ${isWriting
+        ? `<button class="btn primary" id="checkBtn">採点する</button>`
+        : `<button class="btn primary" id="checkBtn" disabled>採点する</button>`}
+      <button class="btn ghost" id="nextBtn" style="display:none">次の問題 →</button>
+      <button class="btn ghost" id="skipBtn">スキップ</button>
+    </div>
+  </div>`;
+  area.innerHTML=html;
+
+  // wire actions
+  if(isWriting){
+    const ta=area.querySelector("textarea.answer-input");
+    ta.addEventListener("input", e=>{ State.freeText=e.target.value; });
+    document.getElementById("checkBtn").onclick=()=>checkWriting(q);
+  }else{
+    area.querySelectorAll(".choice").forEach(btn=>{
+      btn.onclick=()=>{
+        if(State.showFeedback) return;
+        State.selected=Number(btn.dataset.i);
+        area.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"));
+        btn.classList.add("selected");
+        document.getElementById("checkBtn").disabled=false;
+      };
+    });
+    document.getElementById("checkBtn").onclick=()=>checkChoice(q);
+  }
+  document.getElementById("nextBtn").onclick=nextQuestion;
+  document.getElementById("skipBtn").onclick=()=>{ nextQuestion(true); };
+}
+
+function renderChoices(q){
+  return `<div class="choices">${q.choices.map((c,i)=>
+    `<button class="choice" data-i="${i}">
+       <span class="mark">${"ABCD"[i]}</span>
+       <span>${escapeHtml(c)}</span>
+     </button>`).join("")}</div>`;
+}
+
+function renderWriting(q){
+  return `<textarea class="answer-input" placeholder="ここに英語で解答を入力" autofocus>${escapeHtml(State.freeText||"")}</textarea>`;
+}
+
+function checkChoice(q){
+  if(State.selected==null) return;
+  State.showFeedback=true;
+  const area=document.getElementById("qarea");
+  area.querySelectorAll(".choice").forEach((b,i)=>{
+    b.classList.add("locked");
+    if(i===q.answer) b.classList.add("correct");
+    if(i===State.selected && i!==q.answer) b.classList.add("wrong");
+  });
+  const ok=(State.selected===q.answer);
+  showFeedback(ok, q);
+  if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
+  document.getElementById("checkBtn").style.display="none";
+  document.getElementById("nextBtn").style.display="inline-flex";
+}
+
+function checkWriting(q){
+  const ans=(State.freeText||"").trim();
+  if(!ans){ alert("解答を入力してください。"); return; }
+  State.showFeedback=true;
+  const ok=isWritingCorrect(ans, q);
+  showFeedback(ok, q, true, ans);
+  if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
+  document.getElementById("checkBtn").style.display="none";
+  document.getElementById("nextBtn").style.display="inline-flex";
+  document.querySelector("textarea.answer-input").disabled=true;
+}
+
+function normalize(s){
+  return s.toLowerCase()
+    .replace(/[’‘`´]/g,"'")
+    .replace(/[“”]/g,'"')
+    .replace(/[.,!?;:]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function isWritingCorrect(input, q){
+  const cand=[q.answer, ...(q.alts||[])].map(normalize);
+  const n=normalize(input);
+  return cand.includes(n);
+}
+
+function showFeedback(ok, q, writingMode=false, userInput=""){
+  const fb=document.getElementById("fb");
+  fb.classList.add("show");
+  fb.classList.remove("good","bad");
+  fb.classList.add(ok?"good":"bad");
+  let html="";
+  if(ok){
+    html += `<span class="stamp">◎ 正解！</span>${escapeHtml(q.note||"よく出来ました。")}`;
+  }else{
+    html += `<span class="stamp">× 不正解</span>もう一度確認しましょう。`;
+    if(!writingMode){
+      html += `<span class="ans-line">正解: <b>${"ABCD"[q.answer]}. ${escapeHtml(q.choices[q.answer])}</b></span>`;
+    }else{
+      html += `<span class="ans-line">模範解答: <b>${escapeHtml(q.answer)}</b></span>`;
+      if(q.alts && q.alts.length){
+        html += `<span class="ja-hint">他の許容例: ${q.alts.map(a=>`「${escapeHtml(a)}」`).join(" / ")}</span>`;
+      }
+      html += `<span class="ja-hint">あなたの解答: ${escapeHtml(userInput)}</span>`;
+    }
+    if(q.note) html += `<span class="ja-hint">ヒント: ${escapeHtml(q.note)}</span>`;
+  }
+  fb.innerHTML=html;
+}
+
+function nextQuestion(skip=false){
+  if(skip && !State.showFeedback){
+    State.score.bad++; addToReview(State.pool[State.q]);
+  }
+  State.q++;
+  State.showFeedback=false;
+  State.selected=null;
+  State.freeText="";
+  if(State.q>=State.pool.length){ State.done=true; commitProgress(); renderSummary(); return; }
+  renderQuiz();
+}
+
+function addToReview(q){
+  // dedupe by body
+  if(!State.review.find(r=>r.body===q.body && r.lesson===State.lesson && r.mode===State.mode)){
+    State.review.push({
+      lesson:State.lesson, mode:State.mode,
+      body:q.body, prompt:q.prompt,
+      answer:q.choices? q.choices[q.answer] : q.answer,
+      note:q.note||""
+    });
+    saveStore();
+  }
+}
+
+function commitProgress(){
+  const total=State.score.good+State.score.bad;
+  const pct = total? Math.round(100*State.score.good/total):0;
+  State.progress[State.lesson] = State.progress[State.lesson] || {};
+  State.progress[State.lesson][State.mode] = pct;
+  saveStore();
+}
+
+function renderSummary(){
+  const area=document.getElementById("qarea");
+  const total=State.score.good+State.score.bad;
+  const pct = total? Math.round(100*State.score.good/total):0;
+  let stamp="もう一度復習しましょう。";
+  if(pct>=90) stamp="満点近し！素晴らしい";
+  else if(pct>=70) stamp="よくできました";
+  else if(pct>=50) stamp="あと一歩";
+  area.innerHTML=`
+  <div class="summary">
+    <h3>${MODES.find(m=>m.id===State.mode).label} ・ 結果</h3>
+    <div class="score-big">${pct}<small>%</small></div>
+    <div>${State.score.good} / ${total} 問正解</div>
+    <div class="stamp-circle">${stamp}</div>
+    <div class="row">
+      <button class="btn primary" id="againBtn">もう一度</button>
+      <button class="btn accent" id="nextModeBtn">次のモードへ</button>
+      <button class="btn ghost" id="goReviewBtn">復習帳を見る</button>
+    </div>
+  </div>`;
+  document.getElementById("againBtn").onclick=()=>{ resetQuiz(); render(); };
+  document.getElementById("nextModeBtn").onclick=()=>{
+    const idx=MODES.findIndex(m=>m.id===State.mode);
+    State.mode=MODES[(idx+1)%MODES.length].id;
+    resetQuiz(); render();
+  };
+  document.getElementById("goReviewBtn").onclick=openReview;
+  updateReviewFab();
+}
+
+/* ============================================================
+   Review (復習帳) modal
+   ============================================================ */
+const modalBg=document.getElementById("modalBg");
+const modalBody=document.getElementById("modalBody");
+
+function openReview(){
+  let html=`
+    <button class="close" id="closeModal">×</button>
+    <h3>☆ 復習帳</h3>
+    <p style="font-size:13px;color:var(--ink-soft);margin-bottom:8px">間違えた問題が自動で集まります。</p>`;
+  if(!State.review.length){
+    html += `<p style="margin-top:18px;color:var(--ink-soft)">まだ登録された問題はありません。問題を解くと、間違えたものがここに集まります。</p>`;
+  }else{
+    html += State.review.map((r,i)=>{
+      const L=LESSONS.find(l=>l.n===r.lesson);
+      return `<div class="item">
+        <div class="q">${escapeHtml(r.body)}</div>
+        <div class="a">正解: <b>${escapeHtml(r.answer)}</b></div>
+        ${r.note?`<div class="a" style="color:var(--ink-soft)">ヒント: ${escapeHtml(r.note)}</div>`:""}
+        <div class="tags">Lesson ${L.n} ${L.title} / ${MODES.find(m=>m.id===r.mode)?.label||r.mode}</div>
+      </div>`;
+    }).join("");
+    html += `<div style="margin-top:18px;text-align:right">
+      <button class="btn ghost" id="clearReviewBtn">復習帳を空にする</button>
+    </div>`;
+  }
+  modalBody.innerHTML=html;
+  modalBg.classList.add("show");
+  document.getElementById("closeModal").onclick=closeReview;
+  const cl=document.getElementById("clearReviewBtn");
+  if(cl) cl.onclick=()=>{ if(confirm("復習帳をすべて削除しますか？")){ State.review=[]; saveStore(); openReview(); updateReviewFab(); }};
+}
+function closeReview(){ modalBg.classList.remove("show"); }
+modalBg.addEventListener("click", e=>{ if(e.target===modalBg) closeReview(); });
+
+function updateReviewFab(){
+  document.getElementById("reviewCount").textContent=State.review.length;
+}
+document.getElementById("reviewFab").onclick=openReview;
+
+/* ============================================================
+   Helpers
+   ============================================================ */
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g, c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));}
+function formatBody(s){
+  // turn (___) into a styled blank
+  return escapeHtml(s||"").replace(/\(\s*_+\s*\)/g, '<span class="blank">　　　</span>');
+}
+
+/* ============================================================
+   Boot
+   ============================================================ */
+loadStore();
+render();
+
+/* Register service worker for offline use (only on https / localhost) */
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>
