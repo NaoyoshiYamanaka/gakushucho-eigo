@@ -9,7 +9,7 @@
    キャッシュ名は CACHE_VERSION で管理。アプリを更新したら数字を上げる。
    ============================================================ */
 
-const CACHE_VERSION = 'v3-2026-05-18-geography';
+const CACHE_VERSION = 'v4-2026-05-18-explanations';
 const CACHE_NAME = `gakushucho-${CACHE_VERSION}`;
 const FONTS_CACHE = `gakushucho-fonts-${CACHE_VERSION}`;
 

@@ -602,6 +602,49 @@ input.text-fill:focus{outline:none;background:#FFF7EF}
 .modal .item .a b{color:var(--good)}
 .modal .item .tags{font-size:11px;color:var(--ink-soft);margin-top:4px}
 
+/* Explanation modal content (rich) */
+.explain-body{font-size:14px;line-height:1.85;color:var(--ink)}
+.explain-body h4{
+  font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
+  font-size:14px;color:var(--accent-deep);
+  margin:14px 0 6px;letter-spacing:.05em;
+  border-left:3px solid var(--accent);padding-left:8px;
+}
+.explain-body h4:first-child{margin-top:0}
+.explain-body p{margin:6px 0}
+.explain-body ul{margin:6px 0 6px 22px;padding:0}
+.explain-body ul li{margin:3px 0;font-size:14px}
+.explain-body b{color:var(--ink);font-weight:600}
+.explain-body code{
+  background:#F5EFDD;color:var(--accent-deep);
+  padding:1px 5px;border-radius:4px;
+  font-family:'Crimson Pro',serif;font-size:14px;
+  border:1px solid var(--rule);
+}
+.explain-body em{
+  font-style:italic;color:var(--ink-soft);
+  font-family:'Crimson Pro',serif;
+}
+.explain-q-recap{
+  background:#FFF9EC;
+  border:1px solid var(--rule);
+  border-left:3px solid var(--accent);
+  padding:10px 14px;border-radius:0 8px 8px 0;
+  margin-bottom:14px;font-size:13px;
+}
+.explain-q-recap .lbl{
+  font-size:11px;color:var(--ink-soft);letter-spacing:.1em;display:block;margin-bottom:3px;
+}
+.explain-q-recap .q{color:var(--ink);font-family:'Crimson Pro',serif;font-size:15px}
+.explain-q-recap .a{color:var(--good);font-weight:600;font-size:13px;margin-top:4px}
+
+.btn.explain-btn{
+  background:#FFFDF7;color:var(--accent-deep);
+  border:1.5px solid var(--accent);
+}
+.btn.explain-btn:hover{background:#FFF7EF}
+.btn.explain-btn .ic{margin-right:4px}
+
 /* Footer */
 footer.colophon{
   text-align:center;color:var(--ink-soft);font-size:12px;margin-top:30px;
@@ -701,150 +744,226 @@ const QUESTIONS = {
   */
   1: {
     vocab:[
-      // 配付資料 Part 2 単語リストから（p.18）
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"nowadays", choices:["昔は","近頃は","いつでも","二度と"], answer:1, note:"副詞「近頃は・このごろは」。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"seek", choices:["売る","探す・探究する","眠る","縫う"], answer:1, note:"seek - sought - sought と不規則変化。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"mecca", choices:["麦","メッカ・聖地","機械","メダル"], answer:1, note:"「(ある分野で) 多くの人が集まる聖地」。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"skier", choices:["スキーヤー","スリッパ","水夫","空港"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"snowboarder", choices:["雪かき係","スノーボーダー","気象予報士","雪だるま"], answer:1},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"not only A but also B", choices:["AかBのどちらか","AでもBでもない","Aだけでなく B も","Aの代わりに B"], answer:2, note:"「A だけでなく B も」。"},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"that is", choices:["それは","つまり","あれだ","それでも"], answer:1, note:"言いかえ・補足。"},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"stand for ...", choices:["…を表す","…に立ち向かう","…の前に立つ","…を支える"], answer:0, note:"略語の説明でよく使う。"},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"from all around the world", choices:["近所から","全世界に向けて","世界中から","半周して"], answer:2},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"come and experience ...", choices:["…にやって来ない","…を体験しにくる","…を経験せずに帰る","…を遠くから見る"], answer:1},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"be popular with ...", choices:["…と一緒にいる","…に人気がある","…に嫌われる","…で混雑する"], answer:1},
-      // Part 1 本文要語
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"countless", choices:["数えられる","ほぼゼロの","数え切れないほどの","限定された"], answer:2, note:"count + less = 数えられない。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"contrast", choices:["契約","対比・コントラスト","対立心","集中"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"exotic", choices:["異国風の","退屈な","平凡な","電子的な"], answer:0},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"appeal to ...", choices:["…をあわれむ","…の心を引きつける","…に謝罪する","…に申請する"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"construction", choices:["相談","建設・建立","結論","集中"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"donor", choices:["寄贈者","収集家","購入者","観光客"], answer:0},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"sightseeing spot", choices:["公衆トイレ","観光地","写真撮影禁止区域","休憩所"], answer:1},
-      // Part 3 本文要語
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"cultural experience", choices:["文化体験","異文化交流学","文化人類学","海外留学"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"ordinary", choices:["秩序ある","普通の","古代の","公式な"], answer:1, note:"「普段の／ありふれた」。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"costume", choices:["顧客","衣装","費用","税関"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"provide", choices:["証明する","提供する","禁止する","予約する"], answer:1},
-      // 日本語→英語
-      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"近頃は", choices:["nowhere","nowadays","newly","narrow"], answer:1},
-      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"異国風の", choices:["exact","exotic","extra","exit"], answer:1},
-      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"数え切れないほどの", choices:["careful","careless","countless","central"], answer:2},
-      // 文脈穴埋め
-      {prompt:"文脈に合うものを選びなさい。", body:'Niseko in Hokkaido is now a (   ) for sports tourism.', choices:["museum","mecca","mountain","memory"], answer:1, note:"「スポーツ観光の聖地」。"},
-      {prompt:"文脈に合うものを選びなさい。", body:'Tourists are (   ) fresh experiences.', choices:["selling","seeking","sleeping","sending"], answer:1, note:"are + -ing と be seeking。"},
-      {prompt:"文脈に合うものを選びなさい。", body:'"Japow" (   ) for "Japanese powder snow."', choices:["stands","stops","stays","stamps"], answer:0, note:"stand for = 〜を表す。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"nowadays", choices:["昔は","近頃は","いつでも","二度と"], answer:1, note:"副詞「近頃は・このごろは」。",
+       explain:"## 意味\n**nowadays** = 副詞で「近頃は／このごろは」。\n\n## ポイント\n- 現在の傾向や習慣を述べるときに使う\n- 文頭・文中・文末どこにも置ける\n\n## 例文\n- `Nowadays, many people work from home.`（近頃は多くの人が在宅勤務をしている）\n- `Cash is rarely used nowadays.`（現金は近頃あまり使われない）\n\n## 似た語\n**these days** とほぼ同じ意味。nowadays の方が「以前と比べて変化した」のニュアンスがやや強い。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"seek", choices:["売る","探す・探究する","眠る","縫う"], answer:1, note:"seek - sought - sought と不規則変化。",
+       explain:"## 意味\n**seek** = 「探す／探究する／求める」を意味する動詞。\n\n## 活用\n`seek – sought – sought`（不規則動詞）\n\n## 例文\n- `Tourists are seeking new experiences.`（旅行者は新しい体験を探している）\n- `He sought advice from his teacher.`（彼は先生に助言を求めた）\n\n## look for との違い\n**seek** は固い語で、抽象的な対象（真理・知恵・体験など）にも使える。**look for** は口語的でモノを探す時によく使う。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"mecca", choices:["麦","メッカ・聖地","機械","メダル"], answer:1, note:"「(ある分野で) 多くの人が集まる聖地」。",
+       explain:"## 意味\n**mecca** = 「メッカ／聖地」。本来はイスラム教の聖地メッカ（サウジアラビア）を指すが、転じて「ある分野で人々が憧れて集まる場所」の意味で使う。\n\n## 例文\n- `Niseko is a mecca for skiers.`（ニセコはスキーヤーの聖地だ）\n- `Akihabara is a mecca for anime fans.`（秋葉原はアニメファンの聖地だ）\n\n## ポイント\nふつう `a mecca for ~` の形で使う。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"skier", choices:["スキーヤー","スリッパ","水夫","空港"], answer:0,
+       explain:"## 意味\n**skier** = スキーをする人（スキーヤー）。\n\n## 作り方\n`ski`（スキーをする）+ `-er`（する人）= `skier`\n\n## 似た形\n- `snowboarder` = スノーボードをする人\n- `surfer` = サーフィンをする人\n- `runner` = 走る人\n\n## 注意\n発音は「スキーヤー」ではなく `/ˈskiːər/`（スキーア）に近い。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"snowboarder", choices:["雪かき係","スノーボーダー","気象予報士","雪だるま"], answer:1,
+       explain:"## 意味\n**snowboarder** = スノーボードをする人。\n\n## 作り方\n`snow`（雪）+ `board`（板）+ `-er`（する人）。\n\n## 例文\n- `Skiers and snowboarders come from all around the world.`（スキーヤーやスノーボーダーが世界中からやって来る）\n\n## ポイント\nスポーツツーリズム関連の文では skier と snowboarder がセットで出ることが多い。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"not only A but also B", choices:["AかBのどちらか","AでもBでもない","Aだけでなく B も","Aの代わりに B"], answer:2, note:"「A だけでなく B も」。",
+       explain:"## 意味\n**not only A but also B** =「A だけでなく B も」\n\n## ポイント\n- A と B には文法的に**同じ種類**のものを置く（名詞↔名詞、動詞↔動詞）\n- `also` は省略されることもある（口語）\n\n## 例文\n- `Not only sightseeing but also cultural experiences are popular.`（観光だけでなく文化体験も人気だ）\n- `She speaks not only English but also French.`（彼女は英語だけでなくフランス語も話す）\n\n## 主語が not only A but also B の時\n動詞は **B に一致** させる。上の文では `cultural experiences` が複数なので `are`。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"that is", choices:["それは","つまり","あれだ","それでも"], answer:1, note:"言いかえ・補足。",
+       explain:"## 意味\n**that is** =「つまり／すなわち」。直前の内容を言いかえる時に使う表現。\n\n## 例文\n- `Tourists are seeking fresh experiences, that is, not just sightseeing.`（旅行者は新鮮な体験を求めている。つまり、ただの観光ではない）\n\n## ポイント\n- 前後にカンマ `,` を置くのがふつう（`, that is,`）\n- ラテン語由来の **i.e.** と同じ意味（書き言葉では i.e. を使う）\n\n## 注意\n単なる指示語の「あれは〜だ」（that is + 名詞）と区別する。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"stand for ...", choices:["…を表す","…に立ち向かう","…の前に立つ","…を支える"], answer:0, note:"略語の説明でよく使う。",
+       explain:"## 意味\n**stand for ~** =「〜を表す／〜の略である」。\n\n## 例文\n- `\"Japow\" stands for \"Japanese powder snow.\"`（「ジャパウ」は「日本の粉雪」を表す）\n- `UN stands for the United Nations.`（UN は国際連合の略）\n\n## ポイント\n- **略語・記号の意味**を説明する時に超頻出\n- 似た表現: `~ means ...`\n\n## 別の意味\n「〜に賛成する／支持する」の意味もある: `I stand for equality.`（私は平等を支持する）"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"from all around the world", choices:["近所から","全世界に向けて","世界中から","半周して"], answer:2,
+       explain:"## 意味\n**from all around the world** =「世界中から」。\n\n## 構成\n`from`（〜から）+ `all around the world`（世界中の至るところ）\n\n## 例文\n- `Skiers come from all around the world.`（スキーヤーは世界中からやってくる）\n- `Tourists visit Japan from all around the world.`（観光客が世界中から日本を訪れる）\n\n## 言い換え\n- `from all over the world`（同じ意味）\n- `from around the globe`（やや書き言葉）"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"come and experience ...", choices:["…にやって来ない","…を体験しにくる","…を経験せずに帰る","…を遠くから見る"], answer:1,
+       explain:"## 意味\n**come and experience ~** =「〜を体験しに来る／〜を体験するためにやって来る」。\n\n## 構造\n`come`（来る）+ `and`（そして）+ `experience`（体験する）\n\n## 例文\n- `Skiers come and experience Japow in Niseko.`（スキーヤーはジャパウを体験しにニセコへ来る）\n\n## ポイント\n口語英語では `come and ~` は「〜しに来る」を意味する慣用表現。`come to ~` でも置き換え可能（come to experience）。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"be popular with ...", choices:["…と一緒にいる","…に人気がある","…に嫌われる","…で混雑する"], answer:1,
+       explain:"## 意味\n**be popular with ~** =「〜に人気がある」。\n\n## 注意：前置詞\n- `popular **with** + 人` … 人気の対象が人\n- `popular **for** + 物事` … 〜のことで人気がある\n- `popular **as** + 役割` … 〜として人気\n\n## 例文\n- `Niseko is popular with foreign skiers.`（ニセコは外国人スキーヤーに人気がある）\n- `The shrine is famous **for** its red gates.`（神社は赤い鳥居で有名）\n\n## ポイント\n**with** = 「（人）にとって」のニュアンス。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"countless", choices:["数えられる","ほぼゼロの","数え切れないほどの","限定された"], answer:2, note:"count + less = 数えられない。",
+       explain:"## 意味\n**countless** =「数え切れないほどの／非常に多い」。\n\n## 語の構成\n`count`（数える）+ `-less`（〜できない）= 数えられない\n\n## 似た形の語\n- `endless` = 終わりのない\n- `useless` = 役に立たない\n- `careless` = 不注意な\n\n## 例文\n- `The shrine has countless red torii gates.`（その神社には数え切れないほどの赤い鳥居がある）\n- `She has countless friends.`（彼女には数え切れないほどの友人がいる）\n\n## 注意\n後ろは**複数名詞**になる（countless gate**s**）。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"contrast", choices:["契約","対比・コントラスト","対立心","集中"], answer:1,
+       explain:"## 意味\n**contrast** =「対比・コントラスト」（名詞）／「対比する」（動詞）。\n\n## 例文\n- `The sharp contrast between the red gates and the black letters is exotic.`（赤い鳥居と黒い文字の鮮やかな対比は異国風だ）\n- `In contrast to summer, winter here is dry.`（夏とは対照的に、ここの冬は乾燥している）\n\n## よく使うコロケーション\n- `a sharp / striking contrast` = はっきりした対比\n- `in contrast (to / with)` = 〜とは対照的に\n- `make a contrast` = 対比をなす"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"exotic", choices:["異国風の","退屈な","平凡な","電子的な"], answer:0,
+       explain:"## 意味\n**exotic** =「異国風の／珍しい／エキゾチックな」。\n\n## 例文\n- `The shrine looks exotic to foreign tourists.`（その神社は外国人観光客には異国風に見える）\n- `She loves exotic food.`（彼女は珍しい外国料理が好きだ）\n\n## ポイント\n「自分の文化と違って珍しい・魅力的」というポジティブなニュアンス。\n\n## 注意\n発音は `/ɪɡˈzɒtɪk/`（イグゾティック）でアクセントは中央。`exit`（出口）とは全くの別語。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"appeal to ...", choices:["…をあわれむ","…の心を引きつける","…に謝罪する","…に申請する"], answer:1,
+       explain:"## 意味\n**appeal to ~** =「〜の心を引きつける／〜に訴える」。\n\n## 例文\n- `The exotic shrine appeals to visitors from abroad.`（その異国風の神社は海外からの旅行者の心を引きつける）\n- `This book appeals to young readers.`（この本は若い読者の心をつかむ）\n\n## 別の意味\n- 「（人）に訴える／お願いする」: `He appealed to the judge.`（彼は裁判官に訴えた）\n- 「（法律）控訴する」\n\n## 名詞形\n`appeal` = 魅力／訴え"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"construction", choices:["相談","建設・建立","結論","集中"], answer:1,
+       explain:"## 意味\n**construction** =「建設／建立／工事」。\n\n## 語の構成\n動詞 `construct`（建設する）の名詞形。\n\n## 例文\n- `The construction of the bridge took 5 years.`（その橋の建設には 5 年かかった）\n- `The gates show their construction dates.`（鳥居にはその建立年月日が書かれている）\n\n## 関連語\n- `construct` 動詞 = 建設する\n- `under construction` = 工事中\n- `instruction` = 指示（似ているが別語）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"donor", choices:["寄贈者","収集家","購入者","観光客"], answer:0,
+       explain:"## 意味\n**donor** =「寄贈者／提供者／献血者」。\n\n## 語の構成\n動詞 `donate`（寄付する／寄贈する）の名詞形。\n\n## 例文\n- `The names of donors are written on the gates.`（鳥居には寄贈者の名前が書かれている）\n- `She is a blood donor.`（彼女は献血者だ）\n\n## 関連語\n- `donation` = 寄付（行為）\n- `recipient` = 受け取る人（反対）"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"sightseeing spot", choices:["公衆トイレ","観光地","写真撮影禁止区域","休憩所"], answer:1,
+       explain:"## 意味\n**sightseeing spot** =「観光地／観光スポット」。\n\n## 語の構成\n`sightseeing`（観光）+ `spot`（場所）。\n\n## 例文\n- `Kyoto has many famous sightseeing spots.`（京都には有名な観光地がたくさんある）\n- `Fushimi-Inari Shrine is the top sightseeing spot for foreign tourists.`（伏見稲荷大社は外国人観光客にとって最上位の観光地だ）\n\n## 似た表現\n- `tourist attraction` = 観光名所\n- `sightseeing destination` = 観光目的地"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"cultural experience", choices:["文化体験","異文化交流学","文化人類学","海外留学"], answer:0,
+       explain:"## 意味\n**cultural experience** =「文化体験」。その地域・国の文化を実際に体験すること。\n\n## 例文\n- `Tourists enjoy cultural experiences in Japan, such as wearing kimono.`（観光客は着物を着るなどの文化体験を日本で楽しむ）\n\n## ポイント\nニューツーリズム（new tourism）の中心テーマの 1 つ。観光地を見るだけでなく、実際に体験する旅のスタイル。\n\n## 関連語\n- `cuisine` = 料理\n- `tradition` = 伝統"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"ordinary", choices:["秩序ある","普通の","古代の","公式な"], answer:1, note:"「普段の／ありふれた」。",
+       explain:"## 意味\n**ordinary** =「普通の／ありふれた／日常の」。\n\n## 例文\n- `Tourists visit ordinary Japanese homes.`（観光客は普通の日本の家庭を訪れる）\n- `It was just an ordinary day.`（ただの普通の日だった）\n\n## 反対語\n- `extraordinary` = 並外れた／特別な\n- `unusual` = 普通でない\n\n## 注意\n発音は `/ˈɔːrdənˌeri/`（オーディネリ）でアクセントは最初。order（命令）と語源は同じだが意味は別。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"costume", choices:["顧客","衣装","費用","税関"], answer:1,
+       explain:"## 意味\n**costume** =「衣装／民族衣装／コスチューム」。\n\n## 例文\n- `Tourists wear ninja costumes in Iga.`（観光客は伊賀で忍者の衣装を着る）\n- `Halloween costumes`（ハロウィンの仮装衣装）\n\n## 紛らわしい語\n- `customer` = 顧客\n- `custom` = 慣習\n- `customs` = 税関 / 慣習\n\n発音もスペルも似ているので要注意。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"provide", choices:["証明する","提供する","禁止する","予約する"], answer:1,
+       explain:"## 意味\n**provide** =「提供する／供給する」。\n\n## 例文\n- `The hotel provides free Wi-Fi.`（そのホテルは無料 Wi-Fi を提供する）\n- `What kind of new tourism does your area provide?`（あなたの地域はどんなニューツーリズムを提供していますか？）\n\n## 文型\n- `provide A`：A を提供する\n- `provide A for B / provide B with A`：B に A を提供する\n\n## 紛らわしい語\n- `prove` = 証明する\n- `proverb` = ことわざ"},
+      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"近頃は", choices:["nowhere","nowadays","newly","narrow"], answer:1,
+       explain:"## 答え\n**近頃は** = `nowadays`\n\n## 他の選択肢\n- `nowhere` = どこにも〜ない\n- `newly` = 新たに\n- `narrow` = 狭い\n\n## 似た形に注意\n`now`（今）から始まる単語は多いが、意味は全然違う。スペルをしっかり覚えよう。"},
+      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"異国風の", choices:["exact","exotic","extra","exit"], answer:1,
+       explain:"## 答え\n**異国風の** = `exotic`\n\n## 他の選択肢\n- `exact` = 正確な\n- `extra` = 追加の\n- `exit` = 出口\n\n## ポイント\nどれも `ex-` で始まる紛らわしい単語。スペルをしっかり区別しよう。\n\n## 発音\n`exotic` = `/ɪɡˈzɒtɪk/`（イグゾティック）。第 2 音節にアクセント。"},
+      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"数え切れないほどの", choices:["careful","careless","countless","central"], answer:2,
+       explain:"## 答え\n**数え切れないほどの** = `countless`\n\n## 語の構成\n`count`（数える）+ `-less`（〜できない）= 数えられない\n\n## 他の選択肢\n- `careful` = 注意深い\n- `careless` = 不注意な\n- `central` = 中心の\n\n## ポイント\n`-less` で「〜できない／〜のない」を作る形容詞は多い：`useless`（無用な）`endless`（終わりのない）`hopeless`（絶望的な）。"},
+      {prompt:"文脈に合うものを選びなさい。", body:'Niseko in Hokkaido is now a (   ) for sports tourism.', choices:["museum","mecca","mountain","memory"], answer:1, note:"「スポーツ観光の聖地」。",
+       explain:"## 答え\n**mecca**（聖地）が正解。\n\n## 文の意味\n「北海道のニセコは今やスポーツツーリズムの**聖地**となっている。」\n\n## なぜ他は不正解か\n- `museum`（博物館）→ 文脈に合わない\n- `mountain`（山）→ Niseko は山地だが「a mountain for ~」とは言わない\n- `memory`（記憶）→ 完全に意味不明\n\n## ポイント\n`a mecca for ~` =「〜の聖地」は決まり文句。スポーツ・趣味の世界で人々が集まる場所を表す。"},
+      {prompt:"文脈に合うものを選びなさい。", body:'Tourists are (   ) fresh experiences.', choices:["selling","seeking","sleeping","sending"], answer:1, note:"are + -ing と be seeking。",
+       explain:"## 答え\n**seeking**（探している）が正解。\n\n## 文の意味\n「旅行者は新鮮な体験を**探している**。」\n\n## なぜ他は不正解か\n- `selling` = 売っている → 旅行者が体験を売るのは不自然\n- `sleeping` = 眠っている\n- `sending` = 送っている\n\n## 文法ポイント\n`are seeking` = **現在進行形**（be + -ing）。\n→ 今まさに進行中の動作を表す。\n→ Lesson 1 の文法の中心テーマ。"},
+      {prompt:"文脈に合うものを選びなさい。", body:'"Japow" (   ) for "Japanese powder snow."', choices:["stands","stops","stays","stamps"], answer:0, note:"stand for = 〜を表す。",
+       explain:"## 答え\n**stands**（〜を表す）が正解。\n\n## 文の意味\n「『ジャパウ』は『日本の粉雪』**を表す**。」\n\n## 熟語\n**stand for ~** =「〜を表す／〜の略語である」\n→ 略語や符号の意味を説明する超頻出表現。\n\n## なぜ他は不正解か\n- `stops` = 止まる\n- `stays` = とどまる\n- `stamps` = 切手を貼る\n\n## ポイント\n主語 \"Japow\" は単数（しかも 3 人称）なので動詞は `-s` がついた `stands`。"},
     ],
     grammar:[
-      // 助動詞の意味 (配付プリント直結)
-      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"can", choices:["〜すべきだ","〜できる","〜にちがいない","〜だろう"], answer:1, note:"can = 〜できる（能力・可能）。"},
-      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"will", choices:["〜できる","〜すべきだ","〜だろう","〜かもしれない"], answer:2, note:"will = 〜だろう（未来の予想）。"},
-      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"may", choices:["〜できる","〜かもしれない","〜にちがいない","〜だろう"], answer:1, note:"may = 〜かもしれない（推量）／〜してよい（許可）。"},
-      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"must", choices:["〜にちがいない・〜しなければならない","〜できる","〜かもしれない","〜だろう"], answer:0, note:"must = 〜にちがいない／〜しなければならない。"},
-      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"should", choices:["〜できる","〜すべきだ","〜してはいけない","〜にちがいない"], answer:1, note:"should = 〜すべきだ（助言）。"},
-      // 助動詞 + 動詞の原形
-      {prompt:"助動詞のあとに来る形として正しいものを選びなさい。", body:"You should (   ) more vegetables.", choices:["eats","eat","ate","eating"], answer:1, note:"助動詞の後ろは必ず動詞の原形。"},
-      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"It is sunny now, but it (   ) rain tonight.", choices:["may","should","can","do"], answer:0, note:"「〜かもしれない」→ may。"},
-      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"You look pale. You (   ) be tired.", choices:["should","must","will","could"], answer:1, note:"「〜にちがいない」（強い推量）→ must。"},
-      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"He studied hard, so he (   ) pass the test.", choices:["should","may not","cannot","must not"], answer:0, note:"「〜すべき／〜のはずだ」→ should。"},
-      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"(   ) you speak French?", choices:["Can","Must","Should","Will"], answer:0, note:"能力をたずねる → Can you ~?"},
-      // 現在形（3単現の s）
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'She always (___) green tea in the morning.', choices:["drink","drinks","drinking","drank"], answer:1, note:"主語が3人称単数 + 習慣 → 現在形 -s。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The shop (___) at 8 a.m. every day.', choices:["opening","opens","opened","is opening"], answer:1, note:"every day の習慣 → 現在形 -s。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Tourists (___) this region for its hot springs.', choices:["love","loves","loving","loved"], answer:0, note:"主語 Tourists は複数 → 原形 love。"},
-      // 過去形
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Last weekend, I (___) a famous temple in Kyoto.', choices:["visit","visited","visiting","visits"], answer:1, note:"last weekend → 過去形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'My grandfather (___) a kimono when he was young.', choices:["wear","wore","wearing","wears"], answer:1, note:"when he was young の文脈 → 過去形。"},
-      // 現在進行形
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Look! The children (___) in the park right now.', choices:["play","plays","are playing","played"], answer:2, note:"right now → 現在進行形 be + -ing。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Don\'t disturb him. He (___) a book.', choices:["reads","read","is reading","was reading"], answer:2, note:"今この瞬間 → 現在進行形。"},
-      // 過去進行形
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When I called him, he (___) his homework.', choices:["does","did","was doing","is doing"], answer:2, note:"過去進行形 was/were + -ing。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'While we (___) near the lake, we saw a beautiful sunset.', choices:["walk","walks","were walking","walked"], answer:2, note:"While + 過去進行形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When the earthquake struck, we (___) dinner.', choices:["have","had","were having","are having"], answer:2, note:"過去の進行中の動作 → were having。"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"can", choices:["〜すべきだ","〜できる","〜にちがいない","〜だろう"], answer:1, note:"can = 〜できる（能力・可能）。",
+       explain:"## 答え\n**can** = 「〜できる」（能力・可能性）\n\n## 主な使い方\n- **能力**: `I can speak English.`（私は英語が話せる）\n- **可能性**: `Anyone can make a mistake.`（誰でも間違いはする）\n- **許可**（口語）: `You can use my pen.`（私のペン使っていいよ）\n\n## ポイント\n- 後ろは必ず**動詞の原形**: `can do`, `can swim`\n- 過去形は **could**\n- 否定形は `cannot` または `can't`\n\n## 注意\n3 人称単数でも `cans` にはならない（助動詞だから）。"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"will", choices:["〜できる","〜すべきだ","〜だろう","〜かもしれない"], answer:2, note:"will = 〜だろう（未来の予想）。",
+       explain:"## 答え\n**will** = 「〜だろう／〜するつもり」（未来・意志）\n\n## 主な使い方\n- **未来の予想**: `It will rain tomorrow.`（明日は雨が降るだろう）\n- **意志**: `I will help you.`（手伝うよ）\n- **習性**: `Boys will be boys.`（男の子は男の子だ）\n\n## ポイント\n- 後ろは**動詞の原形**\n- 否定形は `will not` または `won't`\n- 過去形は **would**\n\n## be going to との違い\n`will` = その場で決めた未来／予想\n`be going to` = 前から決めている予定／確実な兆候"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"may", choices:["〜できる","〜かもしれない","〜にちがいない","〜だろう"], answer:1, note:"may = 〜かもしれない（推量）／〜してよい（許可）。",
+       explain:"## 答え\n**may** = 「〜かもしれない」（推量）／「〜してよい」（許可）\n\n## 主な使い方\n- **推量**: `It may rain tonight.`（今夜は雨が降るかもしれない）\n- **許可**（フォーマル）: `You may enter.`（入ってよろしい）\n- **許可を求める**: `May I come in?`（入ってもいいですか）\n\n## ポイント\n- 後ろは**動詞の原形**\n- 過去形は **might**（might は現代英語では「〜かもしれない」の控えめ版としても使う）\n\n## 確実さの順\n`must`（90%）> `will`（80%）> `should`（70%）> **`may/might`（50%）** > `could`（30%）"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"must", choices:["〜にちがいない・〜しなければならない","〜できる","〜かもしれない","〜だろう"], answer:0, note:"must = 〜にちがいない／〜しなければならない。",
+       explain:"## 答え\n**must** には 2 つの主な意味がある：\n\n## ① 強い推量\n「**〜にちがいない**」\n- `You look pale. You must be tired.`（顔色が悪いね。疲れているにちがいない）\n\n## ② 義務\n「**〜しなければならない**」\n- `Students must wear uniforms.`（生徒は制服を着なければならない）\n- `We must leave now.`（もう出発しなければ）\n\n## 否定形に注意\n- `must not` = 「〜してはいけない」（禁止）\n- `don't have to` = 「〜する必要はない」（不要）\n\n意味が全然違うので注意！\n\n## 過去形\n過去形はなく、過去の義務は `had to` を使う。"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"should", choices:["〜できる","〜すべきだ","〜してはいけない","〜にちがいない"], answer:1, note:"should = 〜すべきだ（助言）。",
+       explain:"## 答え\n**should** = 「〜すべきだ／〜したほうがよい」（助言・義務）\n\n## 主な使い方\n- **助言**: `You should eat more vegetables.`（もっと野菜を食べるべきだ）\n- **当然の予想**: `He should pass the test.`（彼ならテストに合格するはずだ）\n\n## must との違い\n`must` = 強い義務（しなければならない、しないと罰がある）\n`should` = 弱い助言（したほうがよい、けど強制ではない）\n\n## 否定形\n`should not` / `shouldn't` = 「〜すべきでない」\n\n## ポイント\n後ろは**動詞の原形**。`should to ~` は誤り。"},
+      {prompt:"助動詞のあとに来る形として正しいものを選びなさい。", body:"You should (   ) more vegetables.", choices:["eats","eat","ate","eating"], answer:1, note:"助動詞の後ろは必ず動詞の原形。",
+       explain:"## 答え\n**eat**（動詞の原形）\n\n## ルール（絶対覚える！）\n助動詞のあとは **必ず動詞の原形** がくる。\n\n`can / will / may / must / should + 動詞の原形`\n\n## なぜ他は不正解か\n- `eats`（3 単現）→ 助動詞のあとには絶対に来ない\n- `ate`（過去形）→ 助動詞のあとには絶対に来ない\n- `eating`（-ing 形）→ 助動詞のあとには絶対に来ない\n\n## 文の意味\n「あなたはもっと野菜を**食べるべきだ**」"},
+      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"It is sunny now, but it (   ) rain tonight.", choices:["may","should","can","do"], answer:0, note:"「〜かもしれない」→ may。",
+       explain:"## 答え\n**may**（〜かもしれない）\n\n## 文の意味\n「今は晴れているけれど、今夜は雨が降る**かもしれない**。」\n\n## なぜ他は不正解か\n- `should rain`（雨が降るべき？）→ 不自然\n- `can rain`（雨が降れる？）→ 能力の意味になり不自然\n- `do`（助動詞 + 動詞の原形でない）\n\n## ポイント\n「不確実な可能性」を表すのは **may / might** が定番。"},
+      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"You look pale. You (   ) be tired.", choices:["should","must","will","could"], answer:1, note:"「〜にちがいない」（強い推量）→ must。",
+       explain:"## 答え\n**must**（〜にちがいない）\n\n## 文の意味\n「顔色が悪いね。疲れている**にちがいない**。」\n\n## ポイント：must の 2 つの意味\n- 義務「〜しなければならない」\n- **強い推量「〜にちがいない」** ← この問題はこっち\n\n見た目や状況から「ほぼ確実にそうだ」と推測するときに使う。\n\n## なぜ他は不正解か\n- `should be tired` = 「疲れているはず」→ やや弱い\n- `will be tired` = 未来の予想（疲れるだろう）\n- `could be tired` = 「疲れているかもしれない」→ 弱い"},
+      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"He studied hard, so he (   ) pass the test.", choices:["should","may not","cannot","must not"], answer:0, note:"「〜すべき／〜のはずだ」→ should。",
+       explain:"## 答え\n**should**（〜のはず／〜すべき）\n\n## 文の意味\n「彼は熱心に勉強した。だから、テストに合格する**はずだ**。」\n\n## ポイント\n`should` には 2 つの意味：\n- 助言「〜すべきだ」\n- **当然の予想「〜のはずだ」** ← この問題\n\n根拠（彼は熱心に勉強した）から「合格して当然」と推論。\n\n## なぜ他は不正解か\n- `may not pass` = 合格しないかもしれない → 文脈と矛盾\n- `cannot pass` = 合格できない → 文脈と矛盾\n- `must not pass` = 合格してはいけない → 意味不明"},
+      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"(   ) you speak French?", choices:["Can","Must","Should","Will"], answer:0, note:"能力をたずねる → Can you ~?",
+       explain:"## 答え\n**Can**（〜できますか）\n\n## 文の意味\n「あなたはフランス語を話せ**ますか**？」\n\n## ポイント\n相手の**能力**をたずねる時は `Can you ~?` を使う。\n\n## なぜ他は不正解か\n- `Must you speak French?` = フランス語を話さなければなりませんか？\n- `Should you speak French?` = フランス語を話すべきですか？\n- `Will you speak French?` = フランス語を話してくれますか？（依頼）\n\n## 関連表現\n`Can you ~?` は**依頼**にもなる: `Can you help me?`（手伝ってくれる？）"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'She always (___) green tea in the morning.', choices:["drink","drinks","drinking","drank"], answer:1, note:"主語が3人称単数 + 習慣 → 現在形 -s。",
+       explain:"## 答え\n**drinks**（3 単現の s）\n\n## 文の意味\n「彼女はいつも朝に緑茶を飲む。」\n\n## ルール: 3 人称単数現在の s\n主語が**3 人称単数**（he / she / it / 人名 など）で、**現在の習慣**を表すとき、動詞に `-s` を付ける。\n\n## ヒントになる副詞\n- `always`（いつも）\n- `usually`（普通）\n- `often`（よく）\n- `every day`（毎日）\n→ これらが出てきたら現在形（習慣）が多い。\n\n## ポイント\n`drink` → `drinks`, `study` → `studies`, `go` → `goes` のように形が変わる。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The shop (___) at 8 a.m. every day.', choices:["opening","opens","opened","is opening"], answer:1, note:"every day の習慣 → 現在形 -s。",
+       explain:"## 答え\n**opens**（3 単現の s）\n\n## 文の意味\n「その店は毎日午前 8 時に開く。」\n\n## ルール\n`every day`（毎日）= **習慣の合図**。\n主語 `the shop`（3 人称単数）+ 習慣 → 現在形 `-s` の `opens`。\n\n## なぜ他は不正解か\n- `opening`（動名詞・分詞）→ 動詞単独では使えない\n- `opened`（過去形）→ 毎日のことなので過去ではない\n- `is opening`（現在進行形）→ 「今まさに開いている最中」の意味になり不自然\n\n## ポイント\n習慣 vs 進行中 を見分けよう：\n- 毎日 / いつも / 普通 → 現在形\n- 今 / 今この瞬間 → 現在進行形"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Tourists (___) this region for its hot springs.', choices:["love","loves","loving","loved"], answer:0, note:"主語 Tourists は複数 → 原形 love。",
+       explain:"## 答え\n**love**（原形のまま）\n\n## 文の意味\n「観光客はその温泉のおかげでこの地域を愛している。」\n\n## ルール\n主語 `Tourists`（観光客たち）は**複数形**。\n複数主語 + 現在の習慣 → 動詞は**原形のまま**（`-s` は付かない）。\n\n## なぜ他は不正解か\n- `loves`（3 単現の s）→ 主語が単数の時だけ\n- `loving`（-ing 形）→ 動詞単独では文にならない\n- `loved`（過去形）→ 現在の気持ちを表したいので過去形は不適\n\n## ポイント\n**主語が単数か複数か**を毎回確認する習慣をつけよう。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Last weekend, I (___) a famous temple in Kyoto.', choices:["visit","visited","visiting","visits"], answer:1, note:"last weekend → 過去形。",
+       explain:"## 答え\n**visited**（過去形）\n\n## 文の意味\n「先週末、私は京都の有名なお寺**を訪れた**。」\n\n## ルール\n`last weekend`（先週末）= **過去の合図**。\n→ 動詞は**過去形**にする。\n\n## 過去の合図になる語\n- `yesterday`（昨日）\n- `last week / month / year`（先週／月／年）\n- `~ ago`（〜前）\n- `in 2020`（具体的な過去の年）\n\n## ポイント\n`visit` の過去形は `visited`（規則変化）。発音は「ヴィジティッド」と 3 音節になる。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'My grandfather (___) a kimono when he was young.', choices:["wear","wore","wearing","wears"], answer:1, note:"when he was young の文脈 → 過去形。",
+       explain:"## 答え\n**wore**（過去形）\n\n## 文の意味\n「祖父は若い頃、着物**を着ていた**。」\n\n## ルール\n`when he was young`（若い頃）= 過去の話。\n→ 動詞は**過去形**にする。\n\n## 不規則動詞: wear\n`wear – wore – worn`（着る／着ていた／着られた）\n\n発音は `wore` = `/wɔːr/`（ウォー）。\n\n## ポイント\n衣服や眼鏡・髪型などを「身につけている」状態に `wear` を使う。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Look! The children (___) in the park right now.', choices:["play","plays","are playing","played"], answer:2, note:"right now → 現在進行形 be + -ing。",
+       explain:"## 答え\n**are playing**（現在進行形）\n\n## 文の意味\n「見て！子どもたちが今まさに公園で遊んでいる。」\n\n## ルール: 現在進行形\n`be 動詞（am / is / are）+ 動詞 -ing` = 「今〜している」\n\n## 進行形の合図\n- `Look!` / `Listen!`\n- `now` / `right now`（今）\n- `at the moment`（今のところ）\n- `currently`（今）\n\n## なぜ他は不正解か\n- `play`（原形）→ 主語が複数なので可能だが、`right now` の文脈には合わない\n- `plays`（3 単現）→ 主語 children は複数なので不可\n- `played`（過去）→ now と矛盾\n\n## ポイント\n主語 children は複数 → be 動詞は **are**。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Don\'t disturb him. He (___) a book.', choices:["reads","read","is reading","was reading"], answer:2, note:"今この瞬間 → 現在進行形。",
+       explain:"## 答え\n**is reading**（現在進行形）\n\n## 文の意味\n「彼の邪魔をしないで。彼は本を**読んでいる最中だ**。」\n\n## ルール\n「邪魔しないで」と言っている = 今この瞬間の動作。\n→ 現在進行形（be + -ing）。\n\n## なぜ他は不正解か\n- `reads`（現在形）→ 「毎日本を読む」のような習慣の意味になる\n- `read`（原形・過去形）→ 主語 He なので 3 単現 -s が必要\n- `was reading`（過去進行形）→ Don't disturb は現在の指示\n\n## ポイント\n`disturb` の現在指示形（Don't disturb）と動詞のテンスを揃える。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When I called him, he (___) his homework.', choices:["does","did","was doing","is doing"], answer:2, note:"過去進行形 was/were + -ing。",
+       explain:"## 答え\n**was doing**（過去進行形）\n\n## 文の意味\n「私が彼に電話した**とき**、彼は宿題を**している最中だった**。」\n\n## ルール: 過去進行形\n`was / were + 動詞 -ing` = 「（過去のあるとき）〜している最中だった」\n\n## 典型パターン\n`When + 過去形, 主語 + was/were + -ing`\n→ 「〜したとき、〜していた」\n\n## なぜ他は不正解か\n- `does` / `did` = ただの動作（電話した瞬間に宿題し始めた、ではない）\n- `is doing`（現在進行形）→ 過去の文脈に合わない\n\n## 主語に注意\nhe（単数）→ **was** doing。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'While we (___) near the lake, we saw a beautiful sunset.', choices:["walk","walks","were walking","walked"], answer:2, note:"While + 過去進行形。",
+       explain:"## 答え\n**were walking**（過去進行形）\n\n## 文の意味\n「湖の近くを**歩いていたとき**、私たちは美しい夕焼けを見た。」\n\n## ルール: While + 過去進行形\n`While + 主語 + was/were + -ing, 主語 + 過去形`\n→ 「〜している最中に、〜した」\n\n## 主語に注意\nwe（複数）→ **were** walking。\n\n## 似たパターン\n- `When + 過去形 ~, 主語 + was/were + -ing ~`\n- `While + was/were + -ing ~, 主語 + 過去形 ~`\n\n両方 OK だが、While は進行形と相性が良い。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When the earthquake struck, we (___) dinner.', choices:["have","had","were having","are having"], answer:2, note:"過去の進行中の動作 → were having。",
+       explain:"## 答え\n**were having**（過去進行形）\n\n## 文の意味\n「地震が起きた**とき**、私たちは夕食を**食べていた**。」\n\n## ポイント: have の意味\nここの `have` は「食べる」の意味。\n- `have dinner` = 夕食を食べる\n- `have a meeting` = 会議をする\n- `have a good time` = 楽しい時間を過ごす\n\n## ルール\n過去のある瞬間（地震が起きた瞬間）に**進行中だった**動作 → 過去進行形。\n\n## なぜ他は不正解か\n- `have` / `had`（単純形）→ 動作の進行ニュアンスがない\n- `are having`（現在進行形）→ 過去の文脈に合わない\n\n## 主語\nwe → **were** having。"},
     ],
     verbform:[
-      // 配付プリントと同じ形式: (動詞)を適切な形に変える
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'She ( clean ) her room right now.', answer:"is cleaning", alts:["is cleaning."], note:"現在進行形 be + -ing。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'My brother and I ( walk ) our dog in the park at that time.', answer:"were walking", alts:["were walking."], note:"過去進行形 were + -ing。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Look! It ( rain ) heavily.', answer:"is raining", alts:["is raining."], note:"目の前の動作 → 現在進行形。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'The shrine ( be ) famous for its red gates.', answer:"is", alts:["is."], note:"主語が単数 → is。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Last summer, I ( go ) to Kyoto.', answer:"went", alts:["went."], note:"last summer → 過去形 go-went。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'He always ( drink ) coffee in the morning.', answer:"drinks", alts:["drinks."], note:"3単現の s。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'When the bell rang, the students ( read ) books.', answer:"were reading", alts:["were reading."], note:"過去進行形。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'You can ( see ) Mt. Fuji from here.', answer:"see", alts:["see."], note:"助動詞 can の後ろは原形。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Tourists ( visit ) Kyoto every spring.', answer:"visit", alts:["visit."], note:"複数主語 + 習慣 → 原形。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'My mother ( cook ) dinner right now.', answer:"is cooking", alts:["is cooking."], note:"現在進行形。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'She ( clean ) her room right now.', answer:"is cleaning", alts:["is cleaning."], note:"現在進行形 be + -ing。",
+       explain:"## 答え\n**is cleaning**（現在進行形）\n\n## なぜ\n`right now`（今まさに）= 現在進行形の合図。\n→ 主語 She（3 単）+ `be 動詞 + -ing`\n→ `is` + `cleaning`\n\n## 確認\n- 主語が単数 → `is`（she / he / it）\n- 主語が複数 → `are`（we / they）\n- 主語が I → `am`\n\n## 注意\n`clean` → `cleaning`（語尾の e がない単語はそのまま -ing）"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'My brother and I ( walk ) our dog in the park at that time.', answer:"were walking", alts:["were walking."], note:"過去進行形 were + -ing。",
+       explain:"## 答え\n**were walking**（過去進行形）\n\n## なぜ\n`at that time`（その時）= 過去のある時点の合図。\n主語 `My brother and I`（**2 人 = 複数**）→ `were` + `-ing`。\n\n## 主語が「A and I」のとき\n常に**複数扱い**。動詞は we と同じ。\n- `My brother and I were ~` ✓\n- `My brother and I was ~` ✗\n\n## 過去進行形のパターン\n`was/were + -ing` = 「〜していた最中だった」"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Look! It ( rain ) heavily.', answer:"is raining", alts:["is raining."], note:"目の前の動作 → 現在進行形。",
+       explain:"## 答え\n**is raining**（現在進行形）\n\n## なぜ\n`Look!` = 今この瞬間に目を向ける合図 → 現在進行形。\n主語 It（3 単）→ `is` + `raining`。\n\n## 天気の it\n天気・時刻・距離などを言うときの主語は **it**（仮主語）。\n- `It is raining.` = 雨が降っている\n- `It is 3 o'clock.` = 3 時です\n- `It is sunny.` = 晴れている\n\n## 注意\n`rain` → `raining`（普通に -ing を付ける）"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'The shrine ( be ) famous for its red gates.', answer:"is", alts:["is."], note:"主語が単数 → is。",
+       explain:"## 答え\n**is**（be 動詞・現在）\n\n## なぜ\n- 主語 `The shrine`（神社）= **3 人称単数**\n- 現在の状態（有名である）を表す\n→ be 動詞は `is`\n\n## be 動詞のおさらい\n| 主語 | 現在 | 過去 |\n|------|------|------|\n| I | am | was |\n| he / she / it / 単数 | **is** | was |\n| you / we / they / 複数 | are | were |\n\n## 熟語\n`be famous for ~` = 〜で有名である"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Last summer, I ( go ) to Kyoto.', answer:"went", alts:["went."], note:"last summer → 過去形 go-went。",
+       explain:"## 答え\n**went**（過去形）\n\n## なぜ\n`Last summer`（昨年の夏）= 過去の合図 → 動詞は過去形。\n\n## 不規則動詞: go\n`go – went – gone`\n\n## ポイント\n- 主語 I に関係なく **過去形は went**（s は付かない）\n- 規則動詞は `-ed` を付けるが、go は不規則変化\n\n## 過去の合図ワード\nyesterday / last ~ / ~ ago / in 2020 など。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'He always ( drink ) coffee in the morning.', answer:"drinks", alts:["drinks."], note:"3単現の s。",
+       explain:"## 答え\n**drinks**（3 単現の s）\n\n## なぜ\n- 主語 He = **3 人称単数**\n- `always`（いつも）= 習慣 → 現在形\n→ `drink` + `-s` = `drinks`\n\n## 3 単現の s ルール\n主語が 3 人称（he / she / it / 単数の名詞）かつ現在形 → 動詞に `-s` または `-es` を付ける。\n\n## 例外的な変化\n- `study` → `stud**ies**`（子音 + y → ies）\n- `go` → `go**es**`\n- `have` → `has`（不規則）"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'When the bell rang, the students ( read ) books.', answer:"were reading", alts:["were reading."], note:"過去進行形。",
+       explain:"## 答え\n**were reading**（過去進行形）\n\n## なぜ\n`When the bell rang`（ベルが鳴ったとき）= 過去のある瞬間。\nその瞬間に進行中だった動作 → 過去進行形。\n\n主語 `the students`（複数）→ **were** + `-ing`。\n\n## 典型パターン\n`When + 過去形, 主語 + was/were + -ing`\n→「〜したとき、〜していた」\n\n## 注意\n`read` の現在形と過去形はスペル同じだが発音が違う：\n- 現在 `read` = `/riːd/`（リード）\n- 過去 `read` = `/rɛd/`（レッド）"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'You can ( see ) Mt. Fuji from here.', answer:"see", alts:["see."], note:"助動詞 can の後ろは原形。",
+       explain:"## 答え\n**see**（動詞の原形）\n\n## なぜ\n**助動詞のあとは必ず動詞の原形！**\n`can / will / may / must / should + 動詞の原形`\n\n## 不正解になりがちなパターン\n- `can sees` ✗\n- `can saw` ✗\n- `can seeing` ✗\n- **`can see` ✓**\n\n## 注意\n主語が You でも、3 人称単数 he/she/it でも、助動詞のあとは原形のまま：\n- `He can see Mt. Fuji.` ✓（cans にはならない）"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Tourists ( visit ) Kyoto every spring.', answer:"visit", alts:["visit."], note:"複数主語 + 習慣 → 原形。",
+       explain:"## 答え\n**visit**（原形のまま）\n\n## なぜ\n- 主語 `Tourists`（観光客たち）= **複数**\n- `every spring`（毎春）= 習慣\n→ 現在形だが、複数主語なので **-s は付かない**\n\n## ルール\n主語が複数 (we / they / 複数名詞) → 動詞は原形のまま。\n\n## 確認\n- `Tourists visit ~.`（複数主語）→ visit ✓\n- `A tourist visits ~.`（単数主語）→ visits ✓"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'My mother ( cook ) dinner right now.', answer:"is cooking", alts:["is cooking."], note:"現在進行形。",
+       explain:"## 答え\n**is cooking**（現在進行形）\n\n## なぜ\n`right now`（今まさに）= 現在進行形の合図。\n主語 `My mother`（3 単）→ `is` + `cooking`。\n\n## 構造\n`be 動詞 + 動詞 -ing` = 今〜している最中\n\n## 注意\n`cook` → `cooking`（普通に -ing）。スペルを変えなくて OK。"},
     ],
     arrange:[
-      // 配付プリントの「並べ替え」形式
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"彼女は今、自分の部屋を掃除しているところです。",
        scramble:["She","is","cleaning","her","room","right","now"],
-       answer:"She is cleaning her room right now", note:"現在進行形 + 副詞 right now。"},
+       answer:"She is cleaning her room right now", note:"現在進行形 + 副詞 right now。",
+       explain:"## 並べ方の手順\n1. 主語: **She**\n2. be 動詞 + -ing: **is cleaning**（現在進行形）\n3. 目的語: **her room**\n4. 副詞: **right now**\n\n## ルール\n現在進行形 = `be 動詞 + 動詞 -ing` で「今〜している」\n\n## 語順のコツ\n副詞句（right now / at that time など）は文末に置くのが基本。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"そのとき、弟と私は公園で犬を散歩させていました。",
        scramble:["my","brother","walking","I","and","were","our","dog","in","the","park"],
-       answer:"My brother and I were walking our dog in the park", note:"過去進行形 were + -ing。"},
+       answer:"My brother and I were walking our dog in the park", note:"過去進行形 were + -ing。",
+       explain:"## 並べ方の手順\n1. 主語: **My brother and I**（and の前後に注意）\n2. be 動詞 + -ing: **were walking**（過去進行形・複数主語）\n3. 目的語: **our dog**\n4. 場所: **in the park**\n\n## ポイント\n- 「A and I」は常に複数 → were\n- 「at that time」（そのとき）は文末や文頭に置ける（この問題ではすでに文中に意味として含まれている）"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その神社は数え切れないほどの赤い鳥居で有名です。",
        scramble:["The","shrine","famous","is","for","its","countless","red","torii","gates"],
-       answer:"The shrine is famous for its countless red torii gates", note:"be famous for ~ で「〜で有名」。"},
+       answer:"The shrine is famous for its countless red torii gates", note:"be famous for ~ で「〜で有名」。",
+       explain:"## 並べ方の手順\n1. 主語: **The shrine**\n2. be 動詞 + 形容詞: **is famous**\n3. 熟語: **for ~**\n4. 名詞のかたまり: **its countless red torii gates**\n\n## 熟語\n`be famous for ~` = 〜で有名である\n\n## 名詞のかたまりの語順\n冠詞 / 所有格 → 形容詞 → 名詞 の順。\n- its（所有）→ countless（形容詞）→ red（形容詞）→ torii（修飾名詞）→ gates（中心名詞）"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"観光だけでなく、ニューツーリズムも人気です。",
        scramble:["Not","only","sightseeing","but","also","new","tourism","is","popular"],
-       answer:"Not only sightseeing but also new tourism is popular", note:"not only A but also B。"},
+       answer:"Not only sightseeing but also new tourism is popular", note:"not only A but also B。",
+       explain:"## 並べ方の手順\n1. 構文: **Not only A but also B**\n2. A = **sightseeing**\n3. B = **new tourism**\n4. 動詞: **is popular**\n\n## ルール\n`Not only A but also B + 動詞`\n→ 動詞は **B に一致** させる（new tourism は単数 → is）\n\n## 別解\n通常の語順では `New tourism, as well as sightseeing, is popular.` でも同じ意味。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"あなたはもっと早く起きるべきです。",
        scramble:["You","should","get","up","earlier"],
-       answer:"You should get up earlier", note:"should + 動詞の原形。"},
+       answer:"You should get up earlier", note:"should + 動詞の原形。",
+       explain:"## 並べ方の手順\n1. 主語: **You**\n2. 助動詞: **should**（〜すべき）\n3. 動詞の原形 + 副詞: **get up earlier**\n\n## ポイント\n- 助動詞のあとは**動詞の原形**\n- `get up` = 起きる\n- `earlier` = early の比較級\n\n## 注意\n`should to get up` のように to を入れるのは誤り。助動詞 + to + 原形 は不正。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"スキーヤーは世界中からやってくる。",
        scramble:["Skiers","come","from","all","around","the","world"],
-       answer:"Skiers come from all around the world", note:"from all around the world。"},
+       answer:"Skiers come from all around the world", note:"from all around the world。",
+       explain:"## 並べ方の手順\n1. 主語: **Skiers**（複数）\n2. 動詞: **come**（複数主語なので原形）\n3. 熟語: **from all around the world**\n\n## ポイント\n複数主語 + 現在の習慣 → 動詞は原形のまま（-s 不要）。\n\n## 熟語\n`from all around the world` = 世界中から\n→ `from all over the world` でも同じ意味。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その町は今、スポーツツーリズムのメッカです。",
        scramble:["The","town","is","now","a","mecca","for","sports","tourism"],
-       answer:"The town is now a mecca for sports tourism", note:"a mecca for ~ = 〜の聖地。"},
+       answer:"The town is now a mecca for sports tourism", note:"a mecca for ~ = 〜の聖地。",
+       explain:"## 並べ方の手順\n1. 主語 + be 動詞: **The town is**\n2. 副詞: **now**\n3. 補語: **a mecca**\n4. 熟語: **for sports tourism**\n\n## 熟語\n`a mecca for ~` = 〜の聖地（人々が憧れて集まる場所）\n\n## ポイント\n冠詞 `a` を忘れないこと（mecca は数えられる名詞）。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"明日は雨が降るかもしれません。",
        scramble:["It","may","rain","tomorrow"],
-       answer:"It may rain tomorrow", note:"may = 〜かもしれない。"},
+       answer:"It may rain tomorrow", note:"may = 〜かもしれない。",
+       explain:"## 並べ方の手順\n1. 仮主語: **It**（天気の it）\n2. 助動詞: **may**（〜かもしれない）\n3. 動詞の原形: **rain**\n4. 副詞: **tomorrow**\n\n## ポイント\n- 天気の文の主語は **It**\n- 助動詞のあとは**動詞の原形**\n- `may` = 不確実な可能性（50% くらい）\n\n## 似た言い方\n- `It might rain ~.`（might も同じ意味でやや弱い）"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私たちはこの神社を訪れるべきです。",
        scramble:["We","should","visit","this","shrine"],
-       answer:"We should visit this shrine"},
+       answer:"We should visit this shrine",
+       explain:"## 並べ方の手順\n1. 主語: **We**\n2. 助動詞: **should**（〜すべき）\n3. 動詞の原形: **visit**\n4. 目的語: **this shrine**\n\n## ポイント\n助動詞のあとは**動詞の原形**。\n`should visit` であって `should visits` や `should to visit` は誤り。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"「ジャパウ」は日本の粉雪を表します。",
        scramble:["\"Japow\"","stands","for","Japanese","powder","snow"],
-       answer:"\"Japow\" stands for Japanese powder snow", note:"stand for ~ = 〜を表す。"},
+       answer:"\"Japow\" stands for Japanese powder snow", note:"stand for ~ = 〜を表す。",
+       explain:"## 並べ方の手順\n1. 主語: **\"Japow\"**（3 人称単数）\n2. 動詞 + 熟語: **stands for**\n3. 目的語: **Japanese powder snow**\n\n## 熟語\n`stand for ~` = 〜を表す／〜の略である\n\n## 3 単現の s\n主語が 3 人称単数なので `stand` → **stands**。\n\n## ポイント\n略語の説明で超頻出。`UN stands for the United Nations.` のように使う。"},
     ],
     translate:[
-      // 英→日（4択）
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The shrine is famous for its countless red torii gates.',
-       choices:["その神社は赤い鳥居をいくつか持っている。","その神社は数え切れないほどの赤い鳥居で有名です。","その神社の鳥居は赤くなく、数えやすい。","その神社は鳥居が少なくて人気がない。"], answer:1},
+       choices:["その神社は赤い鳥居をいくつか持っている。","その神社は数え切れないほどの赤い鳥居で有名です。","その神社の鳥居は赤くなく、数えやすい。","その神社は鳥居が少なくて人気がない。"], answer:1,
+       explain:"## キーワード\n- **be famous for ~** = 〜で有名である\n- **countless** = 数え切れないほどの（count + less）\n- **torii gates** = 鳥居\n\n## 直訳\n「その神社 / は有名だ / その数え切れないほどの赤い鳥居で」\n\n## 自然訳\n「その神社は数え切れないほどの赤い鳥居で有名です。」\n\n## ポイント\n伏見稲荷大社のことを描写した文。教科書 Lesson 1 Part 1 の主題。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Tourists are seeking fresh experiences.',
-       choices:["旅行者は古い体験を売っている。","旅行者は経験を求めていない。","旅行者は新鮮な体験を探している。","観光客は新しい場所に行きたくない。"], answer:2},
+       choices:["旅行者は古い体験を売っている。","旅行者は経験を求めていない。","旅行者は新鮮な体験を探している。","観光客は新しい場所に行きたくない。"], answer:2,
+       explain:"## キーワード\n- **seek** = 探す／求める（seek-sought-sought）\n- **are seeking** = 現在進行形（今〜している）\n- **fresh experiences** = 新鮮な体験\n\n## ポイント\n`are seeking` の進行形を「〜している」と訳すこと。\n→ 単純に「探す」ではなく「探している」。\n\n## ニューツーリズムの中心テーマ\n単なる観光ではなく、文化体験などの「新しい体験」を求める旅行スタイル。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The town is now a mecca for sports tourism.',
-       choices:["その町は今、スポーツ観光の聖地となっている。","その町は昔、スポーツ観光地だった。","その町はスポーツが禁止されている。","その町には観光名所がない。"], answer:0},
+       choices:["その町は今、スポーツ観光の聖地となっている。","その町は昔、スポーツ観光地だった。","その町はスポーツが禁止されている。","その町には観光名所がない。"], answer:0,
+       explain:"## キーワード\n- **a mecca for ~** = 〜の聖地\n- **now** = 今や（現在）\n\n## ポイント\n`is now ~` で「今は〜である／今や〜になっている」。\n→ 過去と対比して、現在の状態を強調するときに使う。\n\n## 文の背景\nニセコがスポーツツーリズムの聖地になった、というのが教科書の文脈。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Skiers come from all around the world.',
-       choices:["スキーヤーは世界中に散らばっている。","スキーヤーは世界中からやってくる。","スキーヤーは世界中で珍しい。","スキーヤーはどこにも行かない。"], answer:1},
+       choices:["スキーヤーは世界中に散らばっている。","スキーヤーは世界中からやってくる。","スキーヤーは世界中で珍しい。","スキーヤーはどこにも行かない。"], answer:1,
+       explain:"## キーワード\n- **Skiers** = スキーヤー（複数）\n- **come from ~** = 〜からやって来る\n- **all around the world** = 世界中から\n\n## ポイント\n`come from` は「〜の出身」とも訳せるが、文脈ではここでは「（旅行で）〜からやって来る」。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Not only sightseeing but also cultural experiences are popular.',
-       choices:["観光は人気だが、文化体験は人気がない。","文化体験だけが人気で、観光は減っている。","観光だけでなく、文化体験も人気です。","観光も文化体験も人気がない。"], answer:2},
+       choices:["観光は人気だが、文化体験は人気がない。","文化体験だけが人気で、観光は減っている。","観光だけでなく、文化体験も人気です。","観光も文化体験も人気がない。"], answer:2,
+       explain:"## キーワード\n- **not only A but also B** = A だけでなく B も\n\n## ポイント\nこの構文は「A も B も人気」という意味で、両方を肯定する。\n→ 「A は人気だが B は人気がない」ではない。\n\n## 文法\n動詞 `are` は B（cultural experiences = 複数）に合わせて複数形。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'You should visit Kyoto in autumn.',
-       choices:["あなたは秋に京都を訪れてはいけない。","あなたは秋に京都を訪れるべきです。","あなたは秋に京都に行ったことがある。","あなたは京都に住んだことがある。"], answer:1},
+       choices:["あなたは秋に京都を訪れてはいけない。","あなたは秋に京都を訪れるべきです。","あなたは秋に京都に行ったことがある。","あなたは京都に住んだことがある。"], answer:1,
+       explain:"## キーワード\n- **should** = 〜すべきだ（助言）\n- **in autumn** = 秋に\n\n## ポイント\n`should + 動詞の原形` = 助言／推奨の意味。\n→ 「〜するといいよ」というやわらかいアドバイス。\n\n## 注意\n「〜してはいけない」は `should not / shouldn't`。混同注意。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'He must be tired after the long trip.',
-       choices:["彼は長旅の後で疲れているにちがいない。","彼は長旅の後で疲れているはずがない。","彼は長旅の後で疲れていない。","彼は長旅をしなかった。"], answer:0, note:"must be + 形容詞 = 〜にちがいない（強い推量）。"},
+       choices:["彼は長旅の後で疲れているにちがいない。","彼は長旅の後で疲れているはずがない。","彼は長旅の後で疲れていない。","彼は長旅をしなかった。"], answer:0, note:"must be + 形容詞 = 〜にちがいない（強い推量）。",
+       explain:"## キーワード\n- **must be ~** = 〜にちがいない（強い推量）\n- **the long trip** = 長旅\n\n## ポイント\n`must` には 2 つの意味：\n- 義務「〜しなければならない」\n- **強い推量「〜にちがいない」** ← この問題\n\n見た目や状況から「ほぼ確実」と判断するときに使う。\n\n## 反対\n「〜にちがいない」の反対は **can't be** =「〜のはずがない」。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'It may rain tomorrow.',
-       choices:["明日は雨が降らないだろう。","明日は雨が降るかもしれない。","明日は雨が降ったことがある。","明日は雨が降るのが好きだ。"], answer:1},
+       choices:["明日は雨が降らないだろう。","明日は雨が降るかもしれない。","明日は雨が降ったことがある。","明日は雨が降るのが好きだ。"], answer:1,
+       explain:"## キーワード\n- **may** = 〜かもしれない（推量）\n- **It** = 天気の主語（仮主語の it）\n\n## ポイント\n助動詞の確実さの順：\n`must`（90%）> `will`（80%）> `should`（70%）> **`may`（50%）** > `could`（30%）\n\n## 注意\n`may` には「〜してよい」（許可）の意味もあるが、未来の文脈ではほぼ「〜かもしれない」。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'She was walking her dog at that time.',
-       choices:["そのとき、彼女は犬の散歩をしていた。","彼女はその時、犬を抱いていた。","彼女はその時、犬の散歩から戻った。","彼女はその時、犬を飼っていなかった。"], answer:0},
+       choices:["そのとき、彼女は犬の散歩をしていた。","彼女はその時、犬を抱いていた。","彼女はその時、犬の散歩から戻った。","彼女はその時、犬を飼っていなかった。"], answer:0,
+       explain:"## キーワード\n- **was walking** = 過去進行形（〜していた最中だった）\n- **walk her dog** = 犬を散歩させる\n- **at that time** = そのとき\n\n## ポイント\n`walk + 目的語` で「〜を散歩させる」の意味。\n→ `walk a dog` = 犬の散歩をする。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'They are visiting ordinary Japanese homes.',
-       choices:["彼らは普通の日本の家庭を訪れているところだ。","彼らは特別な日本の家庭を訪れる予定だ。","彼らは日本の家庭を訪れたことがある。","彼らは日本の家庭に住んでいない。"], answer:0},
+       choices:["彼らは普通の日本の家庭を訪れているところだ。","彼らは特別な日本の家庭を訪れる予定だ。","彼らは日本の家庭を訪れたことがある。","彼らは日本の家庭に住んでいない。"], answer:0,
+       explain:"## キーワード\n- **are visiting** = 現在進行形（今〜している最中）\n- **ordinary** = 普通の\n\n## ポイント\n現在進行形 `be + -ing` は「今まさに〜している」を表す。\n→ 「予定」ではなく「進行中」。\n\n## 補足\nordinary は「特別ではない、ごく普通の」というニュアンス。"},
     ],
     writing:[
-      {prompt:"次の日本語を英訳しなさい。", body:"その神社は赤い鳥居で有名です。", answer:"The shrine is famous for its red gates.", alts:["The shrine is famous for its red torii gates.","The shrine is famous for the red gates."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"観光だけでなく、文化体験も人気です。", answer:"Not only sightseeing but also cultural experiences are popular.", alts:["Not only sightseeing but also cultural experience is popular."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"「ジャパウ」は日本の粉雪を表します。", answer:"\"Japow\" stands for Japanese powder snow.", alts:["Japow stands for Japanese powder snow."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"その町は今、メッカ（聖地）となっています。", answer:"The town is now a mecca.", alts:["This town is a mecca now."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私たちは早く起きなければなりません。", answer:"We must get up early.", alts:["We have to get up early."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"あなたはもっと多くの野菜を食べるべきです。", answer:"You should eat more vegetables.", alts:["You ought to eat more vegetables."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"彼は今、宿題をしているところです。", answer:"He is doing his homework now.", alts:["He is doing homework now.","He is doing his homework right now."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"そのとき、私はテレビを見ていました。", answer:"At that time, I was watching TV.", alts:["I was watching TV at that time.","I was watching television at that time."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"スキーヤーは世界中からやってきます。", answer:"Skiers come from all around the world.", alts:["Skiers come from all over the world."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"明日は雨が降るかもしれません。", answer:"It may rain tomorrow.", alts:["It might rain tomorrow."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"彼は外国人旅行者に人気があります。", answer:"He is popular with foreign tourists.", alts:["He is popular among foreign tourists."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"旅行者は新しい体験を探しています。", answer:"Tourists are seeking new experiences.", alts:["Tourists are looking for new experiences.","Tourists are seeking fresh experiences."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その神社は赤い鳥居で有名です。", answer:"The shrine is famous for its red gates.", alts:["The shrine is famous for its red torii gates.","The shrine is famous for the red gates."],
+       explain:"## 構文\n`S + be famous for ~` = 〜で有名である\n\n## キーポイント\n- 主語が単数(The shrine) → **is**\n- `for` のあとは「有名にしている理由」\n- 「its / the」など限定詞をつける\n\n## 例\n- `Kyoto is famous for its temples.`（京都はその寺院で有名）"},
+      {prompt:"次の日本語を英訳しなさい。", body:"観光だけでなく、文化体験も人気です。", answer:"Not only sightseeing but also cultural experiences are popular.", alts:["Not only sightseeing but also cultural experience is popular."],
+       explain:"## 構文\n`Not only A but also B + 動詞`\n\n## 主語＝動詞の一致\n動詞は **B に合わせる**：\n- B が cultural experiences（複数）→ **are**\n- B が cultural experience（単数）→ is\n\n## ポイント\n口語では `also` が省略されることもある。"},
+      {prompt:"次の日本語を英訳しなさい。", body:"「ジャパウ」は日本の粉雪を表します。", answer:"\"Japow\" stands for Japanese powder snow.", alts:["Japow stands for Japanese powder snow."],
+       explain:"## 熟語\n`stand for ~` = 〜を表す／〜の略\n\n## 3 単現の s\n主語 \"Japow\" は単数 → **stands**\n\n## 用法\n略語の説明で頻出: `UN stands for the United Nations.`"},
+      {prompt:"次の日本語を英訳しなさい。", body:"その町は今、メッカ（聖地）となっています。", answer:"The town is now a mecca.", alts:["This town is a mecca now."],
+       explain:"## 構文\n`S + is now + 名詞` = 今や〜である\n\n## ポイント\n- `now`（今）の位置は be 動詞の後\n- mecca は可算名詞 → **a** mecca\n\n## 拡張\n`a mecca for sports tourism` のように for ~ を付けて「〜の聖地」とすることが多い。"},
+      {prompt:"次の日本語を英訳しなさい。", body:"私たちは早く起きなければなりません。", answer:"We must get up early.", alts:["We have to get up early."],
+       explain:"## 助動詞 must\n`must` = 〜しなければならない（義務）\n\n## 同義表現\n- `must = have to`（ほぼ同じ）\n- `have to` は主語が 3 単のとき `has to`\n\n## 注意\n助動詞のあとは**動詞の原形**: `must get up` ✓\n\n## 熟語\n`get up` = 起きる"},
+      {prompt:"次の日本語を英訳しなさい。", body:"あなたはもっと多くの野菜を食べるべきです。", answer:"You should eat more vegetables.", alts:["You ought to eat more vegetables."],
+       explain:"## 助動詞 should\n`should` = 〜すべきだ（助言）\n\n## ポイント\n- 助動詞のあとは**動詞の原形** (eat)\n- 比較級: `more vegetables`（もっと多くの野菜）\n\n## 同義表現\n`ought to` = should と同じ意味（やや堅い）"},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼は今、宿題をしているところです。", answer:"He is doing his homework now.", alts:["He is doing homework now.","He is doing his homework right now."],
+       explain:"## 現在進行形\n`be + -ing` = 今〜している最中\n\n## ポイント\n- 主語 He（3 単）→ **is**\n- `do` の -ing 形は **doing**（doeing ではない）\n- 「自分の宿題」なので **his** をつけるのが自然"},
+      {prompt:"次の日本語を英訳しなさい。", body:"そのとき、私はテレビを見ていました。", answer:"At that time, I was watching TV.", alts:["I was watching TV at that time.","I was watching television at that time."],
+       explain:"## 過去進行形\n`was/were + -ing` = 〜していた最中だった\n\n## キーフレーズ\n- `at that time` = そのとき（過去の合図）\n- 主語 I → **was**\n\n## 位置\n副詞句 `at that time` は文頭・文末どちらでも OK。"},
+      {prompt:"次の日本語を英訳しなさい。", body:"スキーヤーは世界中からやってきます。", answer:"Skiers come from all around the world.", alts:["Skiers come from all over the world."],
+       explain:"## 構文\n`S + come from ~` = 〜からやってくる\n\n## キーフレーズ\n`from all around the world` = 世界中から\n（= from all over the world）\n\n## ポイント\nSkiers（複数）→ 動詞は原形のまま **come**（-s 不要）"},
+      {prompt:"次の日本語を英訳しなさい。", body:"明日は雨が降るかもしれません。", answer:"It may rain tomorrow.", alts:["It might rain tomorrow."],
+       explain:"## 助動詞 may\n`may` = 〜かもしれない（推量）\n\n## ポイント\n- 天気の主語は **It**\n- 助動詞のあとは**動詞の原形** (rain)\n- `might` でも同じ意味で OK\n\n## 確実さ\n`may/might` = 約 50%（不確実）"},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼は外国人旅行者に人気があります。", answer:"He is popular with foreign tourists.", alts:["He is popular among foreign tourists."],
+       explain:"## 熟語\n`be popular with + 人` = 〜（人）に人気がある\n\n## 注意：前置詞\n- `popular **with** + 人`\n- `popular **for** + 物事`（〜のことで人気）\n- `popular **as** + 役割`（〜として人気）\n\n## 言い換え\n`among + 人々` でも OK。"},
+      {prompt:"次の日本語を英訳しなさい。", body:"旅行者は新しい体験を探しています。", answer:"Tourists are seeking new experiences.", alts:["Tourists are looking for new experiences.","Tourists are seeking fresh experiences."],
+       explain:"## 現在進行形\n`be + -ing` = 今〜している\n\n## キー動詞\n- **seek** = 探す（やや堅い）\n- **look for** = 探す（口語的）\n\n## ポイント\n主語 Tourists（複数）→ **are**\n→ 現在進行形だが「今までずっと求めている傾向」を表す。"},
     ],
     reading:[{
       title:"The Lantern Festival of Hoshimi Town",
@@ -856,35 +975,54 @@ Not only Japanese tourists but also foreign visitors come and experience the fes
 
 If you visit Hoshimi, you should try the local cooking lessons. You can make sushi and udon with your Japanese host. You may also visit ordinary Japanese homes. It must be a wonderful experience for everyone.`,
       questions:[
-        {prompt:"内容に合うものを選びなさい。", body:"Where is Hoshimi located?", choices:["On the coast of Japan","In the mountains of Japan","Near Tokyo","On a small island"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"What are the tourists in Hoshimi seeking?", choices:["Ordinary sightseeing only","Cheap souvenirs","New experiences","Quiet hotels"], answer:2},
-        {prompt:"内容に合うものを選びなさい。", body:"How old is the stone bridge?", choices:["50 years old","100 years old","200 years old","500 years old"], answer:2},
-        {prompt:"内容に合うものを選びなさい。", body:"What is Hoshimi becoming?", choices:["A mecca for cultural tourism","A center for business","A famous shopping town","A ski resort only"], answer:0},
-        {prompt:"内容に合うものを選びなさい。", body:"What can visitors do with their Japanese host?", choices:["Watch TV","Make sushi and udon","Buy souvenirs","Go to the museum"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"Where is Hoshimi located?", choices:["On the coast of Japan","In the mountains of Japan","Near Tokyo","On a small island"], answer:1,
+         explain:"## 該当箇所\n冒頭: 「Hoshimi is a small town **in the mountains of Japan**.」\n\n## ポイント\n本文をしっかり読めば直接書いてある。`in the mountains` = 山中に。"},
+        {prompt:"内容に合うものを選びなさい。", body:"What are the tourists in Hoshimi seeking?", choices:["Ordinary sightseeing only","Cheap souvenirs","New experiences","Quiet hotels"], answer:2,
+         explain:"## 該当箇所\n「They are seeking **new experiences**, not just ordinary sightseeing.」\n\n## ポイント\n`not just A` = A だけではない → A 以外も求めている。\n`new experiences` がキーフレーズ（Lesson 1 のテーマでもある）。"},
+        {prompt:"内容に合うものを選びなさい。", body:"How old is the stone bridge?", choices:["50 years old","100 years old","200 years old","500 years old"], answer:2,
+         explain:"## 該当箇所\n「The bridge was built **200 years ago**.」\n\n## 文法\n`was built` = 受動態の過去形。次の Lesson 2 で詳しく学ぶ。\n「200 年前に建てられた」= 現在の年齢は 200 年。"},
+        {prompt:"内容に合うものを選びなさい。", body:"What is Hoshimi becoming?", choices:["A mecca for cultural tourism","A center for business","A famous shopping town","A ski resort only"], answer:0,
+         explain:"## 該当箇所\n「The town is now becoming **a mecca for cultural tourism**.」\n\n## キーフレーズ\n`a mecca for ~` = 〜の聖地。Lesson 1 の重要表現。"},
+        {prompt:"内容に合うものを選びなさい。", body:"What can visitors do with their Japanese host?", choices:["Watch TV","Make sushi and udon","Buy souvenirs","Go to the museum"], answer:1,
+         explain:"## 該当箇所\n「You can **make sushi and udon** with your Japanese host.」\n\n## ポイント\n`with your Japanese host` = 日本のホストと一緒に。\nニューツーリズム＝文化体験の代表例。"},
       ]
     }],
     test:[
-      // 配付プリント型: 単語の意味 → 文法選択 → 動詞の形 → 並べ替え → 和訳 → 英作文 が混ざる
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"nowadays", choices:["昔は","近頃は","いつでも","二度と"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"countless", choices:["数えられる","ほぼゼロの","数え切れないほどの","限定された"], answer:2},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"stand for ...", choices:["…を表す","…を支える","…の前に立つ","…に立ち向かう"], answer:0},
-      {type:"choice", prompt:"助動詞の意味を選びなさい。", body:"must", choices:["〜できる","〜にちがいない・〜しなければならない","〜だろう","〜してもよい"], answer:1},
-      {type:"choice", prompt:"助動詞の意味を選びなさい。", body:"should", choices:["〜できる","〜すべきだ","〜してもよい","〜してはいけない"], answer:1},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"Look! The children (___) in the park right now.", choices:["play","plays","are playing","played"], answer:2},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) green tea every morning.", choices:["drink","drinks","is drinking","drank"], answer:1},
-      {type:"choice", prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"You look pale. You (   ) be tired.", choices:["should","must","will","could"], answer:1},
-      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"My brother and I ( walk ) our dog at that time.", answer:"were walking", alts:["were walking."]},
-      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"You should ( eat ) more vegetables.", answer:"eat", alts:["eat."]},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"nowadays", choices:["昔は","近頃は","いつでも","二度と"], answer:1,
+       explain:"**nowadays** = 副詞「近頃は・このごろは」。\n`These days` とほぼ同じ。文頭・文末どちらにも置ける。"},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"countless", choices:["数えられる","ほぼゼロの","数え切れないほどの","限定された"], answer:2,
+       explain:"**countless** = 数え切れないほどの。\n`count`（数える）+ `-less`（できない）= 数えられない。"},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"stand for ...", choices:["…を表す","…を支える","…の前に立つ","…に立ち向かう"], answer:0,
+       explain:"**stand for ~** = 〜を表す／〜の略である。\n例: `UN stands for the United Nations.`"},
+      {type:"choice", prompt:"助動詞の意味を選びなさい。", body:"must", choices:["〜できる","〜にちがいない・〜しなければならない","〜だろう","〜してもよい"], answer:1,
+       explain:"**must** には 2 つの意味：\n- 強い推量「〜にちがいない」\n- 義務「〜しなければならない」\n後ろは必ず動詞の原形。"},
+      {type:"choice", prompt:"助動詞の意味を選びなさい。", body:"should", choices:["〜できる","〜すべきだ","〜してもよい","〜してはいけない"], answer:1,
+       explain:"**should** = 〜すべきだ／〜のはずだ。\nmust よりも弱い助言。後ろは動詞の原形。"},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"Look! The children (___) in the park right now.", choices:["play","plays","are playing","played"], answer:2,
+       explain:"`Look!` + `right now` = 現在進行形の合図。\n主語 children（複数）→ **are** playing。"},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) green tea every morning.", choices:["drink","drinks","is drinking","drank"], answer:1,
+       explain:"`every morning` = 習慣。\n主語 She（3 単）+ 現在の習慣 → **drinks**（-s 付き）。"},
+      {type:"choice", prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"You look pale. You (   ) be tired.", choices:["should","must","will","could"], answer:1,
+       explain:"見た目から「ほぼ確実にそうだ」と推測 → **must** be ~（〜にちがいない）。"},
+      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"My brother and I ( walk ) our dog at that time.", answer:"were walking", alts:["were walking."],
+       explain:"`at that time` = 過去のある瞬間。進行中だった動作 → 過去進行形。\n主語 `My brother and I`（複数）→ **were** walking。"},
+      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"You should ( eat ) more vegetables.", answer:"eat", alts:["eat."],
+       explain:"**助動詞のあとは動詞の原形！** これが鉄則。\n`should eat` ✓ / `should eats` ✗ / `should to eat` ✗"},
       {type:"arrange", prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"観光だけでなく、ニューツーリズムも人気です。",
        scramble:["Not","only","sightseeing","but","also","new","tourism","is","popular"],
-       answer:"Not only sightseeing but also new tourism is popular"},
+       answer:"Not only sightseeing but also new tourism is popular",
+       explain:"`Not only A but also B` の構文。\n動詞は B（new tourism = 単数）に合わせて **is**。"},
       {type:"arrange", prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その町は今、スポーツツーリズムのメッカです。",
        scramble:["The","town","is","now","a","mecca","for","sports","tourism"],
-       answer:"The town is now a mecca for sports tourism"},
+       answer:"The town is now a mecca for sports tourism",
+       explain:"`a mecca for ~` = 〜の聖地。\n冠詞 `a` を忘れずに（mecca は可算名詞）。"},
       {type:"choice", prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The shrine is famous for its countless red torii gates.',
-       choices:["その神社は赤い鳥居をいくつか持っている。","その神社は数え切れないほどの赤い鳥居で有名です。","その神社の鳥居は赤くない。","その神社は鳥居が少ない。"], answer:1},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"あなたはもっと水を飲むべきです。", answer:"You should drink more water.", alts:["You ought to drink more water."]},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"彼は今、テレビを見ています。", answer:"He is watching TV now.", alts:["He is watching TV.","He is watching television now."]},
+       choices:["その神社は赤い鳥居をいくつか持っている。","その神社は数え切れないほどの赤い鳥居で有名です。","その神社の鳥居は赤くない。","その神社は鳥居が少ない。"], answer:1,
+       explain:"キーワード: \n- `be famous for ~` = 〜で有名\n- `countless` = 数え切れないほどの\n伏見稲荷大社を描写した文。"},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"あなたはもっと水を飲むべきです。", answer:"You should drink more water.", alts:["You ought to drink more water."],
+       explain:"`should + 動詞の原形`（助言）。\nmore water = もっと多くの水（比較級）。"},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"彼は今、テレビを見ています。", answer:"He is watching TV now.", alts:["He is watching TV.","He is watching television now."],
+       explain:"`now` = 現在進行形の合図。\n主語 He（3 単）→ `is` + `watching`。"},
     ],
   },
 
@@ -895,145 +1033,228 @@ If you visit Hoshimi, you should try the local cooking lessons. You can make sus
   */
   2: {
     vocab:[
-      // Part 1 (p.30) 単語リスト
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"creature", choices:["創造","生き物","信用","批評"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"bay", choices:["浜","湾","橋","入口"], answer:1, note:"Toyama Bay = 富山湾。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"local", choices:["全国の","地元の","地方公務員","近所の人"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"firefly squid", choices:["ホタルイカ","ホタル","コウイカ","ホタテ"], answer:0, note:"hotaruika。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"organ", choices:["有機の","臓器・器官","音楽家","起源"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"flash", choices:["軽く焼く","ピカッと光る・点滅する","流す","平らな"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"various", choices:["真空の","様々な","本物の","勝利の"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"pattern", choices:["父親","型・パターン","哀れ","公爵"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"glow", choices:["流れる","光を放つ・光る","成長する","糊付けする"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"firefly", choices:["ホタル","花火","薪","火傷"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"anglerfish", choices:["釣り人","チョウチンアンコウ","アングロサクソン","タツノオトシゴ"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"crystal jellyfish", choices:["透明な氷","オワンクラゲ","水晶","ガラス工芸"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"produce", choices:["生み出す・生産する","示す","減らす","完璧にする"], answer:0},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"a symbol of ...", choices:["…の対立","…の象徴","…の合計","…の支店"], answer:1},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"come from ...", choices:["…からやってくる","…を越えてくる","…のために来る","…を欲しがる"], answer:0},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"give off ...", choices:["…をあきらめる","…を放つ","…をオフにする","…を寄付する"], answer:1, note:"光・におい・熱などを「発する／放つ」。"},
-      // Part 2 (p.32) 単語リスト
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"distract", choices:["(気を)そらす","蒸留する","区別する","破壊する"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"predator", choices:["前任者","捕食動物","予測者","序文"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"countryside", choices:["田舎・地方","国境","数え方","裏側"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"appear", choices:["消える","(姿を)現す・出現する","謝罪する","上に座る"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"poem", choices:["詩","詩人","小説","台本"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"century", choices:["中央","世紀(100年)","中央政府","世紀末"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"mate", choices:["仲間・つがいの片方","食事","会議","素材"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"attract", choices:["広告する","引きつける","返事する","計算する"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"purpose", choices:["紫色","目的","所有","奨励"], answer:1},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"for centuries", choices:["何世紀もの間","100年だけ","古い時代に","世紀末まで"], answer:0},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"turn on", choices:["(光などを)消す","(光などを)放つ・つける","通り過ぎる","逆さにする"], answer:1},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"turn off", choices:["(光などを)消す","(光などを)つける","回り道する","急に止まる"], answer:0},
-      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"look for ...", choices:["…を見ない","…を尊敬する","…を探す","…を見つけたあと放す"], answer:2},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"creature", choices:["創造","生き物","信用","批評"], answer:1,
+       explain:"## 意味\n**creature** = 生き物（動物・人間以外も含む広い意味）\n\n## 語源\n`create`（創造する）+ `-ure`（〜されたもの）= 創造されたもの → 生き物\n\n## 例\n- `firefly squid is a fascinating creature.`（ホタルイカは魅力的な生き物だ）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"bay", choices:["浜","湾","橋","入口"], answer:1, note:"Toyama Bay = 富山湾。",
+       explain:"## 意味\n**bay** = 湾（陸地に入り込んだ海）\n\n## 例\n- `Toyama Bay` = 富山湾（ホタルイカの名所）\n- `Tokyo Bay` = 東京湾\n\n## ポイント\n固有名詞（〜湾）の表現で頻出。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"local", choices:["全国の","地元の","地方公務員","近所の人"], answer:1,
+       explain:"## 意味\n**local** = 地元の／その地域の（形容詞）\n\n## 例\n- `the local people` = 地元の人々\n- `local food` = 地元の食べ物\n- `local time` = 現地時間\n\n## 注意\n「ローカル」とカタカナ語にもなっているが、英語では「地元の」が中心の意味。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"firefly squid", choices:["ホタルイカ","ホタル","コウイカ","ホタテ"], answer:0, note:"hotaruika。",
+       explain:"## 意味\n**firefly squid** = ホタルイカ（hotaruika）\n\n## 構成\n`firefly`（ホタル）+ `squid`（イカ）= 光るイカ\n\n## ポイント\n- 富山湾で春に大群が浅瀬に現れる\n- 体内の発光器官で青く光る\n- Lesson 2 の中心テーマ"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"organ", choices:["有機の","臓器・器官","音楽家","起源"], answer:1,
+       explain:"## 意味\n**organ** = 器官（体の各部分）\n\n## 例\n- `special organs` = 特別な器官（ホタルイカの発光器官）\n- `the heart is a vital organ.`（心臓は重要な器官）\n\n## 別の意味\nオルガン（楽器）の意味もある（同じ綴り）。\n\n## 関連語\n`organism` = 生物（個体）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"flash", choices:["軽く焼く","ピカッと光る・点滅する","流す","平らな"], answer:1,
+       explain:"## 意味\n**flash** = ピカッと光る／点滅する\n\n## 例\n- `Fireflies flash light in various patterns.`（ホタルは様々なパターンで点滅する）\n- `flash camera` = フラッシュ撮影\n\n## 関連語\n`flashlight` = 懐中電灯"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"various", choices:["真空の","様々な","本物の","勝利の"], answer:1,
+       explain:"## 意味\n**various** = 様々な／いろいろな（形容詞）\n\n## 例\n- `various patterns` = 様々な型\n- `various reasons` = 様々な理由\n\n## 関連語\n- `variety` = 多様性（名詞）\n- `vary` = 変動する（動詞）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"pattern", choices:["父親","型・パターン","哀れ","公爵"], answer:1,
+       explain:"## 意味\n**pattern** = 型／パターン／模様\n\n## 例\n- `light patterns` = 光のパターン\n- `behavior pattern` = 行動パターン\n- `a checkered pattern` = チェック模様\n\n## 紛らわしい語\n`patron`（後援者）と発音が似ているので注意。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"glow", choices:["流れる","光を放つ・光る","成長する","糊付けする"], answer:1,
+       explain:"## 意味\n**glow** = （柔らかく）光を放つ（動詞・名詞）\n\n## ポイント\n- `flash`（ピカッと点滅）と違い、glow は**持続的に光る**\n- 蛍の光・夜光塗料のような光\n\n## 例\n- `Fireflies glow at night.`（ホタルは夜光る）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"firefly", choices:["ホタル","花火","薪","火傷"], answer:0,
+       explain:"## 意味\n**firefly** = ホタル（蛍）\n\n## 構成\n`fire`（火）+ `fly`（飛ぶ虫）= 火のように光る虫\n\n## 関連\n- `firefly squid` = ホタルイカ\n- `firework` = 花火（別語！）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"anglerfish", choices:["釣り人","チョウチンアンコウ","アングロサクソン","タツノオトシゴ"], answer:1,
+       explain:"## 意味\n**anglerfish** = チョウチンアンコウ\n\n## 由来\n`angler`（釣り人）+ `fish` = 釣る魚。頭の上の発光器で獲物をおびき寄せて釣るような捕食をする。\n\n## ポイント\n深海に生息し、発光生物の代表例。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"crystal jellyfish", choices:["透明な氷","オワンクラゲ","水晶","ガラス工芸"], answer:1,
+       explain:"## 意味\n**crystal jellyfish** = オワンクラゲ\n\n## 構成\n`crystal`（透明な）+ `jellyfish`（クラゲ）\n\n## ポイント\n- GFP（緑色蛍光タンパク質）の発見で有名\n- 2008 年下村脩氏がノーベル化学賞受賞（このクラゲの研究で）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"produce", choices:["生み出す・生産する","示す","減らす","完璧にする"], answer:0,
+       explain:"## 意味\n**produce** = 生み出す／生産する（動詞）\n\n## 例\n- `Fireflies produce light.`（ホタルは光を生み出す）\n- `Japan produces many cars.`（日本は多くの車を生産する）\n\n## アクセント\n動詞: pro**DUCE** / 名詞: **PRO**duce（青果物）"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"a symbol of ...", choices:["…の対立","…の象徴","…の合計","…の支店"], answer:1,
+       explain:"## 意味\n**a symbol of ~** = 〜の象徴\n\n## 例\n- `Firefly squid is a symbol of spring.`（ホタルイカは春の象徴）\n- `Mt. Fuji is a symbol of Japan.`（富士山は日本の象徴）\n\n## ポイント\n冠詞 `a` を忘れずに（symbol は可算名詞）。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"come from ...", choices:["…からやってくる","…を越えてくる","…のために来る","…を欲しがる"], answer:0,
+       explain:"## 意味\n**come from ~** = 〜からやってくる／〜の出身である\n\n## 例\n- `These lights come from firefly squid.`（これらの光はホタルイカからやってくる）\n- `She comes from Osaka.`（彼女は大阪出身だ）"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"give off ...", choices:["…をあきらめる","…を放つ","…をオフにする","…を寄付する"], answer:1, note:"光・におい・熱などを「発する／放つ」。",
+       explain:"## 意味\n**give off ~** = 〜を放つ／発する\n\n## ポイント\n光・におい・熱・煙などを「発散させる」イメージ。\n\n## 例\n- `Fireflies give off light.`（ホタルは光を放つ）\n- `The candle gives off a sweet smell.`（ろうそくは甘い香りを放つ）\n\n## 注意\n`give up`（あきらめる）と混同しないこと。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"distract", choices:["(気を)そらす","蒸留する","区別する","破壊する"], answer:0,
+       explain:"## 意味\n**distract** = (気を)そらす／注意をそらす\n\n## 語源\n`dis-`（離して）+ `tract`（引く）= 注意を引き離す\n\n## 例\n- `The light distracts predators.`（その光は捕食者の気をそらす）\n- `Don't distract me!`（邪魔しないで！）\n\n## 紛らわしい語\n`distinct`（はっきりした）／`destruction`（破壊）と区別。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"predator", choices:["前任者","捕食動物","予測者","序文"], answer:1,
+       explain:"## 意味\n**predator** = 捕食動物（他の動物を食べる動物）\n\n## 反対語\n`prey` = 獲物\n\n## 例\n- `Fireflies flash light to distract predators.`（ホタルは捕食者の気をそらすために点滅する）\n- `Lions are predators.`（ライオンは捕食動物だ）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"countryside", choices:["田舎・地方","国境","数え方","裏側"], answer:0,
+       explain:"## 意味\n**countryside** = 田舎／地方／田園地帯\n\n## 構成\n`country`（国／田舎）+ `side`（側）= 田舎の側\n\n## 例\n- `Fireflies live in the Japanese countryside.`（ホタルは日本の田園地帯に住む）\n\n## 関連\n反対は `city`（都市）／`urban area`（都市部）。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"appear", choices:["消える","(姿を)現す・出現する","謝罪する","上に座る"], answer:1,
+       explain:"## 意味\n**appear** = (姿を)現す／出現する\n\n## 反対語\n`disappear` = 消える\n\n## 例\n- `Fireflies appear in summer.`（ホタルは夏に現れる）\n- `The lights have appeared in poems for centuries.`（その光は何世紀もの間、詩に登場してきた）\n\n## 別の意味\n「〜のように見える」: `She appears tired.`（彼女は疲れているように見える）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"poem", choices:["詩","詩人","小説","台本"], answer:0,
+       explain:"## 意味\n**poem** = 詩（作品）\n\n## 関連語\n- `poet` = 詩人（人）\n- `poetry` = 詩（総称、不可算名詞）\n\n## 例\n- `Fireflies appear in Japanese poems.`（ホタルは日本の詩に登場する）"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"century", choices:["中央","世紀(100年)","中央政府","世紀末"], answer:1,
+       explain:"## 意味\n**century** = 世紀（100 年）\n\n## 例\n- `the 21st century` = 21 世紀\n- `for centuries` = 何世紀もの間\n\n## ポイント\n複数形 `centuries` で「何世紀もの間」という熟語になる。Lesson 2 重要表現。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"mate", choices:["仲間・つがいの片方","食事","会議","素材"], answer:0,
+       explain:"## 意味\n**mate** = つがいの片方／仲間\n\n## 例\n- `Fireflies flash light to find mates.`（ホタルはつがいを見つけるために点滅する）\n- `roommate` = ルームメイト\n- `classmate` = クラスメイト\n\n## 注意\n動詞では「（動物が）交尾する」の意味もある。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"attract", choices:["広告する","引きつける","返事する","計算する"], answer:1,
+       explain:"## 意味\n**attract** = 引きつける（注意・興味・人を）\n\n## 例\n- `The light attracts small fish.`（その光は小魚を引きつける）\n- `Tokyo attracts many tourists.`（東京は多くの観光客を引きつける）\n\n## 関連語\n- `attractive` = 魅力的な\n- `attraction` = 魅力／観光名所"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"purpose", choices:["紫色","目的","所有","奨励"], answer:1,
+       explain:"## 意味\n**purpose** = 目的\n\n## 例\n- `for different purposes` = 様々な目的のために\n- `What is the purpose of this trip?`（この旅行の目的は何ですか）\n\n## 熟語\n- `on purpose` = わざと\n- `for the purpose of ~` = 〜のために"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"for centuries", choices:["何世紀もの間","100年だけ","古い時代に","世紀末まで"], answer:0,
+       explain:"## 意味\n**for centuries** = 何世紀もの間（とても長い時間）\n\n## 文法\n`for + 期間`（〜の間）+ 現在完了形（継続）でよく使う：\n- `Fireflies have appeared in poems for centuries.`（ホタルは何世紀もの間、詩に登場してきた）\n\n## ポイント\nLesson 2 の現在完了「継続」用法と相性が良い。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"turn on", choices:["(光などを)消す","(光などを)放つ・つける","通り過ぎる","逆さにする"], answer:1,
+       explain:"## 意味\n**turn on** = (光・機械などを)つける／放つ\n\n## 反対\n**turn off** = (光などを)消す\n\n## 例\n- `Fireflies turn on their lights at night.`（ホタルは夜に光をつける）\n- `Turn on the TV, please.`（テレビをつけて）"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"turn off", choices:["(光などを)消す","(光などを)つける","回り道する","急に止まる"], answer:0,
+       explain:"## 意味\n**turn off** = (光・機械などを)消す\n\n## 反対\n**turn on** = (光などを)つける\n\n## 例\n- `Don't forget to turn off the light.`（電気を消すのを忘れずに）\n- `Fireflies turn their lights on and off.`（ホタルは光をつけたり消したりする）"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"look for ...", choices:["…を見ない","…を尊敬する","…を探す","…を見つけたあと放す"], answer:2,
+       explain:"## 意味\n**look for ~** = 〜を探す\n\n## 似た表現\n- `seek` = 探す（堅い）\n- `search for ~` = 〜を探し求める\n- `look for ~` = 探す（口語的）\n\n## 例\n- `Fireflies look for mates at night.`（ホタルは夜つがいを探す）\n\n## 紛らわしい類似熟語\n- `look at ~` = 〜を見る\n- `look after ~` = 〜の世話をする\n- `look forward to ~` = 〜を楽しみにする"},
     ],
     grammar:[
-      // 受動態 (be + 過去分詞)
-      {prompt:"受動態の基本形を選びなさい。", body:"The ball is (   ) by him.", choices:["kick","kicks","kicked","kicking"], answer:2, note:"be + 過去分詞。kick→kicked。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"Math (   ) by Mr. Yatsumonji.", choices:["teach","teaches","is taught","is teaching"], answer:2, note:"主語が物 → 受け身（現在）。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"This car (   ) in Japan.", choices:["made","is made","was made","was making"], answer:2, note:"過去の受け身。"},
-      {prompt:"次の文を受動態に直した文として正しいものを選びなさい。", body:"He kicks the ball.", choices:["The ball kick by him.","The ball is kicked by him.","The ball was kicked by him.","The ball kicks him."], answer:1, note:"現在形の能動 → 現在形の受動 is + 過去分詞。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I (   ) not invited to the party.", choices:["was","were","am","do"], answer:0, note:"否定の受動態は be 動詞のあとに not。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The book is read (   ) many people.", choices:["with","of","by","in"], answer:2, note:"受動態で動作主は by ~。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The shrine was built 300 years (   ).", choices:["before","since","ago","for"], answer:2, note:"〜前 = ~ ago。"},
-      // 現在完了形 (3つの用法)
-      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"They have just got to the station.", choices:["完了","経験","継続","進行"], answer:0, note:"just「ちょうど〜したところだ」→ 完了。"},
-      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"Yumi has made curry before.", choices:["完了","経験","継続","進行"], answer:1, note:"before「以前」→ 経験。"},
-      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"I have lived here for two years.", choices:["完了","経験","継続","進行"], answer:2, note:"for + 期間 → 継続。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I (   ) this book three times.", choices:["read","have read","reading","am reading"], answer:1, note:"three times → 現在完了の経験。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"He (   ) in Tokyo for ten years.", choices:["lives","is living","has lived","lived"], answer:2, note:"for + 期間 → 継続。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"She (   ) just finished her dinner.", choices:["is","was","has","had"], answer:2, note:"have/has + 過去分詞。3単 → has。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"Have you ever (   ) a wild dolphin?", choices:["see","saw","seen","seeing"], answer:2, note:"ever + have + 過去分詞（経験）。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I have never (   ) such a strange creature before.", choices:["saw","seen","see","seeing"], answer:1},
-      // for / since
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I have been busy (   ) last Sunday.", choices:["for","since","from","in"], answer:1, note:"since + 起点（〜から）。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"We have known each other (   ) ten years.", choices:["for","since","from","by"], answer:0, note:"for + 期間（〜の間）。"},
-      // 完了受け身
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The work has already (   ) by them.", choices:["done","being done","been done","do"], answer:2, note:"完了受け身 have been + 過去分詞。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The light is used (   ) different purposes.", choices:["with","of","for","by"], answer:2, note:"for + 目的。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"(   ) you (   ) your homework yet?", choices:["Are / doing","Have / done","Do / do","Did / done"], answer:1, note:"yet と相性が良いのは現在完了。"},
+      {prompt:"受動態の基本形を選びなさい。", body:"The ball is (   ) by him.", choices:["kick","kicks","kicked","kicking"], answer:2, note:"be + 過去分詞。kick→kicked。",
+       explain:"## 受動態の基本形\n**`be 動詞 + 過去分詞 (p.p.)`** = 〜される／〜された\n\n## この問題\n`is + kicked`（kick の過去分詞）\n→ 「ボールは彼に蹴られる」\n\n## ポイント\n- 主語が「される側」になるのが受動態\n- 動作主は `by ~` で示す（省略可）\n\n## 動詞の変化\n`kick – kicked – kicked`（規則動詞）"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"Math (   ) by Mr. Yatsumonji.", choices:["teach","teaches","is taught","is teaching"], answer:2, note:"主語が物 → 受け身（現在）。",
+       explain:"## なぜ受動態か\n主語 `Math`（数学）は「教えられる側」。\n→ `be 動詞 + 過去分詞` の形にする。\n\n## 不規則変化\n`teach – taught – taught`\n→ 過去分詞は **taught**\n\n## 文の意味\n「数学は八ツ門寺先生によって教えられている」\n\n## 配付プリント直結\nこの文は先生のプリントに登場した典型例。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"This car (   ) in Japan.", choices:["made","is made","was made","was making"], answer:2, note:"過去の受け身。",
+       explain:"## 過去の受動態\n`was/were + 過去分詞` = 〜された（過去）\n\n## 不規則変化\n`make – made – made`\n→ 過去分詞は **made**\n\n## 主語の数\n主語 `This car`（単数）→ **was** made\n\n## 文の意味\n「この車は日本で作られた」"},
+      {prompt:"次の文を受動態に直した文として正しいものを選びなさい。", body:"He kicks the ball.", choices:["The ball kick by him.","The ball is kicked by him.","The ball was kicked by him.","The ball kicks him."], answer:1, note:"現在形の能動 → 現在形の受動 is + 過去分詞。",
+       explain:"## 能動 → 受動の手順\n1. 元の文の **目的語**（the ball）を新しい主語にする\n2. 動詞は `be 動詞 + 過去分詞` に変える\n3. 元の主語は `by ~` にする\n\n## この問題\n- 元: He **kicks** the ball.（現在形）\n- 受動: The ball **is kicked** by him.\n\n## 時制を保つ\n元が現在形 → 受動も現在形（is + p.p.）\n元が過去形 → 受動も過去形（was + p.p.）"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I (   ) not invited to the party.", choices:["was","were","am","do"], answer:0, note:"否定の受動態は be 動詞のあとに not。",
+       explain:"## 否定の受動態\n`be 動詞 + not + 過去分詞`\n→ be 動詞のあとに not を入れる\n\n## 主語に合わせる\n主語 I + 過去 → **was** not\n（I → was / he/she/it → was / you/we/they → were）\n\n## 文の意味\n「私はパーティーに招待されなかった」\n\n## 配付プリント直結\n先生のプリント B-(4) と同じ形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The book is read (   ) many people.", choices:["with","of","by","in"], answer:2, note:"受動態で動作主は by ~。",
+       explain:"## 動作主の前置詞\n受動態で「〜によって」を表すのは **`by`**\n\n## 文の意味\n「その本は多くの人に読まれている」\n\n## by 以外も使う場合\n- `be interested **in** ~`（〜に興味がある）\n- `be made **of/from** ~`（〜でできている）\n- `be filled **with** ~`（〜で満たされている）\n\nこれらは慣用的な熟語として覚える。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The shrine was built 300 years (   ).", choices:["before","since","ago","for"], answer:2, note:"〜前 = ~ ago。",
+       explain:"## 「〜前」の表し方\n**過去の文 + ~ ago** = 〜前に\n\n## 例\n- `300 years ago` = 300 年前に\n- `two days ago` = 2 日前に\n\n## ポイント：紛らわしい語\n- **ago** = 過去形と一緒に（過去から見て前）\n- **before** = 過去より前（過去完了で使う）\n- **for** = 〜の間\n- **since** = 〜から（起点）"},
+      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"They have just got to the station.", choices:["完了","経験","継続","進行"], answer:0, note:"just「ちょうど〜したところだ」→ 完了。",
+       explain:"## 現在完了の 3 用法\n1. **完了** =「ちょうど〜したところだ」←この問題\n2. **経験** =「〜したことがある」\n3. **継続** =「ずっと〜している」\n\n## 完了の合図\n- **just**（ちょうど）\n- **already**（すでに）\n- **yet**（まだ／もう）\n\n## 文の意味\n「彼らはちょうど駅に着いたところだ」"},
+      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"Yumi has made curry before.", choices:["完了","経験","継続","進行"], answer:1, note:"before「以前」→ 経験。",
+       explain:"## 経験の用法\n「〜したことがある」を表す。\n\n## 経験の合図\n- **before**（以前）\n- **ever**（これまでに）\n- **never**（一度も〜ない）\n- **~ times**（〜回）\n\n## 3 単現に注意\n主語 Yumi（3 単）→ **has** + 過去分詞\n\n## 文の意味\n「ユミは以前カレーを作ったことがある」"},
+      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"I have lived here for two years.", choices:["完了","経験","継続","進行"], answer:2, note:"for + 期間 → 継続。",
+       explain:"## 継続の用法\n「ずっと〜している」（過去から今までずっと続いている）\n\n## 継続の合図\n- **for + 期間**（〜の間）\n- **since + 起点**（〜から）\n\n## 文の意味\n「私は 2 年間ここに住んでいる」\n→ 2 年前から今までずっと\n\n## 注意\n単純過去 `I lived` だと「以前住んでいた（今はいない）」になる。継続の意味は現在完了でしか出せない。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I (   ) this book three times.", choices:["read","have read","reading","am reading"], answer:1, note:"three times → 現在完了の経験。",
+       explain:"## 経験の用法\n`three times`（3 回）= 経験の合図。\n→ **have + 過去分詞**\n\n## 不規則動詞: read\n`read – read – read`（綴り同じ、発音違い）\n- 現在: /riːd/（リード）\n- 過去・過去分詞: /rɛd/（レッド）"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"He (   ) in Tokyo for ten years.", choices:["lives","is living","has lived","lived"], answer:2, note:"for + 期間 → 継続。",
+       explain:"## 継続の用法\n`for ten years`（10 年間）= 継続の合図。\n→ **has/have + 過去分詞**\n\n## 主語の確認\n主語 He（3 単）→ **has** lived\n\n## なぜ他は不正解か\n- `lives`（現在形）→「いつも住んでいる」ではなく「過去から今までずっと」を表せない\n- `is living`（現在進行形）→「一時的に住んでいる」ニュアンス\n- `lived`（過去形）→「過去に住んでいた（今はいない）」"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"She (   ) just finished her dinner.", choices:["is","was","has","had"], answer:2, note:"have/has + 過去分詞。3単 → has。",
+       explain:"## 完了の用法\n`just`（ちょうど）= 完了の合図。\n→ **has/have + 過去分詞**\n\n## 主語の確認\nShe（3 単）→ **has** + 過去分詞\n（he/she/it/単数 → has）\n（I/you/we/they/複数 → have）\n\n## 文の意味\n「彼女はちょうど夕食を食べ終えたところだ」"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"Have you ever (   ) a wild dolphin?", choices:["see","saw","seen","seeing"], answer:2, note:"ever + have + 過去分詞（経験）。",
+       explain:"## 経験の疑問文\n`Have/Has + 主語 + ever + 過去分詞 ~?`\n=「〜したことがありますか？」\n\n## 不規則変化\n`see – saw – seen`\n→ 過去分詞は **seen**\n\n## ポイント\n- `Have you ever been to ~?` = 〜に行ったことがありますか\n- `Have you ever seen ~?` = 〜を見たことがありますか"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I have never (   ) such a strange creature before.", choices:["saw","seen","see","seeing"], answer:1,
+       explain:"## 経験の否定\n`have never + 過去分詞` = 「一度も〜したことがない」\n\n## 不規則変化\n`see – saw – seen`\n→ 必ず**過去分詞 seen** を使う（saw ではない）\n\n## 文の意味\n「私はそんな奇妙な生き物を一度も見たことがない」\n\n## 注意\n`never` を使ったら否定 not は不要。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I have been busy (   ) last Sunday.", choices:["for","since","from","in"], answer:1, note:"since + 起点（〜から）。",
+       explain:"## for と since の使い分け\n- **for + 期間** (`for two years`, `for ten days`)\n- **since + 起点** (`since 2020`, `since last Sunday`)\n\n## この問題\n`last Sunday` = 特定の時点（起点）\n→ **since**\n\n## 文の意味\n「私は日曜からずっと忙しい」"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"We have known each other (   ) ten years.", choices:["for","since","from","by"], answer:0, note:"for + 期間（〜の間）。",
+       explain:"## for と since の使い分け\n- **for + 期間** ←この問題\n- **since + 起点**\n\n## この問題\n`ten years` = 期間\n→ **for**\n\n## 文の意味\n「私たちは 10 年間お互いに知っている」（10 年来の知り合い）\n\n## know は状態動詞\n状態動詞は通常、現在完了進行形にしない。\n× `have been knowing`\n○ `have known`"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The work has already (   ) by them.", choices:["done","being done","been done","do"], answer:2, note:"完了受け身 have been + 過去分詞。",
+       explain:"## 完了受け身\n`have/has + been + 過去分詞`\n→ 受動態 + 完了の組み合わせ\n\n## 構造\n- 完了形: have + 過去分詞 (be → been)\n- 受動態: be + 過去分詞 (done)\n→ have + **been done**\n\n## 文の意味\n「その仕事は彼らによってすでに終えられた」"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The light is used (   ) different purposes.", choices:["with","of","for","by"], answer:2, note:"for + 目的。",
+       explain:"## for + 目的\n`for + 名詞` で「〜のために／〜の目的で」\n\n## 例\n- `for different purposes` = 様々な目的のために\n- `for example` = 例えば\n- `for fun` = 楽しみのために\n\n## by との違い\n- **by** = 〜によって（動作主・手段）\n- **for** = 〜のために（目的）\n\nこの文では「光が様々な目的のために使われる」"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"(   ) you (   ) your homework yet?", choices:["Are / doing","Have / done","Do / do","Did / done"], answer:1, note:"yet と相性が良いのは現在完了。",
+       explain:"## yet = 現在完了の合図\n`yet`（まだ・もう）は基本的に**現在完了**と一緒に使う。\n\n## 疑問文の語順\n`Have/Has + 主語 + 過去分詞 ~ yet?`\n=「もう〜しましたか？」\n\n## 不規則変化\n`do – did – done`\n→ 過去分詞は **done**\n\n## 文の意味\n「あなたはもう宿題を終えましたか？」"},
     ],
     verbform:[
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"Math ( teach ) by Mr. Yatsumonji.", answer:"is taught", alts:["is taught."], note:"受動態 be + 過去分詞。teach-taught。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"This car ( make ) in Japan.", answer:"was made", alts:["was made."], note:"過去の受動態。make-made。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"I ( live ) here for ten years.", answer:"have lived", alts:["have lived."], note:"継続の現在完了。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"She ( just / finish ) her homework.", answer:"has just finished", alts:["has just finished."], note:"完了の現在完了。3単 → has。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"They ( visit ) Kyoto three times.", answer:"have visited", alts:["have visited."], note:"経験の現在完了。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The letter ( write ) by her yesterday.", answer:"was written", alts:["was written."], note:"過去の受動態。write-wrote-written。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The lights ( give off ) by the firefly squid.", answer:"are given off", alts:["are given off."], note:"受動態 are + 過去分詞。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"We ( be ) friends since high school.", answer:"have been", alts:["have been."], note:"継続の現在完了。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The shrine ( build ) 300 years ago.", answer:"was built", alts:["was built."], note:"過去の受動態。build-built。"},
-      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"I ( not / invite ) to the party.", answer:"was not invited", alts:["was not invited.","wasn't invited","wasn't invited."], note:"否定の受動態。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"Math ( teach ) by Mr. Yatsumonji.", answer:"is taught", alts:["is taught."], note:"受動態 be + 過去分詞。teach-taught。",
+       explain:"## 受動態（現在）\n`is + 過去分詞`\n\n## 不規則変化\n`teach – taught – taught`\n→ 過去分詞は **taught**\n\n## 主語に合わせる\nMath（単数）→ **is**"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"This car ( make ) in Japan.", answer:"was made", alts:["was made."], note:"過去の受動態。make-made。",
+       explain:"## 過去の受動態\n`was/were + 過去分詞`\n\n## 不規則変化\n`make – made – made`\n\n## 主語に合わせる\nThis car（単数）+ 過去 → **was**"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"I ( live ) here for ten years.", answer:"have lived", alts:["have lived."], note:"継続の現在完了。",
+       explain:"## 継続の現在完了\n`have/has + 過去分詞` + for + 期間\n\n## 主語に合わせる\nI / you / we / they / 複数 → **have**\nhe / she / it / 単数 → has\n\n## live の変化\n`live – lived – lived`（規則）"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"She ( just / finish ) her homework.", answer:"has just finished", alts:["has just finished."], note:"完了の現在完了。3単 → has。",
+       explain:"## 完了の現在完了\n`has/have + just + 過去分詞`\n=「ちょうど〜したところだ」\n\n## 語順\n`has` → `just`（副詞）→ `finished`（過去分詞）\n\n## 主語\nShe（3 単）→ **has**\n\n## finish の変化\n`finish – finished – finished`（規則）"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"They ( visit ) Kyoto three times.", answer:"have visited", alts:["have visited."], note:"経験の現在完了。",
+       explain:"## 経験の現在完了\n`have/has + 過去分詞 + ~ times`\n=「〜回〜したことがある」\n\n## 経験の合図\n- `~ times`（〜回）\n- `before`（以前）\n- `ever / never`\n\n## 主語\nThey（複数）→ **have**"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The letter ( write ) by her yesterday.", answer:"was written", alts:["was written."], note:"過去の受動態。write-wrote-written。",
+       explain:"## 過去の受動態\n`was/were + 過去分詞`\n\n## 不規則変化（要注意）\n`write – wrote – written`\n→ 過去 wrote と過去分詞 written は別\n→ 受動態には **written**\n\n## ヒント\n`yesterday`（昨日）= 過去 → was"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The lights ( give off ) by the firefly squid.", answer:"are given off", alts:["are given off."], note:"受動態 are + 過去分詞。",
+       explain:"## 受動態（現在）\n`are + 過去分詞`\n\n## 熟語\n`give off ~` = 〜を放つ\n→ 受動態は `be + given off`\n\n## 主語\nThe lights（複数）→ **are**\n\n## 不規則変化\n`give – gave – given`"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"We ( be ) friends since high school.", answer:"have been", alts:["have been."], note:"継続の現在完了。",
+       explain:"## be 動詞の現在完了\n`have/has + been`\n=「〜であり続けている」\n\n## 主語\nWe（複数）→ **have**\n\n## be の変化\n`be – was/were – been`\n\n## ヒント\n`since high school`（高校から）= 起点 → 継続"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The shrine ( build ) 300 years ago.", answer:"was built", alts:["was built."], note:"過去の受動態。build-built。",
+       explain:"## 過去の受動態\n`was + 過去分詞`\n\n## ヒント\n`300 years ago`（300 年前）= 過去 → was\n\n## 不規則変化\n`build – built – built`\n→ 過去分詞は **built**"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"I ( not / invite ) to the party.", answer:"was not invited", alts:["was not invited.","wasn't invited","wasn't invited."], note:"否定の受動態。",
+       explain:"## 否定の受動態\n`was/were + not + 過去分詞`\n\n## 語順\nI was → I was not → I was not invited\n\n## 主語\nI + 過去 → **was**\n\n## invite の変化\n`invite – invited – invited`（規則）\n\n## 配付プリント直結\n先生のプリント B-(4) と同じ。"},
     ],
     arrange:[
-      // 配付プリント (Lesson 2 Part 1) の並べ替え
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"この写真は彼女によって撮られた。",
        scramble:["This","picture","was","taken","by","her"],
-       answer:"This picture was taken by her", note:"過去の受動態 was + 過去分詞。"},
+       answer:"This picture was taken by her", note:"過去の受動態 was + 過去分詞。",
+       explain:"## 並べ方\n1. 主語: **This picture**\n2. 過去の受動態: **was taken**\n3. 動作主: **by her**\n\n## 構造\n`be 動詞 + 過去分詞 + by + 動作主`\n\n## 注意\ntake の過去分詞は **taken**（不規則: take-took-taken）"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私はそのパーティーに招待されなかった。",
        scramble:["I","was","not","invited","to","the","party"],
-       answer:"I was not invited to the party", note:"否定の受動態。"},
+       answer:"I was not invited to the party", note:"否定の受動態。",
+       explain:"## 並べ方\n1. 主語: **I**\n2. 否定の受動態: **was not invited**\n3. 場所: **to the party**\n\n## 否定の語順\n`was + **not** + 過去分詞`\nbe 動詞のあとに not。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"数学は八ツ門寺先生によって教えられている。",
        scramble:["Math","is","taught","by","Mr.","Yatsumonji"],
-       answer:"Math is taught by Mr. Yatsumonji", note:"現在の受動態。"},
+       answer:"Math is taught by Mr. Yatsumonji", note:"現在の受動態。",
+       explain:"## 並べ方\n1. 主語: **Math**\n2. 現在の受動態: **is taught**\n3. 動作主: **by Mr. Yatsumonji**\n\n## 不規則変化\nteach – taught – taught\n→ 過去分詞は **taught**"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その本は世界中で読まれている。",
        scramble:["The","book","is","read","all","over","the","world"],
-       answer:"The book is read all over the world", note:"by 以外の前置詞も使う。"},
+       answer:"The book is read all over the world", note:"by 以外の前置詞も使う。",
+       explain:"## 並べ方\n1. 主語: **The book**\n2. 受動態: **is read**\n3. 場所: **all over the world**（世界中で）\n\n## ポイント\n- `read` は不規則動詞（read-read-read 綴り同じ、発音違い）\n- 動作主の by は省略可能（誰もが読んでいる時）"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私は10年間ここに住んでいる。",
        scramble:["I","have","lived","here","for","ten","years"],
-       answer:"I have lived here for ten years", note:"継続の現在完了 + for + 期間。"},
+       answer:"I have lived here for ten years", note:"継続の現在完了 + for + 期間。",
+       explain:"## 並べ方\n1. 主語: **I**\n2. 継続の現在完了: **have lived**\n3. 場所: **here**\n4. 期間: **for ten years**\n\n## 構造\n`have/has + 過去分詞 + for + 期間`"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"彼女はちょうど夕食を食べ終えたところです。",
        scramble:["She","has","just","finished","her","dinner"],
-       answer:"She has just finished her dinner", note:"完了の現在完了 + just。"},
+       answer:"She has just finished her dinner", note:"完了の現在完了 + just。",
+       explain:"## 並べ方\n1. 主語: **She**\n2. 完了の現在完了: **has just finished**\n3. 目的語: **her dinner**\n\n## 副詞 just の位置\n`has + **just** + 過去分詞`（has と過去分詞の間）\n\n## 主語\nShe（3 単）→ **has**"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私はホタルイカを見たことがない。",
        scramble:["I","have","never","seen","a","firefly","squid"],
-       answer:"I have never seen a firefly squid", note:"経験の現在完了 + never。"},
+       answer:"I have never seen a firefly squid", note:"経験の現在完了 + never。",
+       explain:"## 並べ方\n1. 主語: **I**\n2. 経験の現在完了（否定）: **have never seen**\n3. 目的語: **a firefly squid**\n\n## never の位置\n`have + **never** + 過去分詞`\n\n## 注意\n`see` の過去分詞は **seen**（saw ではない）。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"ホタルは光を放つ。",
        scramble:["Fireflies","give","off","light"],
-       answer:"Fireflies give off light", note:"give off = 〜を放つ。"},
+       answer:"Fireflies give off light", note:"give off = 〜を放つ。",
+       explain:"## 並べ方\n1. 主語: **Fireflies**（複数）\n2. 動詞 + 副詞: **give off**\n3. 目的語: **light**\n\n## 熟語\n`give off ~` = 〜を放つ（光・におい・熱）\n\n## ポイント\n複数主語 → 動詞は原形 give（-s 不要）。"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その光は捕食者の気をそらす。",
        scramble:["The","light","distracts","predators"],
-       answer:"The light distracts predators"},
+       answer:"The light distracts predators",
+       explain:"## 並べ方\n1. 主語: **The light**（3 単）\n2. 動詞: **distracts**（-s 付き）\n3. 目的語: **predators**\n\n## 3 単現の s\n主語 The light（単数）+ 現在 → distracts"},
       {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私たちは何世紀もそれを使ってきた。",
        scramble:["We","have","used","it","for","centuries"],
-       answer:"We have used it for centuries", note:"継続の現在完了 + for centuries。"},
+       answer:"We have used it for centuries", note:"継続の現在完了 + for centuries。",
+       explain:"## 並べ方\n1. 主語: **We**\n2. 継続の現在完了: **have used**\n3. 目的語: **it**\n4. 期間: **for centuries**（何世紀もの間）\n\n## 重要表現\n`for centuries` = 何世紀もの間（Lesson 2 必須熟語）"},
     ],
     translate:[
-      // 英→日（4択）
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'These lights are much loved by the local people.',
-       choices:["これらの光は地元の人々に売られている。","これらの光は地元の人々によってとても愛されている。","ローカルな人々はこの光を嫌っている。","地元の人々はこれらの光を作っていない。"], answer:1},
+       choices:["これらの光は地元の人々に売られている。","これらの光は地元の人々によってとても愛されている。","ローカルな人々はこの光を嫌っている。","地元の人々はこれらの光を作っていない。"], answer:1,
+       explain:"## キーワード\n- `are loved` = 受動態（〜される）\n- `much` = とても（強調）\n- `by + 人` = 〜によって\n- `local` = 地元の\n\n## ポイント\n受動態の現在形は「〜されている」と訳す。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Fireflies give off light to attract mates.',
-       choices:["ホタルは光を消してつがいを離す。","ホタルは光を放ってつがいを引きつける。","ホタルは光を見せて捕食者を遠ざける。","ホタルはつがいを探さない。"], answer:1},
+       choices:["ホタルは光を消してつがいを離す。","ホタルは光を放ってつがいを引きつける。","ホタルは光を見せて捕食者を遠ざける。","ホタルはつがいを探さない。"], answer:1,
+       explain:"## キーワード\n- `give off ~` = 〜を放つ\n- `to + 動詞の原形` = 〜するために（目的）\n- `attract` = 引きつける\n- `mates` = つがい\n\n## ポイント\n`to attract mates` は「つがいを引きつけるために」（目的の to 不定詞）。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'These lights have appeared in Japanese poems for centuries.',
-       choices:["その光は日本の詩には登場しない。","日本の詩は何世紀もの間、光を放ってきた。","その光は何世紀もの間、日本の詩に登場してきた。","光は最近、詩から消えた。"], answer:2, note:"現在完了の継続 + for centuries。"},
+       choices:["その光は日本の詩には登場しない。","日本の詩は何世紀もの間、光を放ってきた。","その光は何世紀もの間、日本の詩に登場してきた。","光は最近、詩から消えた。"], answer:2, note:"現在完了の継続 + for centuries。",
+       explain:"## キーワード\n- `have appeared` = 現在完了（継続）\n- `for centuries` = 何世紀もの間\n- `poem` = 詩\n\n## ポイント\n現在完了 + for で「ずっと〜してきた」。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The squid have special organs in their bodies.',
-       choices:["イカは特別な器官を体内に持っている。","イカは器官を売っている。","イカの体に特別な薬がある。","イカは体外に器官を持つ。"], answer:0},
+       choices:["イカは特別な器官を体内に持っている。","イカは器官を売っている。","イカの体に特別な薬がある。","イカは体外に器官を持つ。"], answer:0,
+       explain:"## キーワード\n- `organ` = 器官\n- `in their bodies` = 体内に\n\n## 注意\nここの `have` は「持っている」（所有）。受動態ではない。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Anglerfish live in the deep dark sea.',
-       choices:["チョウチンアンコウは浅瀬で暮らす。","チョウチンアンコウは深い暗い海に生息している。","チョウチンアンコウは光る海に住んでいる。","チョウチンアンコウは陸上で生活する。"], answer:1},
+       choices:["チョウチンアンコウは浅瀬で暮らす。","チョウチンアンコウは深い暗い海に生息している。","チョウチンアンコウは光る海に住んでいる。","チョウチンアンコウは陸上で生活する。"], answer:1,
+       explain:"## キーワード\n- `anglerfish` = チョウチンアンコウ\n- `deep dark sea` = 深い暗い海\n\n## ポイント\n2 つの形容詞 deep + dark が名詞 sea を修飾。「深くて暗い」両方の意味。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'I have lived here for ten years.',
-       choices:["私は10年前にここに住んでいた。","私は10年間ここに住んでいる。","私はここに10回住んだ。","私はもうすぐここに10年住むつもりだ。"], answer:1},
+       choices:["私は10年前にここに住んでいた。","私は10年間ここに住んでいる。","私はここに10回住んだ。","私はもうすぐここに10年住むつもりだ。"], answer:1,
+       explain:"## キーワード\n- `have lived` = 現在完了（継続）\n- `for ten years` = 10 年間\n\n## ポイント\n継続用法 = 過去のある時点から**現在も続いている**。\n→「住んでいた（今はいない）」とは違うことに注意。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'She has just finished her homework.',
-       choices:["彼女は宿題をやり終えていない。","彼女はちょうど宿題を終えたところだ。","彼女は宿題をしたことがある。","彼女は宿題を続けている。"], answer:1},
+       choices:["彼女は宿題をやり終えていない。","彼女はちょうど宿題を終えたところだ。","彼女は宿題をしたことがある。","彼女は宿題を続けている。"], answer:1,
+       explain:"## キーワード\n- `has just finished` = 完了用法\n- `just` = ちょうど\n\n## ポイント\n完了用法 = 「ちょうど〜したところだ」。動作が直前に完了したニュアンス。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'I have never seen such a strange creature before.',
-       choices:["私はそんな奇妙な生き物を以前見たことがない。","私はそんな奇妙な生き物を以前見たことがある。","私はそんな奇妙な生き物を見ないつもりだ。","私はそんな奇妙な生き物が嫌いだ。"], answer:0},
+       choices:["私はそんな奇妙な生き物を以前見たことがない。","私はそんな奇妙な生き物を以前見たことがある。","私はそんな奇妙な生き物を見ないつもりだ。","私はそんな奇妙な生き物が嫌いだ。"], answer:0,
+       explain:"## キーワード\n- `have never seen` = 経験用法の否定\n- `before` = 以前\n- `such a ~` = そんな〜\n\n## ポイント\n`never` で「一度も〜ない」を表す。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The light is used for different purposes.',
-       choices:["その光は色々な目的のために使われる。","その光は1つの目的にしか使えない。","その光は使えない。","その光は目的が分からない。"], answer:0},
+       choices:["その光は色々な目的のために使われる。","その光は1つの目的にしか使えない。","その光は使えない。","その光は目的が分からない。"], answer:0,
+       explain:"## キーワード\n- `is used` = 受動態（使われる）\n- `for + 目的` = 〜のために\n- `different purposes` = 様々な目的\n\n## ポイント\n受動態 + 目的の for。"},
       {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'This car was made in Japan.',
-       choices:["この車は日本で作られた。","この車は日本に運ばれた。","この車は日本では売れない。","この車を日本人が買った。"], answer:0},
+       choices:["この車は日本で作られた。","この車は日本に運ばれた。","この車は日本では売れない。","この車を日本人が買った。"], answer:0,
+       explain:"## キーワード\n- `was made` = 過去の受動態\n- `in Japan` = 日本で\n\n## ポイント\n`be made in 場所` = 〜で作られる（製造国）\n`be made of/from + 材料` = 〜で作られている（素材）\n→ 前置詞で意味が変わる。"},
     ],
     writing:[
-      {prompt:"次の日本語を英訳しなさい。", body:"その車は日本で作られた。", answer:"The car was made in Japan.", alts:["This car was made in Japan.","The car is made in Japan."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"その手紙は彼女によって書かれた。", answer:"The letter was written by her.", alts:["That letter was written by her."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私はそのパーティーに招待されなかった。", answer:"I was not invited to the party.", alts:["I wasn't invited to the party."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"彼はちょうど駅に着いたところです。", answer:"He has just got to the station.", alts:["He has just arrived at the station."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"ユミは以前カレーを作ったことがある。", answer:"Yumi has made curry before.", alts:["Yumi made curry before."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私は2年間ここに住んでいる。", answer:"I have lived here for two years.", alts:["I've lived here for two years."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私は日曜からずっと忙しい。", answer:"I have been busy since last Sunday.", alts:["I've been busy since last Sunday."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"ホタルは光を放つ。", answer:"Fireflies give off light.", alts:["Fireflies give off lights."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"その光は何世紀もの間、使われてきた。", answer:"The light has been used for centuries.", alts:["This light has been used for centuries."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私は彼に3回会ったことがある。", answer:"I have met him three times.", alts:["I've met him three times.","I have seen him three times."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私はまだ宿題を終えていない。", answer:"I haven't finished my homework yet.", alts:["I have not finished my homework yet."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"その光は捕食者を引きつける。", answer:"The light attracts predators.", alts:["The lights attract predators."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その車は日本で作られた。", answer:"The car was made in Japan.", alts:["This car was made in Japan.","The car is made in Japan."],
+       explain:"## 過去の受動態\n`was/were + 過去分詞`\n\n## キーポイント\n- make – made – made\n- 「日本で」= **in** Japan（場所の in）\n- 主語 The car（単数）→ was"},
+      {prompt:"次の日本語を英訳しなさい。", body:"その手紙は彼女によって書かれた。", answer:"The letter was written by her.", alts:["That letter was written by her."],
+       explain:"## 過去の受動態\n`was/were + 過去分詞 + by + 動作主`\n\n## キーポイント\n- write – wrote – **written**（過去分詞）\n- 「彼女によって」= by her（her は目的格）"},
+      {prompt:"次の日本語を英訳しなさい。", body:"私はそのパーティーに招待されなかった。", answer:"I was not invited to the party.", alts:["I wasn't invited to the party."],
+       explain:"## 否定の受動態\n`was/were + not + 過去分詞`\n\n## キーポイント\n- invite – invited – invited\n- 「〜に招待する」は invite **to** ~（前置詞 to）\n- 主語 I → was"},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼はちょうど駅に着いたところです。", answer:"He has just got to the station.", alts:["He has just arrived at the station."],
+       explain:"## 完了の現在完了\n`has/have + just + 過去分詞`\n\n## キーポイント\n- get – got – got（または gotten）\n- get to ~ = 〜に着く\n- 主語 He → **has**\n- arrive at ~ でも OK（着く）"},
+      {prompt:"次の日本語を英訳しなさい。", body:"ユミは以前カレーを作ったことがある。", answer:"Yumi has made curry before.", alts:["Yumi made curry before."],
+       explain:"## 経験の現在完了\n`has/have + 過去分詞 + before`\n\n## キーポイント\n- make – made – made\n- 主語 Yumi（3 単）→ **has**\n- before = 以前（経験の合図）"},
+      {prompt:"次の日本語を英訳しなさい。", body:"私は2年間ここに住んでいる。", answer:"I have lived here for two years.", alts:["I've lived here for two years."],
+       explain:"## 継続の現在完了\n`have/has + 過去分詞 + for + 期間`\n\n## キーポイント\n- live – lived – lived\n- for two years = 2 年間\n- 主語 I → have"},
+      {prompt:"次の日本語を英訳しなさい。", body:"私は日曜からずっと忙しい。", answer:"I have been busy since last Sunday.", alts:["I've been busy since last Sunday."],
+       explain:"## be 動詞の継続\n`have/has + been + 形容詞`\n\n## キーポイント\n- be の過去分詞は **been**\n- 状態（忙しい）の継続\n- since + 起点（〜から） vs for + 期間"},
+      {prompt:"次の日本語を英訳しなさい。", body:"ホタルは光を放つ。", answer:"Fireflies give off light.", alts:["Fireflies give off lights."],
+       explain:"## 熟語\n`give off ~` = 〜を放つ（光・におい・熱）\n\n## キーポイント\n- 主語 Fireflies（複数）→ 動詞は原形 give\n- light は不可算名詞でも使える（一般的な「光」）"},
+      {prompt:"次の日本語を英訳しなさい。", body:"その光は何世紀もの間、使われてきた。", answer:"The light has been used for centuries.", alts:["This light has been used for centuries."],
+       explain:"## 完了受動\n`have/has + been + 過去分詞`\n\n## キーポイント\n- 受動態 (be + p.p.) と完了 (have + p.p.) の組み合わせ\n- 主語 The light（単数）→ **has**\n- for centuries = 何世紀もの間"},
+      {prompt:"次の日本語を英訳しなさい。", body:"私は彼に3回会ったことがある。", answer:"I have met him three times.", alts:["I've met him three times.","I have seen him three times."],
+       explain:"## 経験の現在完了\n`have/has + 過去分詞 + ~ times`\n\n## キーポイント\n- meet – met – met\n- 〜回 = `~ times`\n- 主語 I → have"},
+      {prompt:"次の日本語を英訳しなさい。", body:"私はまだ宿題を終えていない。", answer:"I haven't finished my homework yet.", alts:["I have not finished my homework yet."],
+       explain:"## 完了の否定\n`have/has + not + 過去分詞 + yet`\n\n## キーポイント\n- yet = まだ（否定文・疑問文で使う）\n- yet は文末\n- 短縮形 haven't = have not"},
+      {prompt:"次の日本語を英訳しなさい。", body:"その光は捕食者を引きつける。", answer:"The light attracts predators.", alts:["The lights attract predators."],
+       explain:"## 現在形（事実・習性）\n動物の習性は現在形で表す。\n\n## キーポイント\n- attract = 引きつける\n- 主語 The light（3 単）→ **attracts**（-s）\n- predators（捕食動物・複数）"},
     ],
     reading:[{
       title:"The Lights of Toyama Bay",
@@ -1045,34 +1266,54 @@ Tourists come from all over Japan to see this beautiful scene. Many of them have
 
 If you have never seen the lights of hotaruika, you should visit Toyama Bay in April or May. The view will surprise you, and you will not forget it for a long time.`,
       questions:[
-        {prompt:"内容に合うものを選びなさい。", body:"Where can you see the firefly squid?", choices:["In Tokyo Bay","In Osaka Bay","In Toyama Bay","In the Sea of Okhotsk"], answer:2},
-        {prompt:"内容に合うものを選びなさい。", body:"What does the passage say about the squid's organs?", choices:["They make sounds","They flash light in various patterns","They produce ink","They warm up the body"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"Why do scientists think the squid flash light? (One possible reason)", choices:["To find their way back home","To attract mates","To stop swimming","To eat plants"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"How long have the lights appeared in Japanese poems?", choices:["For a few months","For ten years","For about a year","For centuries"], answer:3},
-        {prompt:"内容に合うものを選びなさい。", body:"When is the best time to visit?", choices:["January or February","April or May","August","November"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"Where can you see the firefly squid?", choices:["In Tokyo Bay","In Osaka Bay","In Toyama Bay","In the Sea of Okhotsk"], answer:2,
+         explain:"## 該当箇所\n冒頭: 「**Toyama Bay** becomes one of the most magical places in Japan.」\n\n## ポイント\n富山湾はホタルイカ（firefly squid）の名所として有名。教科書本文でも紹介されている。"},
+        {prompt:"内容に合うものを選びなさい。", body:"What does the passage say about the squid's organs?", choices:["They make sounds","They flash light in various patterns","They produce ink","They warm up the body"], answer:1,
+         explain:"## 該当箇所\n「The organs **flash light in various patterns**.」\n\n## キー語彙\n- `organ` = 器官\n- `flash` = ピカッと光る\n- `various` = 様々な\n- `pattern` = 型、パターン\n\nLesson 2 の単語リスト直結。"},
+        {prompt:"内容に合うものを選びなさい。", body:"Why do scientists think the squid flash light? (One possible reason)", choices:["To find their way back home","To attract mates","To stop swimming","To eat plants"], answer:1,
+         explain:"## 該当箇所\n「Some scientists believe the lights are used **to attract mates**.」\n\n## 文法ポイント\n`to + 動詞の原形` = 〜するために（目的の to 不定詞）\n\n## 単語\n- attract = 引きつける\n- mate = つがいの片方\n\n## 別の理由\n本文では「捕食者の気をそらすため (to distract predators)」も挙げられている。"},
+        {prompt:"内容に合うものを選びなさい。", body:"How long have the lights appeared in Japanese poems?", choices:["For a few months","For ten years","For about a year","For centuries"], answer:3,
+         explain:"## 該当箇所\n「The lights have appeared in Japanese poems **for centuries**.」\n\n## 文法\n現在完了 (have appeared) + for + 期間 = 継続用法\n→「ずっと〜してきた」\n\n## 重要熟語\n`for centuries` = 何世紀もの間（Lesson 2 必須）"},
+        {prompt:"内容に合うものを選びなさい。", body:"When is the best time to visit?", choices:["January or February","April or May","August","November"], answer:1,
+         explain:"## 該当箇所\n「You should visit Toyama Bay in **April or May**.」\n\n## 背景\nホタルイカの群遊（産卵期）は春。4〜5 月が見ごろ。\n\n## 文法\n`should visit` = 〜するべきだ（助言）\nLesson 1 の助動詞 should の用法。"},
       ]
     }],
     test:[
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"creature", choices:["創造","生き物","信用","批評"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"predator", choices:["前任者","捕食動物","予測者","序文"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"give off ...", choices:["…をあきらめる","…を放つ","…をオフにする","…を寄付する"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"for centuries", choices:["100年だけ","世紀末まで","何世紀もの間","古い時代に"], answer:2},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"appear", choices:["消える","(姿を)現す","謝罪する","上に座る"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"glow", choices:["流れる","光を放つ","成長する","糊付けする"], answer:1},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"That book (___) by a famous author.", choices:["writes","wrote","was written","writing"], answer:2},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"I (___) lived here for ten years.", choices:["have","am","was","do"], answer:0},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) just finished her homework.", choices:["has","is","was","will"], answer:0},
-      {type:"choice", prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"I have lived here for two years.", choices:["完了","経験","継続","受動"], answer:2},
-      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"This car ( make ) in Japan.", answer:"was made", alts:["was made."]},
-      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"She ( just / finish ) her homework.", answer:"has just finished", alts:["has just finished."]},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"creature", choices:["創造","生き物","信用","批評"], answer:1,
+       explain:"**creature** = 生き物。`create`（創造）+ `-ure` = 創造されたもの。"},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"predator", choices:["前任者","捕食動物","予測者","序文"], answer:1,
+       explain:"**predator** = 捕食動物。反対は `prey`（獲物）。"},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"give off ...", choices:["…をあきらめる","…を放つ","…をオフにする","…を寄付する"], answer:1,
+       explain:"**give off ~** = 〜を放つ（光・におい・熱）。`give up`（あきらめる）と混同しないこと。"},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"for centuries", choices:["100年だけ","世紀末まで","何世紀もの間","古い時代に"], answer:2,
+       explain:"**for centuries** = 何世紀もの間。現在完了の継続用法と相性が良い。"},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"appear", choices:["消える","(姿を)現す","謝罪する","上に座る"], answer:1,
+       explain:"**appear** = (姿を)現す／出現する。反対は `disappear`（消える）。"},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"glow", choices:["流れる","光を放つ","成長する","糊付けする"], answer:1,
+       explain:"**glow** = 光を放つ（柔らかく持続的に光る）。`flash`（点滅）とは違うニュアンス。"},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"That book (___) by a famous author.", choices:["writes","wrote","was written","writing"], answer:2,
+       explain:"主語 `book`（書かれる側）+ 動作主 `by ~` → 受動態。\n`write – wrote – written` → 過去分詞は **written**。"},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"I (___) lived here for ten years.", choices:["have","am","was","do"], answer:0,
+       explain:"`for ten years` + 過去分詞 lived → 継続の現在完了。\n主語 I → **have**。"},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) just finished her homework.", choices:["has","is","was","will"], answer:0,
+       explain:"`just + 過去分詞` → 完了の現在完了。\n主語 She（3 単）→ **has**。"},
+      {type:"choice", prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"I have lived here for two years.", choices:["完了","経験","継続","受動"], answer:2,
+       explain:"`for + 期間` = 継続の合図。\n「過去から今までずっと住んでいる」"},
+      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"This car ( make ) in Japan.", answer:"was made", alts:["was made."],
+       explain:"過去の受動態 `was + 過去分詞`。\n`make – made – made`。"},
+      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"She ( just / finish ) her homework.", answer:"has just finished", alts:["has just finished."],
+       explain:"完了の現在完了 + just。\n語順: has + just + 過去分詞。主語 She → **has**。"},
       {type:"arrange", prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"この写真は彼女によって撮られた。",
        scramble:["This","picture","was","taken","by","her"],
-       answer:"This picture was taken by her"},
+       answer:"This picture was taken by her",
+       explain:"過去の受動態: `was + taken + by her`。\ntake-took-**taken**（過去分詞）。"},
       {type:"arrange", prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私は10年間ここに住んでいる。",
        scramble:["I","have","lived","here","for","ten","years"],
-       answer:"I have lived here for ten years"},
+       answer:"I have lived here for ten years",
+       explain:"継続の現在完了: `have + lived + here + for + 期間`。\nfor + 期間（10 年間）。"},
       {type:"choice", prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'I have just finished my homework.',
-       choices:["私は宿題を終えるつもりだ。","私はちょうど宿題を終えたところだ。","私は宿題をまだ終えていない。","私は宿題を続けている。"], answer:1},
+       choices:["私は宿題を終えるつもりだ。","私はちょうど宿題を終えたところだ。","私は宿題をまだ終えていない。","私は宿題を続けている。"], answer:1,
+       explain:"`have just + 過去分詞` = 完了の現在完了「ちょうど〜したところだ」。"},
     ],
   },
 
@@ -1263,6 +1504,7 @@ function renderQuiz(){
     <div class="q-actions">
       <button class="btn primary" id="checkBtn" ${isFreeInput||isArrange?"":"disabled"}>採点する</button>
       <button class="btn ghost" id="nextBtn" style="display:none">次の問題 →</button>
+      <button class="btn explain-btn" id="explainBtn" style="display:none"><span class="ic">📖</span>もっと詳しく</button>
       <button class="btn ghost" id="skipBtn">スキップ</button>
     </div>
   </div>`;
@@ -1397,6 +1639,7 @@ function checkArrange(q){
   if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
   document.getElementById("checkBtn").style.display="none";
   document.getElementById("nextBtn").style.display="inline-flex";
+  showExplainButton(q);
 }
 
 function checkVerbForm(q){
@@ -1409,6 +1652,7 @@ function checkVerbForm(q){
   document.getElementById("checkBtn").style.display="none";
   document.getElementById("nextBtn").style.display="inline-flex";
   document.querySelector("input.text-fill").disabled=true;
+  showExplainButton(q);
 }
 
 function checkChoice(q){
@@ -1425,6 +1669,7 @@ function checkChoice(q){
   if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
   document.getElementById("checkBtn").style.display="none";
   document.getElementById("nextBtn").style.display="inline-flex";
+  showExplainButton(q);
 }
 
 function checkWriting(q, ja=false){
@@ -1437,6 +1682,7 @@ function checkWriting(q, ja=false){
   document.getElementById("checkBtn").style.display="none";
   document.getElementById("nextBtn").style.display="inline-flex";
   document.querySelector("textarea.answer-input").disabled=true;
+  showExplainButton(q);
 }
 
 function normalize(s){
@@ -1510,6 +1756,99 @@ function nextQuestion(skip=false){
   State.freeText="";
   if(State.q>=State.pool.length){ State.done=true; commitProgress(); renderSummary(); return; }
   renderQuiz();
+}
+
+/* ============================================================
+   Explanation modal
+   ============================================================ */
+function showExplainButton(q){
+  const btn = document.getElementById("explainBtn");
+  if(!btn) return;
+  if(q.explain){
+    btn.style.display = "inline-flex";
+    btn.onclick = () => openExplainModal(q);
+  } else {
+    btn.style.display = "none";
+  }
+}
+
+function renderMarkdown(s){
+  if(!s) return "";
+  // Already-rendered HTML pass-through if it has tags? No—always parse as markdown-lite.
+  let html = String(s);
+  // Sections with headers: lines starting with "## " → <h4>
+  // First protect existing line breaks
+  const lines = html.split("\n");
+  let out = [];
+  let inList = false;
+  for(let i=0;i<lines.length;i++){
+    let line = lines[i];
+    // Strip trailing/leading spaces
+    line = line.trim();
+    if(line === ""){
+      if(inList){ out.push("</ul>"); inList=false; }
+      continue;
+    }
+    // Header
+    if(/^##\s+/.test(line)){
+      if(inList){ out.push("</ul>"); inList=false; }
+      out.push(`<h4>${inlineFmt(line.replace(/^##\s+/,""))}</h4>`);
+      continue;
+    }
+    // Bullet
+    if(/^[\-•*]\s+/.test(line)){
+      if(!inList){ out.push("<ul>"); inList=true; }
+      out.push(`<li>${inlineFmt(line.replace(/^[\-•*]\s+/,""))}</li>`);
+      continue;
+    }
+    // Para
+    if(inList){ out.push("</ul>"); inList=false; }
+    out.push(`<p>${inlineFmt(line)}</p>`);
+  }
+  if(inList) out.push("</ul>");
+  return out.join("");
+
+  function inlineFmt(s){
+    // Escape HTML first
+    let r = String(s).replace(/[&<>"']/g, c=>({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+    // **bold**
+    r = r.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
+    // `code`
+    r = r.replace(/`([^`]+)`/g, "<code>$1</code>");
+    // _italic_ (CrimsonPro)
+    r = r.replace(/(^|\s)_([^_]+)_/g, "$1<em>$2</em>");
+    return r;
+  }
+}
+
+function openExplainModal(q){
+  let recapAns = "";
+  if(q.choices && typeof q.answer === "number"){
+    recapAns = `${"ABCD"[q.answer]}. ${q.choices[q.answer]}`;
+  } else if(typeof q.answer === "boolean"){
+    recapAns = q.answer ? "○ (正しい)" : "× (誤り)";
+  } else {
+    recapAns = q.answer;
+  }
+  let html = `
+    <button class="close" id="closeModal">×</button>
+    <h3>📖 解説</h3>
+    <div class="explain-q-recap">
+      <span class="lbl">問題</span>
+      <div class="q">${escapeHtml(q.body || "")}</div>
+      <div class="a">正解 / 模範解答: ${escapeHtml(recapAns)}</div>
+    </div>
+    <div class="explain-body">${renderMarkdown(q.explain)}</div>
+    <div style="margin-top:18px;text-align:right">
+      <button class="btn primary" id="closeExplainBtn">閉じる</button>
+    </div>
+  `;
+  modalBody.innerHTML = html;
+  modalBg.classList.add("show");
+  document.getElementById("closeModal").onclick = closeReview;
+  document.getElementById("closeExplainBtn").onclick = closeReview;
 }
 
 function addToReview(q){
