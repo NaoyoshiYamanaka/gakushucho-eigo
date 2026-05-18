@@ -378,7 +378,7 @@ header.brand .sub{
 .choices button.choice.wrong .mark{background:var(--bad);color:#fff}
 .choices button.choice.locked{cursor:default}
 
-/* Free text input (writing) */
+/* Free text input (writing / translate) */
 textarea.answer-input{
   width:100%;
   min-height:88px;
@@ -396,7 +396,86 @@ textarea.answer-input{
     transparent 0, transparent 27px,
     var(--rule-soft) 27px, var(--rule-soft) 28px);
 }
+textarea.answer-input.ja{
+  font-family:'Noto Sans JP','Zen Maru Gothic',sans-serif;
+  font-size:16px;
+}
 textarea.answer-input:focus{outline:none;border-color:var(--accent);background-color:#FFF}
+
+/* Single-line verb form fill */
+.text-fill-row{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  margin-top:8px;
+}
+.text-fill-row label{
+  font-size:13px;color:var(--ink-soft);
+}
+input.text-fill{
+  flex:1;min-width:160px;
+  border:none;
+  border-bottom:2px solid var(--accent);
+  background:#FFFDF7;
+  font-family:'Crimson Pro',serif;
+  font-size:18px;
+  font-weight:600;
+  color:var(--ink);
+  padding:8px 4px;
+  font-style:italic;
+}
+input.text-fill:focus{outline:none;background:#FFF7EF}
+
+/* Arrange (並べ替え) chip area */
+.arrange-area{margin-top:6px}
+.arrange-answer{
+  min-height:64px;
+  border:1.5px dashed var(--rule);
+  border-radius:10px;
+  padding:14px 12px;
+  background:#FFFDF7;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:14px;
+  align-items:flex-start;
+}
+.arrange-answer .placeholder{
+  color:var(--ink-soft);font-size:13px;font-style:italic;
+  display:flex;align-items:center;height:32px;
+}
+.arrange-pool{
+  display:flex;flex-wrap:wrap;gap:6px;
+  padding:8px 0;
+  border-top:1px dashed var(--rule);
+}
+.arrange-pool::before{
+  content:"語の引き出し";
+  display:block;width:100%;font-size:11px;color:var(--ink-soft);
+  margin-bottom:6px;letter-spacing:.05em;
+}
+.word-chip{
+  background:#FFF;
+  border:1.5px solid var(--rule);
+  padding:6px 14px;
+  border-radius:99px;
+  font-family:'Crimson Pro',serif;
+  font-size:17px;
+  cursor:pointer;
+  transition:all .12s;
+  color:var(--ink);
+}
+.word-chip:hover:not(:disabled){
+  border-color:var(--accent);
+  background:#FFF7EF;
+}
+.arrange-answer .word-chip{
+  background:var(--ink);
+  color:#FFFDF7;
+  border-color:var(--ink);
+}
+.arrange-answer .word-chip:hover{
+  background:#000;border-color:#000;
+}
+.word-chip:disabled{opacity:.4;cursor:not-allowed}
 
 /* Action buttons */
 .q-actions{
@@ -598,11 +677,14 @@ const LESSONS = [
 ];
 
 const MODES = [
-  {id:"vocab",   label:"語彙ドリル",  glyph:"📖"},
-  {id:"grammar", label:"文法ドリル",  glyph:"✎"},
-  {id:"writing", label:"英作文",      glyph:"✑"},
-  {id:"reading", label:"長文読解",    glyph:"📰"},
-  {id:"test",    label:"総合テスト",  glyph:"🎯"},
+  {id:"vocab",     label:"語彙",      glyph:"📖"},
+  {id:"grammar",   label:"文法",      glyph:"✎"},
+  {id:"verbform",  label:"動詞の形",  glyph:"⟳"},
+  {id:"arrange",   label:"並べ替え",  glyph:"⇄"},
+  {id:"translate", label:"和訳",      glyph:"⇋"},
+  {id:"writing",   label:"英作文",    glyph:"✑"},
+  {id:"reading",   label:"長文読解",  glyph:"📰"},
+  {id:"test",      label:"総合テスト",glyph:"🎯"},
 ];
 
 /* ============================================================
@@ -611,192 +693,386 @@ const MODES = [
    ============================================================ */
 const QUESTIONS = {
 
-  /* ====================  LESSON 1  ==================== */
+  /* ====================  LESSON 1  ====================
+     試験範囲: Part 1〜3 (p.14-21)
+     語彙: 配付資料の単語リスト準拠 (nowadays/seek/mecca/not only…but also/that is/
+            stand for/from all around the world/be popular with ほか + 本文要語)
+     文法: 助動詞 can/will/may/must/should + 現在形/過去形/現在進行形/過去進行形
+  */
   1: {
     vocab:[
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"region", choices:["伝統","地域・地方","物語","お土産"], answer:1, note:"地域の意。例: a mountain region."},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"attract", choices:["広告する","引きつける","返事する","計算する"], answer:1, note:"動詞で「魅了する／引きつける」。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"tradition", choices:["伝統","練習","渋滞","結果"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"recommend", choices:["記録する","推薦する","拒否する","到着する"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"souvenir", choices:["案内人","お土産","記念碑","予算"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"cuisine", choices:["流通","料理","曲線","議論"], answer:1, note:"その地域・国の料理。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"landmark", choices:["土地区分","目印・名所","上陸","現地ガイド"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"heritage", choices:["心臓","遺産","儀式","収穫"], answer:1, note:"world heritage = 世界遺産。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"scenery", choices:["脚本","景色・風景","場面分け","背景音楽"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"accommodation", choices:["案内係","宿泊施設","運送会社","食事の支度"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"itinerary", choices:["旅行日程","目的地","片道切符","旅行会社"], answer:0, note:"travel itinerary = 旅程表。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"authentic", choices:["古典的な","本物の・正真正銘の","儀礼的な","代表的な"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"crowded", choices:["静かな","混雑した","人気のない","狭い"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"spectacular", choices:["素朴な","壮観な","儀式的な","軽率な"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"explore", choices:["輸出する","探検する・探索する","表現する","爆発する"], answer:1},
-      {prompt:"日本語に対応する英単語を選びなさい。", body:"祭り", choices:["fasten","festival","fluster","fashion"], answer:1},
-      {prompt:"日本語に対応する英単語を選びなさい。", body:"地元の", choices:["lonely","local","logical","loyal"], answer:1},
-      {prompt:"日本語に対応する英単語を選びなさい。", body:"訪れる", choices:["vacate","visit","value","view"], answer:1},
-      {prompt:"次の文脈に最も合う語を選びなさい。", body:"Kyoto is famous for its ( ) temples and shrines.", choices:["ancient","absent","artificial","awkward"], answer:0, note:"ancient = 古代の・古い。"},
-      {prompt:"次の文脈に最も合う語を選びなさい。", body:"The tour guide ( ) us a quiet café near the river.", choices:["recovered","recommended","recorded","reduced"], answer:1},
+      // 配付資料 Part 2 単語リストから（p.18）
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"nowadays", choices:["昔は","近頃は","いつでも","二度と"], answer:1, note:"副詞「近頃は・このごろは」。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"seek", choices:["売る","探す・探究する","眠る","縫う"], answer:1, note:"seek - sought - sought と不規則変化。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"mecca", choices:["麦","メッカ・聖地","機械","メダル"], answer:1, note:"「(ある分野で) 多くの人が集まる聖地」。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"skier", choices:["スキーヤー","スリッパ","水夫","空港"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"snowboarder", choices:["雪かき係","スノーボーダー","気象予報士","雪だるま"], answer:1},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"not only A but also B", choices:["AかBのどちらか","AでもBでもない","Aだけでなく B も","Aの代わりに B"], answer:2, note:"「A だけでなく B も」。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"that is", choices:["それは","つまり","あれだ","それでも"], answer:1, note:"言いかえ・補足。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"stand for ...", choices:["…を表す","…に立ち向かう","…の前に立つ","…を支える"], answer:0, note:"略語の説明でよく使う。"},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"from all around the world", choices:["近所から","全世界に向けて","世界中から","半周して"], answer:2},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"come and experience ...", choices:["…にやって来ない","…を体験しにくる","…を経験せずに帰る","…を遠くから見る"], answer:1},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"be popular with ...", choices:["…と一緒にいる","…に人気がある","…に嫌われる","…で混雑する"], answer:1},
+      // Part 1 本文要語
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"countless", choices:["数えられる","ほぼゼロの","数え切れないほどの","限定された"], answer:2, note:"count + less = 数えられない。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"contrast", choices:["契約","対比・コントラスト","対立心","集中"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"exotic", choices:["異国風の","退屈な","平凡な","電子的な"], answer:0},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"appeal to ...", choices:["…をあわれむ","…の心を引きつける","…に謝罪する","…に申請する"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"construction", choices:["相談","建設・建立","結論","集中"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"donor", choices:["寄贈者","収集家","購入者","観光客"], answer:0},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"sightseeing spot", choices:["公衆トイレ","観光地","写真撮影禁止区域","休憩所"], answer:1},
+      // Part 3 本文要語
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"cultural experience", choices:["文化体験","異文化交流学","文化人類学","海外留学"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"ordinary", choices:["秩序ある","普通の","古代の","公式な"], answer:1, note:"「普段の／ありふれた」。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"costume", choices:["顧客","衣装","費用","税関"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"provide", choices:["証明する","提供する","禁止する","予約する"], answer:1},
+      // 日本語→英語
+      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"近頃は", choices:["nowhere","nowadays","newly","narrow"], answer:1},
+      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"異国風の", choices:["exact","exotic","extra","exit"], answer:1},
+      {prompt:"次の日本語に対応する英単語を選びなさい。", body:"数え切れないほどの", choices:["careful","careless","countless","central"], answer:2},
+      // 文脈穴埋め
+      {prompt:"文脈に合うものを選びなさい。", body:'Niseko in Hokkaido is now a (   ) for sports tourism.', choices:["museum","mecca","mountain","memory"], answer:1, note:"「スポーツ観光の聖地」。"},
+      {prompt:"文脈に合うものを選びなさい。", body:'Tourists are (   ) fresh experiences.', choices:["selling","seeking","sleeping","sending"], answer:1, note:"are + -ing と be seeking。"},
+      {prompt:"文脈に合うものを選びなさい。", body:'"Japow" (   ) for "Japanese powder snow."', choices:["stands","stops","stays","stamps"], answer:0, note:"stand for = 〜を表す。"},
     ],
     grammar:[
+      // 助動詞の意味 (配付プリント直結)
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"can", choices:["〜すべきだ","〜できる","〜にちがいない","〜だろう"], answer:1, note:"can = 〜できる（能力・可能）。"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"will", choices:["〜できる","〜すべきだ","〜だろう","〜かもしれない"], answer:2, note:"will = 〜だろう（未来の予想）。"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"may", choices:["〜できる","〜かもしれない","〜にちがいない","〜だろう"], answer:1, note:"may = 〜かもしれない（推量）／〜してよい（許可）。"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"must", choices:["〜にちがいない・〜しなければならない","〜できる","〜かもしれない","〜だろう"], answer:0, note:"must = 〜にちがいない／〜しなければならない。"},
+      {prompt:"助動詞の意味として最も適切なものを選びなさい。", body:"should", choices:["〜できる","〜すべきだ","〜してはいけない","〜にちがいない"], answer:1, note:"should = 〜すべきだ（助言）。"},
+      // 助動詞 + 動詞の原形
+      {prompt:"助動詞のあとに来る形として正しいものを選びなさい。", body:"You should (   ) more vegetables.", choices:["eats","eat","ate","eating"], answer:1, note:"助動詞の後ろは必ず動詞の原形。"},
+      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"It is sunny now, but it (   ) rain tonight.", choices:["may","should","can","do"], answer:0, note:"「〜かもしれない」→ may。"},
+      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"You look pale. You (   ) be tired.", choices:["should","must","will","could"], answer:1, note:"「〜にちがいない」（強い推量）→ must。"},
+      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"He studied hard, so he (   ) pass the test.", choices:["should","may not","cannot","must not"], answer:0, note:"「〜すべき／〜のはずだ」→ should。"},
+      {prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"(   ) you speak French?", choices:["Can","Must","Should","Will"], answer:0, note:"能力をたずねる → Can you ~?"},
+      // 現在形（3単現の s）
       {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'She always (___) green tea in the morning.', choices:["drink","drinks","drinking","drank"], answer:1, note:"主語が3人称単数 + 習慣 → 現在形 -s。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Last weekend, I (___) a famous temple in Kyoto.', choices:["visit","visited","visiting","visits"], answer:1, note:"last weekend → 過去形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Look! The children (___) in the park right now.', choices:["play","plays","are playing","played"], answer:2, note:"right now → 現在進行形 be + -ing。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When I called him, he (___) his homework.', choices:["does","did","was doing","is doing"], answer:2, note:"過去進行形 was/were + -ing。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'You (___) take an umbrella; it might rain.', choices:["should","shouldn’t","cannot","wouldn’t"], answer:0, note:"助言の should。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'(___) you pass me the salt, please?', choices:["Could","Must","Should","Did"], answer:0, note:"丁寧な依頼の Could you ~ ?"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'We (___) each other when we were children.', choices:["know","knew","are knowing","knows"], answer:1, note:"when we were children → 過去形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Tourists (___) this region for its hot springs.', choices:["love","loves","loving","loved"], answer:0, note:"主語 Tourists は複数 → 原形 love。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'My grandfather (___) a kimono on special occasions when he was young.', choices:["wear","wore","wearing","wears"], answer:1, note:"when he was young の文脈 → 過去形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'(___) I borrow your guidebook?', choices:["Can","Was","Did","Were"], answer:0, note:"許可を求める Can I ~ ?"},
       {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The shop (___) at 8 a.m. every day.', choices:["opening","opens","opened","is opening"], answer:1, note:"every day の習慣 → 現在形 -s。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Tourists (___) this region for its hot springs.', choices:["love","loves","loving","loved"], answer:0, note:"主語 Tourists は複数 → 原形 love。"},
+      // 過去形
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Last weekend, I (___) a famous temple in Kyoto.', choices:["visit","visited","visiting","visits"], answer:1, note:"last weekend → 過去形。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'My grandfather (___) a kimono when he was young.', choices:["wear","wore","wearing","wears"], answer:1, note:"when he was young の文脈 → 過去形。"},
+      // 現在進行形
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Look! The children (___) in the park right now.', choices:["play","plays","are playing","played"], answer:2, note:"right now → 現在進行形 be + -ing。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Don\'t disturb him. He (___) a book.', choices:["reads","read","is reading","was reading"], answer:2, note:"今この瞬間 → 現在進行形。"},
+      // 過去進行形
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When I called him, he (___) his homework.', choices:["does","did","was doing","is doing"], answer:2, note:"過去進行形 was/were + -ing。"},
       {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'While we (___) near the lake, we saw a beautiful sunset.', choices:["walk","walks","were walking","walked"], answer:2, note:"While + 過去進行形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'He (___) swim across the river when he was a child.', choices:["could","can","must","should"], answer:0, note:"過去の能力 → could。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'(___) I help you with your luggage?', choices:["Shall","Did","Was","Have"], answer:0, note:"申し出の Shall I ~ ?"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Last year, my family (___) to Okinawa for vacation.', choices:["goes","went","going","is going"], answer:1},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Don’t disturb him. He (___) a book.', choices:["reads","read","is reading","was reading"], answer:2, note:"今この瞬間 → 現在進行形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'People in this town (___) a special festival every August.', choices:["holds","hold","holding","is holding"], answer:1, note:"主語 People は複数 → hold。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'He (___) his bicycle to school every day.', choices:["ride","rides","is riding","rode"], answer:1},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Tourists (___) that old castle because of its history.', choices:["admire","admires","is admiring","admired"], answer:0},
       {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'When the earthquake struck, we (___) dinner.', choices:["have","had","were having","are having"], answer:2, note:"過去の進行中の動作 → were having。"},
     ],
+    verbform:[
+      // 配付プリントと同じ形式: (動詞)を適切な形に変える
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'She ( clean ) her room right now.', answer:"is cleaning", alts:["is cleaning."], note:"現在進行形 be + -ing。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'My brother and I ( walk ) our dog in the park at that time.', answer:"were walking", alts:["were walking."], note:"過去進行形 were + -ing。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Look! It ( rain ) heavily.', answer:"is raining", alts:["is raining."], note:"目の前の動作 → 現在進行形。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'The shrine ( be ) famous for its red gates.', answer:"is", alts:["is."], note:"主語が単数 → is。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Last summer, I ( go ) to Kyoto.', answer:"went", alts:["went."], note:"last summer → 過去形 go-went。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'He always ( drink ) coffee in the morning.', answer:"drinks", alts:["drinks."], note:"3単現の s。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'When the bell rang, the students ( read ) books.', answer:"were reading", alts:["were reading."], note:"過去進行形。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'You can ( see ) Mt. Fuji from here.', answer:"see", alts:["see."], note:"助動詞 can の後ろは原形。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'Tourists ( visit ) Kyoto every spring.', answer:"visit", alts:["visit."], note:"複数主語 + 習慣 → 原形。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:'My mother ( cook ) dinner right now.', answer:"is cooking", alts:["is cooking."], note:"現在進行形。"},
+    ],
+    arrange:[
+      // 配付プリントの「並べ替え」形式
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"彼女は今、自分の部屋を掃除しているところです。",
+       scramble:["She","is","cleaning","her","room","right","now"],
+       answer:"She is cleaning her room right now", note:"現在進行形 + 副詞 right now。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"そのとき、弟と私は公園で犬を散歩させていました。",
+       scramble:["my","brother","walking","I","and","were","our","dog","in","the","park"],
+       answer:"My brother and I were walking our dog in the park", note:"過去進行形 were + -ing。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その神社は数え切れないほどの赤い鳥居で有名です。",
+       scramble:["The","shrine","famous","is","for","its","countless","red","torii","gates"],
+       answer:"The shrine is famous for its countless red torii gates", note:"be famous for ~ で「〜で有名」。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"観光だけでなく、ニューツーリズムも人気です。",
+       scramble:["Not","only","sightseeing","but","also","new","tourism","is","popular"],
+       answer:"Not only sightseeing but also new tourism is popular", note:"not only A but also B。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"あなたはもっと早く起きるべきです。",
+       scramble:["You","should","get","up","earlier"],
+       answer:"You should get up earlier", note:"should + 動詞の原形。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"スキーヤーは世界中からやってくる。",
+       scramble:["Skiers","come","from","all","around","the","world"],
+       answer:"Skiers come from all around the world", note:"from all around the world。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その町は今、スポーツツーリズムのメッカです。",
+       scramble:["The","town","is","now","a","mecca","for","sports","tourism"],
+       answer:"The town is now a mecca for sports tourism", note:"a mecca for ~ = 〜の聖地。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"明日は雨が降るかもしれません。",
+       scramble:["It","may","rain","tomorrow"],
+       answer:"It may rain tomorrow", note:"may = 〜かもしれない。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私たちはこの神社を訪れるべきです。",
+       scramble:["We","should","visit","this","shrine"],
+       answer:"We should visit this shrine"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"「ジャパウ」は日本の粉雪を表します。",
+       scramble:["\"Japow\"","stands","for","Japanese","powder","snow"],
+       answer:"\"Japow\" stands for Japanese powder snow", note:"stand for ~ = 〜を表す。"},
+    ],
+    translate:[
+      // 英→日（4択）
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The shrine is famous for its countless red torii gates.',
+       choices:["その神社は赤い鳥居をいくつか持っている。","その神社は数え切れないほどの赤い鳥居で有名です。","その神社の鳥居は赤くなく、数えやすい。","その神社は鳥居が少なくて人気がない。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Tourists are seeking fresh experiences.',
+       choices:["旅行者は古い体験を売っている。","旅行者は経験を求めていない。","旅行者は新鮮な体験を探している。","観光客は新しい場所に行きたくない。"], answer:2},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The town is now a mecca for sports tourism.',
+       choices:["その町は今、スポーツ観光の聖地となっている。","その町は昔、スポーツ観光地だった。","その町はスポーツが禁止されている。","その町には観光名所がない。"], answer:0},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Skiers come from all around the world.',
+       choices:["スキーヤーは世界中に散らばっている。","スキーヤーは世界中からやってくる。","スキーヤーは世界中で珍しい。","スキーヤーはどこにも行かない。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Not only sightseeing but also cultural experiences are popular.',
+       choices:["観光は人気だが、文化体験は人気がない。","文化体験だけが人気で、観光は減っている。","観光だけでなく、文化体験も人気です。","観光も文化体験も人気がない。"], answer:2},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'You should visit Kyoto in autumn.',
+       choices:["あなたは秋に京都を訪れてはいけない。","あなたは秋に京都を訪れるべきです。","あなたは秋に京都に行ったことがある。","あなたは京都に住んだことがある。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'He must be tired after the long trip.',
+       choices:["彼は長旅の後で疲れているにちがいない。","彼は長旅の後で疲れているはずがない。","彼は長旅の後で疲れていない。","彼は長旅をしなかった。"], answer:0, note:"must be + 形容詞 = 〜にちがいない（強い推量）。"},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'It may rain tomorrow.',
+       choices:["明日は雨が降らないだろう。","明日は雨が降るかもしれない。","明日は雨が降ったことがある。","明日は雨が降るのが好きだ。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'She was walking her dog at that time.',
+       choices:["そのとき、彼女は犬の散歩をしていた。","彼女はその時、犬を抱いていた。","彼女はその時、犬の散歩から戻った。","彼女はその時、犬を飼っていなかった。"], answer:0},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'They are visiting ordinary Japanese homes.',
+       choices:["彼らは普通の日本の家庭を訪れているところだ。","彼らは特別な日本の家庭を訪れる予定だ。","彼らは日本の家庭を訪れたことがある。","彼らは日本の家庭に住んでいない。"], answer:0},
+    ],
     writing:[
-      {prompt:"次の日本語を英訳しなさい。", body:"彼女は毎週末、祖父母を訪ねる。", answer:"She visits her grandparents every weekend.", alts:["She goes to see her grandparents every weekend."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私は昨日、その有名なお城に行った。", answer:"I went to the famous castle yesterday.", alts:["Yesterday I went to the famous castle."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"その子どもたちは今、海で泳いでいる。", answer:"The children are swimming in the sea now.", alts:["The children are swimming in the ocean now."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私たちは早く起きなければならない。", answer:"We must get up early.", alts:["We have to get up early."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"あなたはこの店の寿司を試してみるべきです。", answer:"You should try the sushi at this restaurant.", alts:["You should try the sushi at this shop."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"彼は子どもの頃、ピアノを弾いていました。", answer:"He played the piano when he was a child.", alts:["He used to play the piano when he was a child."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"窓を開けてもいいですか？", answer:"May I open the window?", alts:["Can I open the window?"]},
-      {prompt:"次の日本語を英訳しなさい。", body:"雨が降っているので、私たちは家にいます。", answer:"It is raining, so we are staying home.", alts:["Because it is raining, we are staying home."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"彼らは去年その町で祭りを開催した。", answer:"They held a festival in the town last year.", alts:["They had a festival in that town last year."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"この公園は地元の人々に人気です。", answer:"This park is popular with the local people.", alts:["This park is popular among local people."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その神社は赤い鳥居で有名です。", answer:"The shrine is famous for its red gates.", alts:["The shrine is famous for its red torii gates.","The shrine is famous for the red gates."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"観光だけでなく、文化体験も人気です。", answer:"Not only sightseeing but also cultural experiences are popular.", alts:["Not only sightseeing but also cultural experience is popular."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"「ジャパウ」は日本の粉雪を表します。", answer:"\"Japow\" stands for Japanese powder snow.", alts:["Japow stands for Japanese powder snow."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その町は今、メッカ（聖地）となっています。", answer:"The town is now a mecca.", alts:["This town is a mecca now."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私たちは早く起きなければなりません。", answer:"We must get up early.", alts:["We have to get up early."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"あなたはもっと多くの野菜を食べるべきです。", answer:"You should eat more vegetables.", alts:["You ought to eat more vegetables."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼は今、宿題をしているところです。", answer:"He is doing his homework now.", alts:["He is doing homework now.","He is doing his homework right now."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"そのとき、私はテレビを見ていました。", answer:"At that time, I was watching TV.", alts:["I was watching TV at that time.","I was watching television at that time."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"スキーヤーは世界中からやってきます。", answer:"Skiers come from all around the world.", alts:["Skiers come from all over the world."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"明日は雨が降るかもしれません。", answer:"It may rain tomorrow.", alts:["It might rain tomorrow."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼は外国人旅行者に人気があります。", answer:"He is popular with foreign tourists.", alts:["He is popular among foreign tourists."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"旅行者は新しい体験を探しています。", answer:"Tourists are seeking new experiences.", alts:["Tourists are looking for new experiences.","Tourists are seeking fresh experiences."]},
     ],
     reading:[{
-      title:"The Quiet Village of Yumesato",
-      passage:`Yumesato is a small village in the mountains of central Japan. About 800 people live there, and most of them work on small farms or run family inns. The village is famous for its hot springs and for an old wooden bridge that was built more than 300 years ago.
+      title:"The Lantern Festival of Hoshimi Town",
+      passage:`Hoshimi is a small town in the mountains of Japan. Nowadays, many tourists from all around the world visit Hoshimi. They are seeking new experiences, not just ordinary sightseeing.
 
-Every autumn, the village holds a Lantern Festival. During the festival, visitors and local people walk through the streets carrying paper lanterns. They sing traditional songs, eat local food, and watch a small fireworks show at the end of the night.
+Hoshimi is famous for its old stone bridge and its summer Lantern Festival. The bridge was built 200 years ago. During the festival, local people walk through the town with paper lanterns. The lanterns and the dark sky make a beautiful contrast.
 
-A few years ago, only a few hundred tourists visited Yumesato each year. But last summer, more than 5,000 people came. Many of them stayed at family inns and tried the village's special soba noodles. The villagers were surprised, but they were also happy. They are planning to open a small museum next year to teach visitors about the history of the bridge.
+Not only Japanese tourists but also foreign visitors come and experience the festival. Skiers, snowboarders, and families come from many countries. The town is now becoming a mecca for cultural tourism.
 
-If you ever travel to Japan, you should visit Yumesato. You can hike, take photos, and enjoy a quiet evening at a traditional inn.`,
+If you visit Hoshimi, you should try the local cooking lessons. You can make sushi and udon with your Japanese host. You may also visit ordinary Japanese homes. It must be a wonderful experience for everyone.`,
       questions:[
-        {prompt:"内容に合うものを選びなさい。", body:"Where is Yumesato located?", choices:["On a small island","In the mountains of central Japan","On the coast of Hokkaido","Near Tokyo Bay"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"What is the village famous for?", choices:["A modern art museum","Hot springs and an old wooden bridge","A summer beach festival","Its ski resorts"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"When is the Lantern Festival held?", choices:["In spring","In summer","In autumn","In winter"], answer:2},
-        {prompt:"内容に合うものを選びなさい。", body:"About how many tourists came last summer?", choices:["A few hundred","About 1,000","More than 5,000","Around 10,000"], answer:2},
-        {prompt:"内容に合うものを選びなさい。", body:"What are the villagers planning for next year?", choices:["To build a new bridge","To open a small museum","To stop the festival","To close the family inns"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"Where is Hoshimi located?", choices:["On the coast of Japan","In the mountains of Japan","Near Tokyo","On a small island"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"What are the tourists in Hoshimi seeking?", choices:["Ordinary sightseeing only","Cheap souvenirs","New experiences","Quiet hotels"], answer:2},
+        {prompt:"内容に合うものを選びなさい。", body:"How old is the stone bridge?", choices:["50 years old","100 years old","200 years old","500 years old"], answer:2},
+        {prompt:"内容に合うものを選びなさい。", body:"What is Hoshimi becoming?", choices:["A mecca for cultural tourism","A center for business","A famous shopping town","A ski resort only"], answer:0},
+        {prompt:"内容に合うものを選びなさい。", body:"What can visitors do with their Japanese host?", choices:["Watch TV","Make sushi and udon","Buy souvenirs","Go to the museum"], answer:1},
       ]
     }],
     test:[
-      // mix of vocab + grammar + writing
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"heritage", choices:["心臓","遺産","儀式","収穫"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"recommend", choices:["記録する","推薦する","拒否する","到着する"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"crowded", choices:["静かな","混雑した","人気のない","狭い"], answer:1},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) coffee every morning.", choices:["drink","drinks","is drinking","drank"], answer:1},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"They (___) the museum yesterday.", choices:["visit","visited","are visiting","visits"], answer:1},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"Listen! Someone (___) the piano.", choices:["play","plays","is playing","played"], answer:2},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"(___) you tell me the way to the station?", choices:["Could","Must","Did","Have"], answer:0},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"We (___) leave now, or we'll miss the bus.", choices:["must","might","could","would"], answer:0},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"He (___) tennis every Sunday when he was in high school.", choices:["plays","played","is playing","has played"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"scenery", choices:["脚本","景色","場面","背景音楽"], answer:1},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"私は明日、京都に行きます。", answer:"I am going to Kyoto tomorrow.", alts:["I will go to Kyoto tomorrow.","I'm visiting Kyoto tomorrow."]},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"彼は今、宿題をしている。", answer:"He is doing his homework now.", alts:["He is doing homework now."]},
+      // 配付プリント型: 単語の意味 → 文法選択 → 動詞の形 → 並べ替え → 和訳 → 英作文 が混ざる
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"nowadays", choices:["昔は","近頃は","いつでも","二度と"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"countless", choices:["数えられる","ほぼゼロの","数え切れないほどの","限定された"], answer:2},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"stand for ...", choices:["…を表す","…を支える","…の前に立つ","…に立ち向かう"], answer:0},
+      {type:"choice", prompt:"助動詞の意味を選びなさい。", body:"must", choices:["〜できる","〜にちがいない・〜しなければならない","〜だろう","〜してもよい"], answer:1},
+      {type:"choice", prompt:"助動詞の意味を選びなさい。", body:"should", choices:["〜できる","〜すべきだ","〜してもよい","〜してはいけない"], answer:1},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"Look! The children (___) in the park right now.", choices:["play","plays","are playing","played"], answer:2},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) green tea every morning.", choices:["drink","drinks","is drinking","drank"], answer:1},
+      {type:"choice", prompt:"空所に入る助動詞として最も適切なものを選びなさい。", body:"You look pale. You (   ) be tired.", choices:["should","must","will","could"], answer:1},
+      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"My brother and I ( walk ) our dog at that time.", answer:"were walking", alts:["were walking."]},
+      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"You should ( eat ) more vegetables.", answer:"eat", alts:["eat."]},
+      {type:"arrange", prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"観光だけでなく、ニューツーリズムも人気です。",
+       scramble:["Not","only","sightseeing","but","also","new","tourism","is","popular"],
+       answer:"Not only sightseeing but also new tourism is popular"},
+      {type:"arrange", prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その町は今、スポーツツーリズムのメッカです。",
+       scramble:["The","town","is","now","a","mecca","for","sports","tourism"],
+       answer:"The town is now a mecca for sports tourism"},
+      {type:"choice", prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The shrine is famous for its countless red torii gates.',
+       choices:["その神社は赤い鳥居をいくつか持っている。","その神社は数え切れないほどの赤い鳥居で有名です。","その神社の鳥居は赤くない。","その神社は鳥居が少ない。"], answer:1},
       {type:"writing", prompt:"日本語を英訳しなさい。", body:"あなたはもっと水を飲むべきです。", answer:"You should drink more water.", alts:["You ought to drink more water."]},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"私たちは去年、その祭りに参加した。", answer:"We took part in the festival last year.", alts:["We joined the festival last year.","We participated in that festival last year."]},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"窓を閉めてもいいですか？", answer:"May I close the window?", alts:["Can I close the window?"]},
+      {type:"writing", prompt:"日本語を英訳しなさい。", body:"彼は今、テレビを見ています。", answer:"He is watching TV now.", alts:["He is watching TV.","He is watching television now."]},
     ],
   },
 
-  /* ====================  LESSON 2  ==================== */
+  /* ====================  LESSON 2  ====================
+     試験範囲: Part 1〜2 (p.30-33)
+     語彙: 配付資料 Part 1 (p.30) と Part 2 (p.32) の単語リストに完全準拠
+     文法: 受動態 (be + 過去分詞) ＋ 現在完了形 (完了・経験・継続)
+  */
   2: {
     vocab:[
+      // Part 1 (p.30) 単語リスト
       {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"creature", choices:["創造","生き物","信用","批評"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"discover", choices:["覆い隠す","発見する","議論する","出発する"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"species", choices:["速度","種（生物の分類）","特別な","予報"], answer:1, note:"単複同形の名詞。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"glow", choices:["流れる","ぼんやり光る","成長する","糊付けする"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"researcher", choices:["研究者","出版社","観光客","代表者"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"fascinate", choices:["失敗する","魅了する","設備を整える","発酵させる"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"observe", choices:["観察する","祝う","従う","保護する"], answer:0, note:"「観察する／（規則を）守る」両方の意味あり。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"survive", choices:["供給する","生き残る","勝つ","驚く"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"predator", choices:["前任者","捕食者","予測者","序文"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"organism", choices:["有機体・生物","オルガン","会社","風刺画"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"environment", choices:["環境","出来事","出口","会場"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"depth", choices:["深さ","死亡","贈り物","量"], answer:0, note:"deep の名詞形。"},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"mysterious", choices:["神秘的な","損失の","凄惨な","ごたごたした"], answer:0},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"signal", choices:["署名","合図・信号","荷物","痕跡"], answer:1},
-      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"release", choices:["放出する","関連付ける","賃借する","記述する"], answer:0},
-      {prompt:"日本語に対応する英単語を選びなさい。", body:"ホタル", choices:["fireball","fireplace","firefly","fireman"], answer:2},
-      {prompt:"日本語に対応する英単語を選びなさい。", body:"海洋（の）", choices:["mountain","marine","material","mineral"], answer:1, note:"marine = 海洋の。"},
-      {prompt:"日本語に対応する英単語を選びなさい。", body:"明らかにする・暴露する", choices:["reveal","reverse","revise","retire"], answer:0},
-      {prompt:"次の文脈に最も合う語を選びなさい。", body:"Scientists have ( ) a new species deep in the ocean.", choices:["discovered","discussed","disturbed","distributed"], answer:0},
-      {prompt:"次の文脈に最も合う語を選びなさい。", body:"The deep sea is a ( ) and unexplored place.", choices:["museum","mysterious","mineral","muscle"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"bay", choices:["浜","湾","橋","入口"], answer:1, note:"Toyama Bay = 富山湾。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"local", choices:["全国の","地元の","地方公務員","近所の人"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"firefly squid", choices:["ホタルイカ","ホタル","コウイカ","ホタテ"], answer:0, note:"hotaruika。"},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"organ", choices:["有機の","臓器・器官","音楽家","起源"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"flash", choices:["軽く焼く","ピカッと光る・点滅する","流す","平らな"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"various", choices:["真空の","様々な","本物の","勝利の"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"pattern", choices:["父親","型・パターン","哀れ","公爵"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"glow", choices:["流れる","光を放つ・光る","成長する","糊付けする"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"firefly", choices:["ホタル","花火","薪","火傷"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"anglerfish", choices:["釣り人","チョウチンアンコウ","アングロサクソン","タツノオトシゴ"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"crystal jellyfish", choices:["透明な氷","オワンクラゲ","水晶","ガラス工芸"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"produce", choices:["生み出す・生産する","示す","減らす","完璧にする"], answer:0},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"a symbol of ...", choices:["…の対立","…の象徴","…の合計","…の支店"], answer:1},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"come from ...", choices:["…からやってくる","…を越えてくる","…のために来る","…を欲しがる"], answer:0},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"give off ...", choices:["…をあきらめる","…を放つ","…をオフにする","…を寄付する"], answer:1, note:"光・におい・熱などを「発する／放つ」。"},
+      // Part 2 (p.32) 単語リスト
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"distract", choices:["(気を)そらす","蒸留する","区別する","破壊する"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"predator", choices:["前任者","捕食動物","予測者","序文"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"countryside", choices:["田舎・地方","国境","数え方","裏側"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"appear", choices:["消える","(姿を)現す・出現する","謝罪する","上に座る"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"poem", choices:["詩","詩人","小説","台本"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"century", choices:["中央","世紀(100年)","中央政府","世紀末"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"mate", choices:["仲間・つがいの片方","食事","会議","素材"], answer:0},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"attract", choices:["広告する","引きつける","返事する","計算する"], answer:1},
+      {prompt:"次の英単語の意味として最も適切なものを選びなさい。", body:"purpose", choices:["紫色","目的","所有","奨励"], answer:1},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"for centuries", choices:["何世紀もの間","100年だけ","古い時代に","世紀末まで"], answer:0},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"turn on", choices:["(光などを)消す","(光などを)放つ・つける","通り過ぎる","逆さにする"], answer:1},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"turn off", choices:["(光などを)消す","(光などを)つける","回り道する","急に止まる"], answer:0},
+      {prompt:"次の英熟語の意味として最も適切なものを選びなさい。", body:"look for ...", choices:["…を見ない","…を尊敬する","…を探す","…を見つけたあと放す"], answer:2},
     ],
     grammar:[
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The deep sea (___) by many scientists in recent years.', choices:["studies","studied","is studied","has been studying"], answer:2, note:"受け身（現在形）be + 過去分詞。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'I (___) this book three times.', choices:["read","have read","reading","am reading"], answer:1, note:"現在完了の経験：have + 過去分詞。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'She (___) for her keys for an hour.', choices:["is looking","has been looking","looked","looks"], answer:1, note:"for an hour → 現在完了進行形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'A new species (___) off the coast last year.', choices:["discovered","was discovered","discovers","has discovered"], answer:1, note:"last year + 受け身 → 過去形 was + 過去分詞。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'We (___) each other since high school.', choices:["know","are knowing","have known","knew"], answer:2, note:"since + 現在完了（継続）。状態動詞は進行形にしない。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The cave has already (___) by the team.', choices:["explored","being explored","been explored","explore"], answer:2, note:"完了受け身 have been + 過去分詞。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'He (___) in Tokyo for ten years.', choices:["lives","is living","has lived","lived"], answer:2, note:"for ten years + 継続 → 現在完了。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Many beautiful fish (___) near the reef every spring.', choices:["see","sees","seen","are seen"], answer:3, note:"主語が物 → 受け身。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'They (___) on the project since last month.', choices:["work","are working","have been working","worked"], answer:2, note:"since + 動作の継続 → 現在完了進行形。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'Have you ever (___) a wild dolphin?', choices:["see","saw","seen","seeing"], answer:2, note:"have + 過去分詞（経験）。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The whales (___) followed by the scientists at this moment.', choices:["is being","are being","have been","was"], answer:1, note:"進行形の受け身 are being + 過去分詞。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'I have never (___) such a strange creature before.', choices:["saw","seen","see","seeing"], answer:1},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'This lab (___) by Dr. Tanaka in 2010.', choices:["founded","is founded","was founded","has founded"], answer:2, note:"過去の出来事の受け身。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'She (___) a report about jellyfish since yesterday.', choices:["writes","wrote","has been writing","is writing"], answer:2},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The ocean (___) home to millions of species.', choices:["is called","calls","called","is calling"], answer:0, note:"call OC の受動態 → S is called C。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'We (___) this article many times already.', choices:["read","have read","are reading","reads"], answer:1, note:"already → 現在完了。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'The samples (___) to the lab next week.', choices:["send","sent","will be sent","are sending"], answer:2, note:"未来の受け身 will be + 過去分詞。"},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'He (___) here for over an hour, but no one came.', choices:["waits","waited","has been waiting","is waiting"], answer:2},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'This documentary (___) by millions of viewers worldwide.', choices:["watches","is watched","is watching","watch"], answer:1},
-      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:'(___) you (___) your homework yet?', choices:["Are / doing","Have / done","Do / do","Did / done"], answer:1, note:"yet と相性が良いのは現在完了。"},
+      // 受動態 (be + 過去分詞)
+      {prompt:"受動態の基本形を選びなさい。", body:"The ball is (   ) by him.", choices:["kick","kicks","kicked","kicking"], answer:2, note:"be + 過去分詞。kick→kicked。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"Math (   ) by Mr. Yatsumonji.", choices:["teach","teaches","is taught","is teaching"], answer:2, note:"主語が物 → 受け身（現在）。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"This car (   ) in Japan.", choices:["made","is made","was made","was making"], answer:2, note:"過去の受け身。"},
+      {prompt:"次の文を受動態に直した文として正しいものを選びなさい。", body:"He kicks the ball.", choices:["The ball kick by him.","The ball is kicked by him.","The ball was kicked by him.","The ball kicks him."], answer:1, note:"現在形の能動 → 現在形の受動 is + 過去分詞。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I (   ) not invited to the party.", choices:["was","were","am","do"], answer:0, note:"否定の受動態は be 動詞のあとに not。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The book is read (   ) many people.", choices:["with","of","by","in"], answer:2, note:"受動態で動作主は by ~。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The shrine was built 300 years (   ).", choices:["before","since","ago","for"], answer:2, note:"〜前 = ~ ago。"},
+      // 現在完了形 (3つの用法)
+      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"They have just got to the station.", choices:["完了","経験","継続","進行"], answer:0, note:"just「ちょうど〜したところだ」→ 完了。"},
+      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"Yumi has made curry before.", choices:["完了","経験","継続","進行"], answer:1, note:"before「以前」→ 経験。"},
+      {prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"I have lived here for two years.", choices:["完了","経験","継続","進行"], answer:2, note:"for + 期間 → 継続。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I (   ) this book three times.", choices:["read","have read","reading","am reading"], answer:1, note:"three times → 現在完了の経験。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"He (   ) in Tokyo for ten years.", choices:["lives","is living","has lived","lived"], answer:2, note:"for + 期間 → 継続。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"She (   ) just finished her dinner.", choices:["is","was","has","had"], answer:2, note:"have/has + 過去分詞。3単 → has。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"Have you ever (   ) a wild dolphin?", choices:["see","saw","seen","seeing"], answer:2, note:"ever + have + 過去分詞（経験）。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I have never (   ) such a strange creature before.", choices:["saw","seen","see","seeing"], answer:1},
+      // for / since
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"I have been busy (   ) last Sunday.", choices:["for","since","from","in"], answer:1, note:"since + 起点（〜から）。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"We have known each other (   ) ten years.", choices:["for","since","from","by"], answer:0, note:"for + 期間（〜の間）。"},
+      // 完了受け身
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The work has already (   ) by them.", choices:["done","being done","been done","do"], answer:2, note:"完了受け身 have been + 過去分詞。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"The light is used (   ) different purposes.", choices:["with","of","for","by"], answer:2, note:"for + 目的。"},
+      {prompt:"空所に入れるのに最も適切なものを選びなさい。", body:"(   ) you (   ) your homework yet?", choices:["Are / doing","Have / done","Do / do","Did / done"], answer:1, note:"yet と相性が良いのは現在完了。"},
+    ],
+    verbform:[
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"Math ( teach ) by Mr. Yatsumonji.", answer:"is taught", alts:["is taught."], note:"受動態 be + 過去分詞。teach-taught。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"This car ( make ) in Japan.", answer:"was made", alts:["was made."], note:"過去の受動態。make-made。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"I ( live ) here for ten years.", answer:"have lived", alts:["have lived."], note:"継続の現在完了。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"She ( just / finish ) her homework.", answer:"has just finished", alts:["has just finished."], note:"完了の現在完了。3単 → has。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"They ( visit ) Kyoto three times.", answer:"have visited", alts:["have visited."], note:"経験の現在完了。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The letter ( write ) by her yesterday.", answer:"was written", alts:["was written."], note:"過去の受動態。write-wrote-written。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The lights ( give off ) by the firefly squid.", answer:"are given off", alts:["are given off."], note:"受動態 are + 過去分詞。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"We ( be ) friends since high school.", answer:"have been", alts:["have been."], note:"継続の現在完了。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"The shrine ( build ) 300 years ago.", answer:"was built", alts:["was built."], note:"過去の受動態。build-built。"},
+      {prompt:"カッコ内の語を適切な形に変えなさい。", body:"I ( not / invite ) to the party.", answer:"was not invited", alts:["was not invited.","wasn't invited","wasn't invited."], note:"否定の受動態。"},
+    ],
+    arrange:[
+      // 配付プリント (Lesson 2 Part 1) の並べ替え
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"この写真は彼女によって撮られた。",
+       scramble:["This","picture","was","taken","by","her"],
+       answer:"This picture was taken by her", note:"過去の受動態 was + 過去分詞。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私はそのパーティーに招待されなかった。",
+       scramble:["I","was","not","invited","to","the","party"],
+       answer:"I was not invited to the party", note:"否定の受動態。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"数学は八ツ門寺先生によって教えられている。",
+       scramble:["Math","is","taught","by","Mr.","Yatsumonji"],
+       answer:"Math is taught by Mr. Yatsumonji", note:"現在の受動態。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その本は世界中で読まれている。",
+       scramble:["The","book","is","read","all","over","the","world"],
+       answer:"The book is read all over the world", note:"by 以外の前置詞も使う。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私は10年間ここに住んでいる。",
+       scramble:["I","have","lived","here","for","ten","years"],
+       answer:"I have lived here for ten years", note:"継続の現在完了 + for + 期間。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"彼女はちょうど夕食を食べ終えたところです。",
+       scramble:["She","has","just","finished","her","dinner"],
+       answer:"She has just finished her dinner", note:"完了の現在完了 + just。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私はホタルイカを見たことがない。",
+       scramble:["I","have","never","seen","a","firefly","squid"],
+       answer:"I have never seen a firefly squid", note:"経験の現在完了 + never。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"ホタルは光を放つ。",
+       scramble:["Fireflies","give","off","light"],
+       answer:"Fireflies give off light", note:"give off = 〜を放つ。"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"その光は捕食者の気をそらす。",
+       scramble:["The","light","distracts","predators"],
+       answer:"The light distracts predators"},
+      {prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私たちは何世紀もそれを使ってきた。",
+       scramble:["We","have","used","it","for","centuries"],
+       answer:"We have used it for centuries", note:"継続の現在完了 + for centuries。"},
+    ],
+    translate:[
+      // 英→日（4択）
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'These lights are much loved by the local people.',
+       choices:["これらの光は地元の人々に売られている。","これらの光は地元の人々によってとても愛されている。","ローカルな人々はこの光を嫌っている。","地元の人々はこれらの光を作っていない。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Fireflies give off light to attract mates.',
+       choices:["ホタルは光を消してつがいを離す。","ホタルは光を放ってつがいを引きつける。","ホタルは光を見せて捕食者を遠ざける。","ホタルはつがいを探さない。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'These lights have appeared in Japanese poems for centuries.',
+       choices:["その光は日本の詩には登場しない。","日本の詩は何世紀もの間、光を放ってきた。","その光は何世紀もの間、日本の詩に登場してきた。","光は最近、詩から消えた。"], answer:2, note:"現在完了の継続 + for centuries。"},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The squid have special organs in their bodies.',
+       choices:["イカは特別な器官を体内に持っている。","イカは器官を売っている。","イカの体に特別な薬がある。","イカは体外に器官を持つ。"], answer:0},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'Anglerfish live in the deep dark sea.',
+       choices:["チョウチンアンコウは浅瀬で暮らす。","チョウチンアンコウは深い暗い海に生息している。","チョウチンアンコウは光る海に住んでいる。","チョウチンアンコウは陸上で生活する。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'I have lived here for ten years.',
+       choices:["私は10年前にここに住んでいた。","私は10年間ここに住んでいる。","私はここに10回住んだ。","私はもうすぐここに10年住むつもりだ。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'She has just finished her homework.',
+       choices:["彼女は宿題をやり終えていない。","彼女はちょうど宿題を終えたところだ。","彼女は宿題をしたことがある。","彼女は宿題を続けている。"], answer:1},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'I have never seen such a strange creature before.',
+       choices:["私はそんな奇妙な生き物を以前見たことがない。","私はそんな奇妙な生き物を以前見たことがある。","私はそんな奇妙な生き物を見ないつもりだ。","私はそんな奇妙な生き物が嫌いだ。"], answer:0},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'The light is used for different purposes.',
+       choices:["その光は色々な目的のために使われる。","その光は1つの目的にしか使えない。","その光は使えない。","その光は目的が分からない。"], answer:0},
+      {prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'This car was made in Japan.',
+       choices:["この車は日本で作られた。","この車は日本に運ばれた。","この車は日本では売れない。","この車を日本人が買った。"], answer:0},
     ],
     writing:[
-      {prompt:"次の日本語を英訳しなさい。", body:"その魚は深海で発見された。", answer:"The fish was discovered in the deep sea.", alts:["That fish was discovered in the deep ocean."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私はこの本を3回読んだことがある。", answer:"I have read this book three times.", alts:["I've read this book three times."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"彼は2時間ずっと勉強し続けている。", answer:"He has been studying for two hours.", alts:["He has studied for two hours."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"たくさんのホタルが夏の夜に見られる。", answer:"Many fireflies are seen on summer nights.", alts:["A lot of fireflies can be seen on summer nights."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"彼らはまだ宿題を終えていない。", answer:"They haven't finished their homework yet.", alts:["They have not finished their homework yet."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"その新種は科学者によって観察されている。", answer:"The new species is being observed by scientists.", alts:["That new species is being observed by scientists."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"私たちはお互いに10年来の知り合いです。", answer:"We have known each other for ten years.", alts:["We've known each other for ten years."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"その光は化学反応によって生み出される。", answer:"The light is produced by a chemical reaction.", alts:["That light is produced by chemical reactions."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"彼女はちょうど夕食を食べ終えたところだ。", answer:"She has just finished eating dinner.", alts:["She has just finished her dinner.","She has just had dinner."]},
-      {prompt:"次の日本語を英訳しなさい。", body:"このビーチは美しいクラゲで有名です。", answer:"This beach is famous for its beautiful jellyfish.", alts:["This beach is known for its beautiful jellyfish."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その車は日本で作られた。", answer:"The car was made in Japan.", alts:["This car was made in Japan.","The car is made in Japan."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その手紙は彼女によって書かれた。", answer:"The letter was written by her.", alts:["That letter was written by her."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私はそのパーティーに招待されなかった。", answer:"I was not invited to the party.", alts:["I wasn't invited to the party."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"彼はちょうど駅に着いたところです。", answer:"He has just got to the station.", alts:["He has just arrived at the station."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"ユミは以前カレーを作ったことがある。", answer:"Yumi has made curry before.", alts:["Yumi made curry before."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私は2年間ここに住んでいる。", answer:"I have lived here for two years.", alts:["I've lived here for two years."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私は日曜からずっと忙しい。", answer:"I have been busy since last Sunday.", alts:["I've been busy since last Sunday."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"ホタルは光を放つ。", answer:"Fireflies give off light.", alts:["Fireflies give off lights."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その光は何世紀もの間、使われてきた。", answer:"The light has been used for centuries.", alts:["This light has been used for centuries."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私は彼に3回会ったことがある。", answer:"I have met him three times.", alts:["I've met him three times.","I have seen him three times."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"私はまだ宿題を終えていない。", answer:"I haven't finished my homework yet.", alts:["I have not finished my homework yet."]},
+      {prompt:"次の日本語を英訳しなさい。", body:"その光は捕食者を引きつける。", answer:"The light attracts predators.", alts:["The lights attract predators."]},
     ],
     reading:[{
-      title:"The Mystery of Glowing Fish",
-      passage:`For many years, scientists have been studying the strange behavior of deep-sea creatures. One of the most fascinating discoveries is bioluminescence — the ability of some animals to produce their own light.
+      title:"The Lights of Toyama Bay",
+      passage:`Every spring, Toyama Bay becomes one of the most magical places in Japan. Small blue lights can be seen on the surface of the water at night. These lights are produced by firefly squid, or hotaruika in Japanese.
 
-In 2015, a small fish called the "moon lantern" was discovered in the western Pacific Ocean. It lives at a depth of about 700 meters, where almost no sunlight reaches. The moon lantern produces a soft blue light from special cells under its skin. Scientists believe that this light is used to attract small prey and to send signals to other moon lanterns in the dark.
+Firefly squid have been studied by Japanese scientists for a long time. They are known for the special organs in their bodies. The organs flash light in various patterns. Some scientists believe the lights are used to attract mates. Others think the lights distract predators in the deep dark sea.
 
-Since the discovery, more than fifty research papers have been written about this fish. A team in Okinawa has been observing it for almost five years. They have found that the light becomes brighter when the fish feels safe, and dimmer when a predator is nearby.
+Tourists come from all over Japan to see this beautiful scene. Many of them have visited Toyama Bay several times. The lights have appeared in Japanese poems for centuries. The squid are now a true symbol of spring in this region.
 
-Many questions still need to be answered. How does the moon lantern control its light? Why has this ability not been found in similar fish living in the same area? Scientists hope that, in the coming years, the secrets of this beautiful creature will be revealed.`,
+If you have never seen the lights of hotaruika, you should visit Toyama Bay in April or May. The view will surprise you, and you will not forget it for a long time.`,
       questions:[
-        {prompt:"内容に合うものを選びなさい。", body:"What is bioluminescence?", choices:["The study of deep sea fish","The ability of some animals to produce their own light","A type of small jellyfish","A new chemical used in research"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"When and where was the moon lantern discovered?", choices:["In 2005, in the Atlantic Ocean","In 2015, in the western Pacific Ocean","In 2020, near the Japan Sea","In 2015, in a freshwater lake"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"Why does the moon lantern produce light?", choices:["To warm up its body","To attract prey and signal other moon lanterns","To frighten all kinds of fish","To find its way back home"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"What happens to its light when a predator is near?", choices:["It becomes brighter","It becomes dimmer","It changes color to red","It stays exactly the same"], answer:1},
-        {prompt:"内容に合うものを選びなさい。", body:"Which question do scientists still want to answer?", choices:["Whether the moon lantern can fly","How the moon lantern controls its light","Whether humans can eat it","Whether the fish can live on land"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"Where can you see the firefly squid?", choices:["In Tokyo Bay","In Osaka Bay","In Toyama Bay","In the Sea of Okhotsk"], answer:2},
+        {prompt:"内容に合うものを選びなさい。", body:"What does the passage say about the squid's organs?", choices:["They make sounds","They flash light in various patterns","They produce ink","They warm up the body"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"Why do scientists think the squid flash light? (One possible reason)", choices:["To find their way back home","To attract mates","To stop swimming","To eat plants"], answer:1},
+        {prompt:"内容に合うものを選びなさい。", body:"How long have the lights appeared in Japanese poems?", choices:["For a few months","For ten years","For about a year","For centuries"], answer:3},
+        {prompt:"内容に合うものを選びなさい。", body:"When is the best time to visit?", choices:["January or February","April or May","August","November"], answer:1},
       ]
     }],
     test:[
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"species", choices:["速度","種","特別な","予報"], answer:1},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"observe", choices:["観察する","保護する","祝う","従う"], answer:0},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"environment", choices:["環境","出来事","出口","会場"], answer:0},
-      {type:"choice", prompt:"単語の意味を選びなさい。", body:"glow", choices:["流れる","ぼんやり光る","成長する","糊付けする"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"creature", choices:["創造","生き物","信用","批評"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"predator", choices:["前任者","捕食動物","予測者","序文"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"give off ...", choices:["…をあきらめる","…を放つ","…をオフにする","…を寄付する"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"for centuries", choices:["100年だけ","世紀末まで","何世紀もの間","古い時代に"], answer:2},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"appear", choices:["消える","(姿を)現す","謝罪する","上に座る"], answer:1},
+      {type:"choice", prompt:"単語の意味を選びなさい。", body:"glow", choices:["流れる","光を放つ","成長する","糊付けする"], answer:1},
       {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"That book (___) by a famous author.", choices:["writes","wrote","was written","writing"], answer:2},
       {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"I (___) lived here for ten years.", choices:["have","am","was","do"], answer:0},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) studying English since this morning.", choices:["has been","is","was","will"], answer:0},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"The window (___) by the strong wind.", choices:["broke","was broken","has broken","is breaking"], answer:1},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"Have you ever (___) to Hokkaido?", choices:["go","gone","been","went"], answer:2, note:"経験は have been to。"},
-      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"They (___) the project since last week.", choices:["work on","worked on","have been working on","are work on"], answer:2},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"私はちょうど宿題を終えたところだ。", answer:"I have just finished my homework.", alts:["I've just finished my homework."]},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"その手紙は彼女によって書かれた。", answer:"The letter was written by her.", alts:["That letter was written by her."]},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"彼は3時間ずっと泳ぎ続けている。", answer:"He has been swimming for three hours.", alts:["He has swum for three hours."]},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"この映画は世界中で見られている。", answer:"This movie is watched all over the world.", alts:["This film is watched around the world."]},
-      {type:"writing", prompt:"日本語を英訳しなさい。", body:"私はまだ彼に会ったことがない。", answer:"I haven't met him yet.", alts:["I have not met him yet.","I haven't seen him yet."]},
+      {type:"choice", prompt:"空所に入れるのに適切なものを選びなさい。", body:"She (___) just finished her homework.", choices:["has","is","was","will"], answer:0},
+      {type:"choice", prompt:"次の英文が表す現在完了の用法を選びなさい。", body:"I have lived here for two years.", choices:["完了","経験","継続","受動"], answer:2},
+      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"This car ( make ) in Japan.", answer:"was made", alts:["was made."]},
+      {type:"verbform", prompt:"カッコ内の語を適切な形に変えなさい。", body:"She ( just / finish ) her homework.", answer:"has just finished", alts:["has just finished."]},
+      {type:"arrange", prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"この写真は彼女によって撮られた。",
+       scramble:["This","picture","was","taken","by","her"],
+       answer:"This picture was taken by her"},
+      {type:"arrange", prompt:"日本語の意味になるように英語を並べ替えなさい。", body:"私は10年間ここに住んでいる。",
+       scramble:["I","have","lived","here","for","ten","years"],
+       answer:"I have lived here for ten years"},
+      {type:"choice", prompt:"次の英文の和訳として最も適切なものを選びなさい。", body:'I have just finished my homework.',
+       choices:["私は宿題を終えるつもりだ。","私はちょうど宿題を終えたところだ。","私は宿題をまだ終えていない。","私は宿題を続けている。"], answer:1},
     ],
   },
 
@@ -941,10 +1217,29 @@ function renderQuiz(){
 
   const area=document.getElementById("qarea");
   const isReading = State.mode==="reading";
-  const isWriting = (State.mode==="writing") || q.type==="writing";
+  // Determine effective type for this question (test mode uses q.type, others use mode)
+  const effType = q.type || State.mode;
+  const isWriting   = effType==="writing";
+  const isTranslate = effType==="translate";
+  const isVerbForm  = effType==="verbform";
+  const isArrange   = effType==="arrange";
+  const isFreeInput = isWriting || isTranslate || isVerbForm;
 
   let qbodyClass="qbody";
   if(/^[ぁ-んァ-ヶ一-龯、。「」]/.test((q.body||"")[0]||"")) qbodyClass+=" ja";
+
+  // Body for arrange = the Japanese sentence to translate
+  let bodyHtml = formatBody(q.body);
+  if(isArrange){
+    // ensure JA styling
+    qbodyClass = "qbody ja";
+  }
+
+  let inputHtml = "";
+  if(isArrange)        inputHtml = renderArrange(q);
+  else if(isVerbForm)  inputHtml = renderVerbForm(q);
+  else if(isFreeInput) inputHtml = renderWriting(q, isTranslate);
+  else                 inputHtml = renderChoices(q);
 
   let html=`
   <div class="qmeta">
@@ -962,24 +1257,30 @@ function renderQuiz(){
   <div class="q-card">
     <span class="qno">Q${State.q+1}</span>
     <div class="qprompt">${escapeHtml(q.prompt||"")}</div>
-    <div class="${qbodyClass}">${formatBody(q.body)}</div>
-    ${isWriting? renderWriting(q) : renderChoices(q)}
+    <div class="${qbodyClass}">${bodyHtml}</div>
+    ${inputHtml}
     <div class="feedback" id="fb"></div>
     <div class="q-actions">
-      ${isWriting
-        ? `<button class="btn primary" id="checkBtn">採点する</button>`
-        : `<button class="btn primary" id="checkBtn" disabled>採点する</button>`}
+      <button class="btn primary" id="checkBtn" ${isFreeInput||isArrange?"":"disabled"}>採点する</button>
       <button class="btn ghost" id="nextBtn" style="display:none">次の問題 →</button>
       <button class="btn ghost" id="skipBtn">スキップ</button>
     </div>
   </div>`;
   area.innerHTML=html;
 
-  // wire actions
-  if(isWriting){
+  // wire actions per type
+  if(isArrange){
+    setupArrange();
+    document.getElementById("checkBtn").onclick=()=>checkArrange(q);
+  }else if(isVerbForm){
+    const inp=area.querySelector("input.text-fill");
+    inp.addEventListener("input", e=>{ State.freeText=e.target.value; });
+    inp.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); checkVerbForm(q); }});
+    document.getElementById("checkBtn").onclick=()=>checkVerbForm(q);
+  }else if(isFreeInput){
     const ta=area.querySelector("textarea.answer-input");
     ta.addEventListener("input", e=>{ State.freeText=e.target.value; });
-    document.getElementById("checkBtn").onclick=()=>checkWriting(q);
+    document.getElementById("checkBtn").onclick=()=>checkWriting(q, isTranslate);
   }else{
     area.querySelectorAll(".choice").forEach(btn=>{
       btn.onclick=()=>{
@@ -1004,8 +1305,110 @@ function renderChoices(q){
      </button>`).join("")}</div>`;
 }
 
-function renderWriting(q){
-  return `<textarea class="answer-input" placeholder="ここに英語で解答を入力" autofocus>${escapeHtml(State.freeText||"")}</textarea>`;
+function renderWriting(q, ja=false){
+  const cls = "answer-input" + (ja?" ja":"");
+  const ph  = ja ? "ここに日本語で和訳を入力" : "ここに英語で解答を入力";
+  return `<textarea class="${cls}" placeholder="${ph}" autofocus>${escapeHtml(State.freeText||"")}</textarea>`;
+}
+
+function renderVerbForm(q){
+  return `<div class="text-fill-row">
+    <label>カッコ内の語を適切な形に →</label>
+    <input type="text" class="text-fill" placeholder="例: is cleaning" value="${escapeHtml(State.freeText||"")}" autofocus>
+  </div>`;
+}
+
+function renderArrange(q){
+  // Shuffle the words once and cache on the question (so user sees the same shuffle within this question)
+  if(!q._shuffle){
+    const arr = [...q.scramble];
+    for(let i=arr.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    q._shuffle = arr;
+  }
+  const pool = q._shuffle;
+  return `<div class="arrange-area">
+    <div class="arrange-answer" id="arrAns">
+      <span class="placeholder">↓ 下から順にタップして英文を組み立てよう</span>
+    </div>
+    <div class="arrange-pool" id="arrPool">
+      ${pool.map((w,i)=>`<button class="word-chip" data-w="${escapeHtml(w)}">${escapeHtml(w)}</button>`).join("")}
+    </div>
+  </div>`;
+}
+
+function setupArrange(){
+  const pool = document.getElementById("arrPool");
+  const ans  = document.getElementById("arrAns");
+  function refreshPlaceholder(){
+    if(!ans.querySelector(".word-chip")){
+      if(!ans.querySelector(".placeholder")){
+        const ph=document.createElement("span");
+        ph.className="placeholder";
+        ph.textContent="↓ 下から順にタップして英文を組み立てよう";
+        ans.appendChild(ph);
+      }
+    } else {
+      ans.querySelector(".placeholder")?.remove();
+    }
+  }
+  document.querySelectorAll(".arrange-area .word-chip").forEach(btn=>{
+    btn.onclick = () => {
+      if(State.showFeedback) return;
+      if(btn.parentElement === pool){
+        ans.querySelector(".placeholder")?.remove();
+        ans.appendChild(btn);
+      } else {
+        pool.appendChild(btn);
+        refreshPlaceholder();
+      }
+    };
+  });
+}
+
+function normalizeArrangeWord(w){
+  return String(w||"").toLowerCase()
+    .replace(/[.,!?;:"']/g,"")
+    .trim();
+}
+function checkArrange(q){
+  const ans=document.getElementById("arrAns");
+  const userWords = [...ans.querySelectorAll(".word-chip")].map(c=>c.dataset.w);
+  if(userWords.length === 0){
+    alert("並べてから採点してください。");
+    return;
+  }
+  const expected = q.answer.split(/\s+/);
+  const a = userWords.map(normalizeArrangeWord).join(" ");
+  const b = expected.map(normalizeArrangeWord).join(" ");
+  let ok = (a===b);
+  if(!ok && q.alts){
+    for(const alt of q.alts){
+      const c = alt.split(/\s+/).map(normalizeArrangeWord).join(" ");
+      if(a===c){ ok=true; break; }
+    }
+  }
+  State.showFeedback=true;
+  // lock chips
+  document.querySelectorAll(".arrange-area .word-chip").forEach(c=>c.disabled=true);
+  showFeedback(ok, q, true, userWords.join(" "));
+  if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
+  document.getElementById("checkBtn").style.display="none";
+  document.getElementById("nextBtn").style.display="inline-flex";
+}
+
+function checkVerbForm(q){
+  const ans=(State.freeText||"").trim();
+  if(!ans){ alert("解答を入力してください。"); return; }
+  State.showFeedback=true;
+  const ok = isWritingCorrect(ans, q);
+  showFeedback(ok, q, true, ans);
+  if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
+  document.getElementById("checkBtn").style.display="none";
+  document.getElementById("nextBtn").style.display="inline-flex";
+  document.querySelector("input.text-fill").disabled=true;
 }
 
 function checkChoice(q){
@@ -1024,11 +1427,11 @@ function checkChoice(q){
   document.getElementById("nextBtn").style.display="inline-flex";
 }
 
-function checkWriting(q){
+function checkWriting(q, ja=false){
   const ans=(State.freeText||"").trim();
   if(!ans){ alert("解答を入力してください。"); return; }
   State.showFeedback=true;
-  const ok=isWritingCorrect(ans, q);
+  const ok = ja ? isJaCorrect(ans, q) : isWritingCorrect(ans, q);
   showFeedback(ok, q, true, ans);
   if(ok) State.score.good++; else { State.score.bad++; addToReview(q); }
   document.getElementById("checkBtn").style.display="none";
@@ -1048,6 +1451,29 @@ function isWritingCorrect(input, q){
   const cand=[q.answer, ...(q.alts||[])].map(normalize);
   const n=normalize(input);
   return cand.includes(n);
+}
+function normalizeJa(s){
+  return String(s||"")
+    .replace(/[、。．，！？「」『』 　\s　]/g,"")
+    .replace(/[ァ-ヶ]/g, ch => String.fromCharCode(ch.charCodeAt(0)-0x60)) // katakana→hiragana
+    .toLowerCase();
+}
+function isJaCorrect(input, q){
+  const cand=[q.answer, ...(q.alts||[])].map(normalizeJa);
+  const n=normalizeJa(input);
+  // exact match or partial - require >= 70% character overlap
+  if(cand.includes(n)) return true;
+  // permissive: if user's answer contains all expected keywords from any cand
+  for(const c of cand){
+    if(c.length>0 && n.length>=Math.floor(c.length*0.7)){
+      // count shared chars
+      const setC=new Set(c);
+      let shared=0;
+      for(const ch of n){ if(setC.has(ch)) shared++; }
+      if(shared >= Math.floor(c.length*0.7)) return true;
+    }
+  }
+  return false;
 }
 
 function showFeedback(ok, q, writingMode=false, userInput=""){

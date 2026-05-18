@@ -9,7 +9,7 @@
    キャッシュ名は CACHE_VERSION で管理。アプリを更新したら数字を上げる。
    ============================================================ */
 
-const CACHE_VERSION = 'v1-2026-05-18';
+const CACHE_VERSION = 'v2-2026-05-18-midterm';
 const CACHE_NAME = `gakushucho-eigo-${CACHE_VERSION}`;
 const FONTS_CACHE = `gakushucho-eigo-fonts-${CACHE_VERSION}`;
 
