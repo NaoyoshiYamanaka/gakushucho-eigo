@@ -67,12 +67,21 @@ button{-webkit-appearance:none;cursor:pointer;font-family:inherit}
 
 .app{max-width:980px;margin:0 auto;padding:24px 16px 80px}
 
-header.brand{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:8px}
+header.brand{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:8px;gap:12px}
 header.brand h1{font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;font-size:28px;font-weight:700;letter-spacing:.04em}
 header.brand h1 .sep{color:var(--accent);margin:0 .35em}
+header.brand .right{text-align:right}
+header.brand .nav-btns{display:flex;gap:6px;justify-content:flex-end;margin-bottom:4px;flex-wrap:wrap}
+header.brand .nav-btn{
+  appearance:none;background:#FFFDF7;border:1.5px solid var(--rule);color:var(--ink);
+  font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:600;
+  padding:6px 12px;border-radius:99px;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:4px;transition:all .12s;
+}
+header.brand .nav-btn:hover{border-color:var(--accent);color:var(--accent-deep);background:#FFF7EF}
+header.brand .nav-btn.pause{border-color:var(--accent);color:var(--accent-deep)}
+header.brand .nav-btn.pause:hover{background:var(--accent);color:#FFFDF7}
 header.brand .sub{font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink-soft);font-style:italic;text-align:right}
-header.brand .back{font-size:12px;color:var(--ink-soft);text-decoration:none;border:1px solid var(--rule);padding:4px 10px;border-radius:99px;margin-right:8px}
-header.brand .back:hover{border-color:var(--ink);color:var(--ink)}
 
 .tab-strip{display:flex;gap:4px;flex-wrap:wrap;margin:18px 0 0;padding-bottom:0}
 .tab-strip button.lesson-tab{
@@ -295,7 +304,13 @@ footer.colophon{text-align:center;color:var(--ink-soft);font-size:12px;margin-to
 <div class="app">
   <header class="brand">
     <h1>学習帖<span class="sep">—</span>地理</h1>
-    <div class="sub"><a class="back" href="./">← 学習帖トップ</a>新地理総合&nbsp;|&nbsp;Lesson Trainer</div>
+    <div class="right">
+      <div class="nav-btns">
+        <button class="nav-btn pause" id="pauseBtn" style="display:none">⏸ 中断</button>
+        <a class="nav-btn" href="./">🏠 学習帖トップ</a>
+      </div>
+      <div class="sub">新地理総合&nbsp;|&nbsp;Lesson Trainer</div>
+    </div>
   </header>
 
   <nav class="tab-strip" id="lessonTabs"></nav>
@@ -1254,6 +1269,24 @@ function getLessonProgress(lessonN){
   return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
 }
 
+function updatePauseButtonVisibility(){
+  const btn = document.getElementById("pauseBtn");
+  if(!btn) return;
+  const visible = !!(State.pool && !State.done && State.q < (State.pool?.length||0));
+  btn.style.display = visible ? "inline-flex" : "none";
+}
+
+function pauseQuiz(){
+  if(!State.pool || State.done) return;
+  if(!confirm("今のクイズを中断します。これまでの結果サマリーを表示します。")){
+    return;
+  }
+  State.done = true;
+  commitProgress();
+  renderSummary(true /* fromPause */);
+  updatePauseButtonVisibility();
+}
+
 function render(){
   renderTabs();
   const L=LESSONS.find(l=>l.n===State.lesson);
@@ -1287,6 +1320,7 @@ function render(){
   if(!has) renderPlaceholder();
   else renderQuiz();
   updateReviewFab();
+  updatePauseButtonVisibility();
 }
 
 function renderPlaceholder(){
@@ -1688,7 +1722,7 @@ function commitProgress(){
   saveStore();
 }
 
-function renderSummary(){
+function renderSummary(fromPause=false){
   const area=document.getElementById("qarea");
   const total=State.score.good+State.score.bad;
   const pct = total? Math.round(100*State.score.good/total):0;
@@ -1696,16 +1730,23 @@ function renderSummary(){
   if(pct>=90) stamp="満点近し！素晴らしい";
   else if(pct>=70) stamp="よくできました";
   else if(pct>=50) stamp="あと一歩";
+  const heading = fromPause
+    ? `${MODES.find(m=>m.id===State.mode).label} ・ 中断しました`
+    : `${MODES.find(m=>m.id===State.mode).label} ・ 結果`;
+  const subtext = fromPause
+    ? `${State.score.good + State.score.bad} 問終了時点 / 全 ${State.pool?.length || 0} 問`
+    : `${State.score.good} / ${total} 問正解`;
   area.innerHTML=`
   <div class="summary">
-    <h3>${MODES.find(m=>m.id===State.mode).label} ・ 結果</h3>
+    <h3>${heading}</h3>
     <div class="score-big">${pct}<small>%</small></div>
-    <div>${State.score.good} / ${total} 問正解</div>
-    <div class="stamp-circle">${stamp}</div>
+    <div>${subtext}</div>
+    <div class="stamp-circle">${fromPause?"おつかれさま":stamp}</div>
     <div class="row">
-      <button class="btn primary" id="againBtn">もう一度</button>
+      <button class="btn primary" id="againBtn">${fromPause?"続きから / もう一度":"もう一度"}</button>
       <button class="btn accent" id="nextModeBtn">次のモードへ</button>
       <button class="btn ghost" id="goReviewBtn">復習帳を見る</button>
+      <a class="btn ghost" href="./" style="text-decoration:none;display:inline-flex;align-items:center">🏠 学習帖トップへ</a>
     </div>
   </div>`;
   document.getElementById("againBtn").onclick=()=>{ resetQuiz(); render(); };
@@ -1716,6 +1757,7 @@ function renderSummary(){
   };
   document.getElementById("goReviewBtn").onclick=openReview;
   updateReviewFab();
+  updatePauseButtonVisibility();
 }
 
 const modalBg=document.getElementById("modalBg");
@@ -1765,6 +1807,9 @@ function formatBody(s){
 
 loadStore();
 render();
+
+// Wire pause button (header)
+document.getElementById("pauseBtn")?.addEventListener("click", pauseQuiz);
 
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', () => {
